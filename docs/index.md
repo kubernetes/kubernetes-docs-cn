@@ -69,12 +69,12 @@ h2, h3, h4 {
 <div class="colContainer">
   <div class="col3rd">
     <h3>Kubernetes是什么？</h3>
-    <p>Kubernetes是一个开源的集自动部署、水平扩容和跨集群的容器应用运维平台。下面这个链接更详细的介绍了这个平台能为你带来什么。</p>
+    <p>Kubernetes是一个支持自动部署、水平扩容以及跨集群应用容器运维的开源平台。下面这个链接更详细的介绍了这个平台能为你带来什么。</p>
     <a href="/docs/whatisk8s/" class="button">阅读Kubernetes简介</a>
   </div>
   <div class="col3rd">
     <h3>简单的案例</h3>
-    <p>在这个快速入门案例中，我们会创建一个Kubernetes的实例并在上面运行一个简单的NodeJS程序。只需要几分钟，你就能够从零开始通过Kubernetes的方式将应用部署到运行在谷歌容器引擎（Google Container Engine）上。</p>
+    <p>在这个快速入门案例中，我们会创建一个Kubernetes的实例并在上面运行一个简单的Node.js "Hello World"应用。只需要几分钟，你就能够从零开始通过Kubernetes的方式将应用部署到谷歌容器引擎（Google Container Engine）上。</p>
     <a href="/docs/hellonode/" class="button">让我们开始吧</a>
   </div>
   <div class="col3rd">
