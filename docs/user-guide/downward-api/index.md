@@ -5,7 +5,7 @@
 
 ## 步骤 0: 前提条件
 
-这个例子会假设你有一个被安装好并正在工作的Kubernetes集群，也已经在PATH环境变量中的某个目录下安装好了kubectl命令行工具。具体安装步骤请在[getting-started](http://kubernetes.io/v1.0/docs/getting-started-guides/)中找到与你平台对应的安装说明。
+这个例子会假设你有一个被安装好并正在工作的Kubernetes集群，也已经在PATH环境变量中的某个目录下安装好了kubectl命令行工具。具体安装步骤请在[getting-started](/docs/getting-started-guides/)中找到与你平台对应的安装说明。
 
 ## 步骤 1: 创建一个pod
 
@@ -18,7 +18,7 @@ $ kubectl create -f docs/user-guide/downward-api/dapi-pod.yaml
 ```
 
 ### 检查日志
-这个pod将在使用downward API的容器中运行env命令。你可以使用grep命令过滤pod的日志来检查pod被注入了正确的值。
+这个pod将在使用downward API的容器中运行`env`命令。你可以使用grep命令过滤pod的日志来检查pod被注入了正确的值。
 
 ```shell
 $ kubectl logs dapi-test-pod | grep POD_
