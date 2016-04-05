@@ -11,11 +11,10 @@ title: "kubectl config"
 
 使用config的子命令修改kubeconfig配置文件，如“kubectl config set current-context my-context”。
 
-配置文件的读取遵循如下规则：
+配置文件的读取顺序遵循如下规则：
 
-The loading order follows these rules:
-    1. 如果指定了--kubeconfig选项，那么只有指定的文件被加载。此选项只能被设置一次，并且不会合并其他文件。If the --kubeconfig flag is set, then only that file is loaded.  The flag may only be set once and no merging takes place.
-    2. 如果设置了$KUBECONFIG环境变量，将同时使用此环境变量指定的所有文件列表（使用操作系统默认的顺序），所有文件将被合并。当修改一个值时，将修改设置了该值的文件。当创建一个值时，将在列表的首个文件创建该值。若列表中所有的文件都不存在，将创建列表中的最后一个文件。
+    1. 如果指定了--kubeconfig选项，那么只有指定的文件被加载。此选项只能被设置一次，并且不会合并其他文件。
+    2. 如果设置了$KUBECONFIG环境变量，将同时使用此环境变量指定的所有文件列表（使用操作系统默认的文件分隔规则），所有文件将被合并。当修改一个值时，将修改设置了该值的文件。当创建一个值时，将在列表的首个文件创建该值。若列表中所有的文件都不存在，将创建列表中的最后一个文件。
     3. 如果前两项都没有设置,将使用 ${HOME}/.kube/config，并且不会合并其他文件。
 
 
