@@ -5,14 +5,14 @@ title: "kubectl annotate"
 
 ## kubectl annotate
 
-更新某个资源的注解
+更新某个资源的Annotation
 
 ### 摘要
 
-更新一个或多个资源的注解。
-注解是一个键值对，它可以包含比label更多的信息，并且可能是机读数据。
-注解用来存储那些辅助的，非区分性的信息，特别是那些为外部工具或系统扩展插件使用的数据。
-如果--overwrite设为true，将会覆盖现有的注解，否则试图修改一个注解的值将会抛出错误。
+更新一个或多个资源的Annotation。
+Annotation是一个键值对，它可以包含比label更多的信息，并且可能是机读数据。
+Annotation用来存储那些辅助的，非区分性的信息，特别是那些为外部工具或系统扩展插件使用的数据。
+如果--overwrite设为true，将会覆盖现有的Annotation，否则试图修改一个Annotation的值将会抛出错误。
 如果设置了--resource-version，那么将会使用指定的这个版本，否则将使用当前版本。
 
 支持的资源包括但不限于（大小写不限）：pods (po)、services (svc)、
@@ -30,23 +30,23 @@ kubectl annotate [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_N=V
 
 ```
 {% raw %}
-# 更新pod “foo”，设置其注解description的值为my frontend。
-# 如果同一个注解被赋值了多次，只保存最后一次设置的值。
+# 更新pod “foo”，设置其Annotation description的值为my frontend。
+# 如果同一个Annotation被赋值了多次，只保存最后一次设置的值。
 $ kubectl annotate pods foo description='my frontend'
 
-# 更新“pod.json”文件中type和name字段指定的pod的注解。
+# 更新“pod.json”文件中type和name字段指定的pod的Annotation。
 $ kubectl annotate -f pod.json description='my frontend'
 
-# 更新pod “foo”，设置其注解description的值为my frontend running nginx，已有的值将被覆盖。
+# 更新pod “foo”，设置其Annotation description的值为my frontend running nginx，已有的值将被覆盖。
 $ kubectl annotate --overwrite pods foo description='my frontend running nginx'
 
 # 更新同一namespace下所有的pod。
 $ kubectl annotate pods --all description='my frontend running nginx'
 
-# 仅当pod “foo”当前版本为1时，更新其注解
+# 仅当pod “foo”当前版本为1时，更新其Annotation
 $ kubectl annotate pods foo description='my frontend running nginx' --resource-version=1
 
-# 更新pod “foo”，删除其注解description。
+# 更新pod “foo”，删除其Annotation description。
 # 不需要--override选项。
 $ kubectl annotate pods foo description-
 {% endraw %}
@@ -58,8 +58,8 @@ $ kubectl annotate pods foo description-
 {% raw %}
       --all[=false]: 选择namespace中所有指定类型的资源。
   -f, --filename=[]: 用来指定待升级资源的文件名，目录名或者URL。
-      --overwrite[=false]: 如果设置为true，允许覆盖更新注解，否则拒绝更新已存在的注解。
-      --resource-version="": 如果不为空，仅当资源当前版本和指定版本相同时才能更新注解。仅当更新单个资源时有效。
+      --overwrite[=false]: 如果设置为true，允许覆盖更新Annotation，否则拒绝更新已存在的Annotation。
+      --resource-version="": 如果不为空，仅当资源当前版本和指定版本相同时才能更新Annotation。仅当更新单个资源时有效。
 {% endraw %}
 ```
 
