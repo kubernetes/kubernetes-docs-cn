@@ -1,9 +1,9 @@
 ---
 ---
 
-Kubernetes的[`Pod`](/docs/user-guide/pods)的寿命是有限的。它们出生然后死亡，它们不会复活。[`ReplicationControllers`](/docs/user-guide/replication-controller)是特别用来动态的创建和销毁`Pods`（如：动态伸缩或者执行[rolling updates](/docs/user-guide/kubectl/kubectl_rolling-update)中动态的创建和销毁pod）。尽管每个`Pod`有自己的IP地址，随着时间变化随着时间推移即使这些IP地址也不能被认为是可靠的。这带来一个问题：如果一些`Pods`的集合（让我们称之为backends）为集群中的其他的`Pod`提供了一些功能（让我们称它们为frontends）,这些frontends应该如何找到并一直知道哪些backends在这样的集合中呢？
+Kubernetes的[`Pod`](/docs/user-guide/pods)的寿命是有限的。它们出生然后死亡，它们不会复活。[`ReplicationController`](/docs/user-guide/replication-controller)是特别用来动态的创建和销毁`Pods`（如：动态伸缩或者执行[rolling updates](/docs/user-guide/kubectl/kubectl_rolling-update)中动态的创建和销毁pod）。尽管每个`Pod`有自己的IP地址，随着时间变化随着时间推移即使这些IP地址也不能被认为是可靠的。这带来一个问题：如果一些`Pod`的集合（让我们称之为backends）为集群中的其他的`Pod`提供了一些功能（让我们称它们为frontends）,这些frontends应该如何找到并一直知道哪些backends在这样的集合中呢？
 
-欢迎进入`Services`的世界。
+欢迎进入`Service`的世界。
 
 一个Kubernetes的`Service`是一种抽象，它定义了一个`Pod`的逻辑集合和一个用于访问它们的策略 - 有的时候被称之为微服务。一个`Service`的目标`Pod`集合通常是由[`Label
 Selector`](/docs/user-guide/labels/#label-selectors) 来决定的（下面有讲一个没有选择器的`Service` 有什么用处）。
@@ -18,7 +18,7 @@ Selector`](/docs/user-guide/labels/#label-selectors) 来决定的（下面有讲
 
 ## 定义一个`Service`
 
-Kubernetes中的`Service`是一个REST对象，这点与`Pod`类似。正如所有的REST对象一样，向apiserver　POST一个`Service`的定义就能创建一个新的实例。例如，假设你有一组`Pods`,每一个Pod都开放了9376端口，并且都有一个`"app=MyApp"`的标签。
+Kubernetes中的`Service`是一个REST对象，这点与`Pod`类似。正如所有的REST对象一样，向apiserver　POST一个`Service`的定义就能创建一个新的实例。例如，假设你有一组`Pods`，每一个Pod都开放了9376端口，并且都有一个`"app=MyApp"`的标签。
 
 ```json
 {
@@ -101,15 +101,15 @@ Service一般是用来对Kubernetes　Pod的访问进行抽象，但是也可以
 }
 ```
 
-注意：Endpoint的IP不能是本地回环接口 (127.0.0.0/8),本地链路地址(169.254.0.0/16)或者本地链路多播地址((224.0.0.0/24)。
+注意：Endpoint的IP不能是本地回环接口 (127.0.0.0/8)，本地链路地址(169.254.0.0/16)或者本地链路多播地址((224.0.0.0/24)。
 
 不用选择器来访问一个`Service`的表现就像它有一个选择器一样。流量会被路由到用户定义的endpoint（在这个例子是：`1.2.3.4:80`）。
 
 ## 虚拟IP和服务代理
 
-每一个Kubernetes集群中的node都运行了一个`kube-proxy`,这个应用会监控Kubernetes　master中对于`Service`和`Endpoints`对象的添加和删除。对于每一个Service它都会在本地node上开放一个端口（随机选择）。任何向这个端口的链接都会被代理到响应的后端`Pod`。至于到底是哪个后端会被使用决定于`Service`的`SessionAffinity`(会话亲和度)。最后，它会添加iptables的规则，用来获取向`Service`的集群IP（这是虚拟的）和端口的流量，然后把该流量转发到之前描述的端口。
+每一个Kubernetes集群中的node都运行了一个`kube-proxy`，这个应用会监控Kubernetes　master中对于`Service`和`Endpoints`对象的添加和删除。对于每一个Service它都会在本地node上开放一个端口（随机选择）。任何向这个端口的链接都会被代理到响应的后端`Pod`。至于到底是哪个后端会被使用决定于`Service`的`SessionAffinity`(会话亲和度)。最后，它会添加iptables的规则，用来获取向`Service`的集群IP（这是虚拟的）和端口的流量，然后把该流量转发到之前描述的端口。
 
-这样的结果是任何绑定到`Service`的流量都被代理到了一个适合的后端，而不需要客户端知道任何Kubernetes，或者`Services`，`Pod`这些内容。
+这样的结果是任何绑定到`Service`的流量都被代理到了一个适合的后端，而不需要客户端知道任何Kubernetes，或者`Service`，`Pod`这些内容。
 
 ![Services overview diagram](/images/docs/services-overview.svg)
 
@@ -117,7 +117,7 @@ Service一般是用来对Kubernetes　Pod的访问进行抽象，但是也可以
 
 对于Kubernetes 1.0来说，`Service`是一个“第三层”（在IP之上TCP/UDP）的构造。我们目前还没有一个“第七层”（HTTP）服务的概念。
 
-## 多端口服务（Multi-Port Services）
+## 多端口服务（Multi-Port Service）
 
 
 很多`Service`需要开放多个端口，而不仅仅是一个端口。对于这种情形，Kubernetes支持在`Service`对象上定义多个端口。当使用多个端口的时候，你必须给出所有的端口名称，这样endpoint才不会有理解上的歧义。例如：
@@ -327,7 +327,7 @@ Kubernetes的`ServiceTypes`能让你指定你想要哪一种服务。默认的�
 
 我们想添加L7（HTTP）的`Service`作为作为首选的支持。
 
-我们想有更多灵活的Service入口模式，包含目前的`ClusterIP`, `NodePort`, `LoadBalancer`和更多其他模式。
+我们想有更多灵活的Service入口模式，包含目前的`ClusterIP`， `NodePort`， `LoadBalancer`和更多其他模式。
 
 
 ## 虚拟IP残酷的细节
