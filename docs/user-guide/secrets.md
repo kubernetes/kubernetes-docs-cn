@@ -13,15 +13,16 @@ Secret是一个包含少量敏感信息的对象，如密码，一个token或者
 用户可以创建Secret，系统自身也会创建一些Secret。
 
 要使用Secret，一个pod需要对该Secret进行引用。
-Pod可以以两种方式来使用Secret：或者通过在挂载在其中一个或者多个容器的[volume](/docs/user-guide/volumes)文件，或者在kubelet为pod拉取镜像的时候使用。
 
-### Service Acccount使用API的认证信息自动创建并附件Secret
+Pod可以以两种方式来使用Secret：或者作为文件，通过pod中一个或多个容器挂载的[volume](/docs/user-guide/volumes)进行传递，或者在kubelet为pod拉取镜像的时候使用。
 
-Kubernetes会自动创建可以用来访问API的包含认证信息的Secret，并且它会自动修改Pod来使用这种类型的Secret。
+### Service Account将自动创建并附加包含API认证信息的Secret
 
-API认证信息的自动创建和使用可以在想要的时候被禁用或者修改。然而，如果你只需要安全的访问apiserver，这是一种推荐的工作流。
+Kubernetes会自动创建包含API认证信息的Secret，并且它会自动修改Pod来使用这种类型的Secret。
 
-[Service Account](/docs/user-guide/service-accounts)文档有更多的关于Service Account工作原理的
+API认证信息的自动创建和使用可以在想要的时候被禁用或者修改。然而，如果你只需要安全的访问apiserver，这是一种推荐的使用方式。
+
+[Service Account](/docs/user-guide/service-accounts)文档有更多的关于Service Account工作原理的信息
 
 ### 手动创建一个Secret
 
@@ -38,11 +39,11 @@ data:
   username: dmFsdWUtMQ0K
 ```
 
-data字段是一个map。它的键必须符合[`DNS_SUBDOMAIN`](https://github.com/kubernetes/kubernetes/blob/{{page.githubbranch}}/docs/design/identifiers.md)的要求，除了开头的点也是允许的。它的值是任意的数据。上面例子中username和password的值，在base64编码之前，分别是`value-1`和`value-2`，后面跟着回车和换行符。
+data字段是一个map。它的键必须符合[`DNS_SUBDOMAIN`](https://github.com/kubernetes/kubernetes/blob/{{page.githubbranch}}/docs/design/identifiers.md)的要求，除了位于开头的点（`.`）是允许的外。它的值是使用base64编码的任意数据。上面例子中username和password的值，在base64编码之前，分别是`value-1`和`value-2`，后面跟着回车和换行符。
 
 使用[`kubectl create`](/docs/user-guide/kubectl/kubectl_create)来创建secret。
 
-一旦secret创建好，你需要修改pod来指定它应该使用这个secret。
+一旦secret创建好，你需要修改pod来指定它使用这个secret。
 
 ### 手动指定一个要挂载到Pod的Secret
 
@@ -77,19 +78,19 @@ data字段是一个map。它的键必须符合[`DNS_SUBDOMAIN`](https://github.c
 ```
 
 
-每一个你想要使用的secret需要自己的`spec.volumes`。
+每一个你想要使用的secret需要指定自己的spec.volumes字段。
 
 如果pod中有多个容器，那么容器需要自己的`volumeMounts`块，但是一个secret只需要一个`spec.volumes`。
 
 你可以把多个文件打包进一个secret中，或者使用多secret，你可以选择任意一种方便的方式。
 
-[这里](/docs/user-guide/secrets/)另外一个创建一个secret和在volume中使用该secret的例子。
+[这里](/docs/user-guide/secrets/)有另外一个创建一个secret和在volume中使用该secret的例子。
 
 ### 手动指定一个imagePullSecret
 
 imagePullSecrets的使用可以在[images文档](/docs/user-guide/images/#specifying-imagepullsecrets-on-a-pod)中找到。
 
-### 安排imagePullSecret自动附加
+### 自动挂载手动创建的secret
 
 你可以自手动创建一个imagePullSecret，然后在serviceAccount中引用它。任何用该serviceAccount创建的pod，或者那些默认使用该Service Account的pod，它们的imagePullSecret字段都会设置成该service account的该字段。更多该流程的详细细节，请查看这里[这里](/docs/user-guide/service-accounts/#adding-imagepullsecrets-to-a-service-account)。
 
@@ -110,7 +111,7 @@ Serect volume资源要被验证以确保指定的对象引用实际上指向了�
 
 Secret API对象存在于一个namespace中。他们可以被位于相同的namespace的pod引用。
 
-单个的secret的大小限制是1M。这是为了不鼓励创建非常大的secret对象，放置它们耗尽apiserver或者kubelet的内存。然而，创建大量的小体积的secret对象也会让内存耗尽。更加全面的针对内存的限制是一个计划中的特性。
+单个的secret的大小限制是1M。这是为了不鼓励创建非常大的secret对象，防止它们耗尽apiserver或者kubelet的内存。然而，创建大量的小体积的secret对象也会让内存耗尽。更加全面的针对内存的限制是一个计划中的特性。
 
 Kubelet只支持从API服务器获取的pod的secret。这包含任何通过kubectl，或者间接通过replication controller创建的pod。这不包含通过kubelet `--manifest-url`标记，`--config`标记或它的REST API创建的Pod（这是不是创建pod的常见做法）。
 
@@ -135,10 +136,10 @@ value-2
 
 当通过API创建一个pod的时候，引用的secret是否存在是没有被检查的。一旦pod被调度，kubelet会试着去获取secret的值。如果secret因为不存在或者临时的与API服务器连接问题不能被获取到，kubectl会进行周期性的重新尝试。它会报告一个关于pod的事件，解释其未被启动的原因。一旦secret获取成功，kubele会创建并且挂载一个包含该secret的volume。pod中的容器直到volume被挂载之前是不会启动的。
 
-一旦kubelet已经启动，它的secret volume将不会再改动。要改变使用的secret，必须删除最初的pod，并且创建一个新的pod（很可能`PodSpec`一样）。因此，secret的更新与部署一个新的容器镜像的工作流是一样的。可以使用`kubectl rolling-update`（([man page](/docs/user-guide/kubectl/kubectl_rolling-update)).）。
+一旦kubelet启动了pod，即使其引用的secret资源被修改了，其挂载的secret volume也不会再改变。要改变使用的secret，必须删除最初的pod，并且创建一个新的pod（很可能`PodSpec`一样）。因此，secret的更新与部署一个新的容器镜像的工作流是一样的。可以使用`kubectl rolling-update`（([man page](/docs/user-guide/kubectl/kubectl_rolling-update)).）。
 
 
-当secret 被引用的时候没有指定[`resourceVersion`](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/docs/devel/api-conventions.md#concurrency-control-and-consistency)。因此，如果一个secret的更新和一个pod的启动时间几乎一样，那么哪一个版本的secret会被使用是不确定的。目前还不可能检查使用的是哪个secret对象的resource version。根据计划，pod会报告这个信息，这样replication controller就能重启那些使用老版本的secret的容器。目前，如果这是一个问题，那推荐不要更新现有secret的数据，而是创建新的secret并且选用不同的名字。
+被secret 引用的时候，它的[`resourceVersion`](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/docs/devel/api-conventions.md#concurrency-control-and-consistency)字段还没有被指定。因此，如果一个secret的更新和一个pod的启动时间几乎一样，那么哪一个版本的secret会被使用是不确定的。目前还不可能检查使用的是哪个secret对象的resource version。根据计划，pod会报告这个信息，这样replication controller就能重启那些使用老版本的secret的容器。目前，如果这是一个问题，那推荐不要更新现有secret的数据，而是创建新的secret并且选用不同的名字。
 
 
 ## 使用案例
@@ -163,7 +164,7 @@ value-2
 
 **提示：** secret数据的序列化的JSON和YAML被编码成base64的字符串。这些字符串中的换行符是不合法的，必须被省略。
 
-现在我们可以创建一个pod，通过sshe key来引用这个secret，并且在volume中使用它：
+现在我们可以创建一个pod，通过sshe key来引用这个secret，并且通过volume来使用它：
 
 ```json
 {
@@ -210,13 +211,9 @@ value-2
 
 然后容器可以使用这个secret的数据来创建ssh连接。
 
-### 使用案例之：有Pod/test环境认证信息的Pod
+### 使用案例之：在生产/测试环境下使用不同认证信息的pod
 
-This example illustrates a pod which consumes a secret containing prod
-credentials and another pod which consumes a secret with test environment
-credentials.
-
-这里例子展示了一个使用包含prod认证信息的pod，另外一个使用测试环境的认证信息的pod：
+这个例子展示了一个pod使用生产环境的认证信息，另一个pod使用测试环境的认证信息：
 
 
 下面是secret信息：
@@ -367,7 +364,7 @@ Pod的信息如下:
 
 这可以被切分到两个容器中的两个进程：一个前端容器用户处理用户交互和业务逻辑，但是看不到private key；然后一个signer的容器可以看到private key，只对一些简单的来自前端服务器的签名请求做出响应（如：通过本地的网络）。
 
-使用这种分离式的策略，攻击者现在必须欺骗应用做些比较随意的的事情，这可能比让它读取一个文件苦难的多。
+使用这种分离式的策略，攻击者不得不使用其他手段来欺骗应用服务器，这可能比让它读取一个文件难的多。
 
 <!-- TODO: explain how to do this while still using automation. -->
 
@@ -375,25 +372,25 @@ Pod的信息如下:
 
 ### 保护
 
-因为`secret`的影响可以独立于使用它们的pod进行创建，在pod的创建，查看和编辑的工作流中secret被泄露的风险就更小了。系统也可以对`secret`对象采取额外的预防措施，如防止它们被写到磁盘上可能的地方。
+因为`secret`的对象可以独立于使用它们的pod进行创建，在pod的创建，查看和编辑的工作流中secret被泄露的风险就更小了。系统也可以对`secret`对象采取额外的预防措施，如防止它们被写到磁盘上可能的地方。
 
-`secret`只有当一个Node上的pod需要它的时候才会送到到该node。它不会被写到磁盘上。它保存在tmpfs上。一旦依赖它的pod的时候就会被删除。
+`secret`只有当一个Node上的pod需要它的时候才会送到到该node。它不会被写到磁盘上。它保存在tmpfs上。当使用它的pod删除的时候它也会被删除。
 
 在绝大多数的Kubernetes-project-maintained发行版中，用户和apiserver之间，和从apiserver到kubelet的交流是被SSL/TLS保护着的。secret在这些通道中传输的时候是受到保护的。
 
-node中的secret数据是保存在tmpfs volume中的，因此不会在node上被重置。
+node中的secret数据是保存在tmpfs volume中的，因而不会最终保存在node上。
 
-在同一个node上可能有多个pod的secret。然而，只有pod请求的secret才有可能被它的容器看到。因此，一个pod不能访问到另外一个pod的secret。
+在同一个node上可能有多个pod的secret。然而，只有请求secret的pod包含的容器才能访问它。因此，一个pod不能访问到另外一个pod的secret。
 
 一个pod上可能有很多容器。然而，每一个pod中的容器需要在它的`volumeMounts`请求该secret volume这样才可以在容器中看见它。这可以用来创建有用的 [pod级的安全隔离](#use-case-two-containers).
 
 ### 风险
 
- - 在API服务器中，secret数据是在etcd中以明文保存的；因此：
-     - 管理员应该限制etcd的访问权限，只让管理人员访问
-     - API服务器中的Secret数据是存放在etcd使用的磁盘上；管理员可能需要对etcd不再使用的时候对它使用过的磁盘进行清除
- - 应用在读到这些secret之后仍然需要保护secret的值，如防止无意将信息记入日志或者发送到不可信的一方
- - 一个可以创建使用该secret的Pod的用户可以看到该secret的值。即使apiserver的策略不允许该用户读取该secret对象，该用户可以运行一个泄露该secret的pod
+ - 在API Server中，secret数据是在etcd中以明文保存的；因此：
+     - 管理员应该限制etcd的访问权限，只让管理人员访问。
+     - API服务器中的Secret数据是存放在etcd使用的磁盘上；管理员可能需要对etcd不再使用的时候对它使用过的磁盘进行清除。
+ - 应用在读到这些secret之后仍然需要保护secret的值，如防止无意将信息记入日志或者发送到不可信的一方。
+ - 用户创建一个使用secret的pod时也可以查看secret的值。即使apiserver的策略不允许该用户读取该secret对象，该用户可以运行一个泄露该secret的pod。
  - 如果多个etcd的副本在运行，那secret在它们之间是共享的。默认情况下，etcd不会对节点之间的通讯使用SSL/TLS进行保护，然而这是可以配置的。
  - 目前还无法控制那些Kubernetes集群的用户可以访问某一个secret。已经有支持这个特性的计划。
- - 目前任何在node上的root用户通过假冒kubelet可以读取任何apiserver中的secret。一个已经计划的特性是只把secret发送给实际上需该secret的node，限制在一个node上root漏洞的影响。
+ - 目前任何一个node上的root用户都可以通过伪装成kubelet读取所有的secret信息。一个已经计划的特性是只把secret发送给实际上需该secret的node，缩小某个node上滥用root权限带来的影响。
