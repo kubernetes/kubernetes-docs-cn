@@ -1,7 +1,7 @@
 ---
 ---
 
-Kubernetes的[`Pods`](/docs/user-guide/pods)的寿命是有限的。它们出生然后死亡，它们不会复活。[`ReplicationControllers`](/docs/user-guide/replication-controller)是特别用来动态的创建和销毁`Pods`（如：[rolling updates](/docs/user-guide/kubectl/kubectl_rolling-update)中动态的创建和销毁pod）。尽管每个`Pod`有自己的IP地址，随着时间变化即使这些IP地址也是不可靠的无法被依赖。这带来一个问题：如果一些`Pods`的组（让我们称之为backends）为集群中的其他的`Pod`提供了一些功能（让我们称它们为frontends）,这些frontends应该如何找到并一直知道那些backends在该组中呢？
+Kubernetes的[`Pod`](/docs/user-guide/pods)的寿命是有限的。它们出生然后死亡，它们不会复活。[`ReplicationControllers`](/docs/user-guide/replication-controller)是特别用来动态的创建和销毁`Pods`（如：动态伸缩或者执行[rolling updates](/docs/user-guide/kubectl/kubectl_rolling-update)中动态的创建和销毁pod）。尽管每个`Pod`有自己的IP地址，随着时间变化随着时间推移即使这些IP地址也不能被认为是可靠的。这带来一个问题：如果一些`Pods`的集合（让我们称之为backends）为集群中的其他的`Pod`提供了一些功能（让我们称它们为frontends）,这些frontends应该如何找到并一直知道哪些backends在这样的集合中呢？
 
 欢迎进入`Services`的世界。
 
@@ -10,14 +10,15 @@ Selector`](/docs/user-guide/labels/#label-selectors) 来决定的（下面有讲
 
 举个例子，想象一个处理图片的后端运行了三个副本。这些副本都是可以替代的 - 前端不关心它们使用的是哪一个后端。尽管实际组成后端集合的`Pod`可能会变化，前端的客户端却不需要知道这个变化，也不需要自己有一个列表来记录这些后端服务。`Service`抽象能让你达到这种解耦。
 
-对于那些Kubernetes原生的应用，Kubernetes提供了一个简单的`Endpoints` API，会在`Service`中的`Pod`集合发生改变的时候更新。对于非Kubernetes原生的应用，Kubernetes提供了一个对于Services的基于虚拟IP的bridge可以重定向到后端的`Pod`。
+对于那些Kubernetes原生的应用，Kubernetes提供了一个简单的`Endpoints` API，会在`Service`中的`Pod`集合发生改变的时候更新。对于非Kubernetes原生的应用，Kubernetes为Service提供了一种基于虚拟IP的桥接方式使其重定向到后端的Pods。
+
 
 * TOC
 {:toc}
 
 ## 定义一个`Service`
 
-Kubernetes中的`Service`是一个REST对象，这点与`Pod`类似．正如所有的REST对象一样，向apiserver　POST一个`Service`的定义就能创建一个新的实例．例如，假设你有一组`Pods`,每一个Pod都开放了9376端口，并且都有一个`"app=MyApp"`的标签．
+Kubernetes中的`Service`是一个REST对象，这点与`Pod`类似。正如所有的REST对象一样，向apiserver　POST一个`Service`的定义就能创建一个新的实例。例如，假设你有一组`Pods`,每一个Pod都开放了9376端口，并且都有一个`"app=MyApp"`的标签。
 
 ```json
 {
@@ -41,11 +42,12 @@ Kubernetes中的`Service`是一个REST对象，这点与`Pod`类似．正如所�
 }
 ```
 
-这个定义会创建一个新的`Service`对象，名字为"my-service"，它的目标是所有带有`"app=MyApp"`标签的`Pod`上面的9376端口．这个`Service`同时也会被分配一个IP地址（有时被称作"cluster ip(集群IP)"），它会被服务的代理所使用（见下面）．这个`Service`的选择器会被不断的评估，其结果会被POST到一个`Endpoints`的对象，他的名字也是"my-service"．
+这个定义会创建一个新的`Service`对象，名字为"my-service"，它指向所有带有"app=MyApp"标签的Pod上面的9376端口。这个`Service`同时也会被分配一个IP地址（有时被称作"cluster ip"），它会被服务的代理所使用（见下面）。这个`Service`的选择器会被不断的评估，会不断的对Pod进行筛选，并将结果POST到名字同样为“my-service”的Endpoints对象。
 
-注意一个`Service`能将一个来源的端口映射到任意的`targetPort`．默认下，`targetPort`会被设置成与`port`字段一样的值．可能更有意思的地方在于，`targetPort`可以是一个字符串，能引用一个在后端`Pod`的端口．实际指派给该名称的端口号在每一个`Pod`中可能会不同．这为部署和更新你的`Service`提供了很大的灵活性．例如，你可以在你的后端的下一个版本中更改开放的端口，而无需导致客户出现故障．
 
-Kubernetes的`Service`支持`TCP`和`UDP`协议．默认是`TCP`．
+注意一个`Service`能将一个来源的端口映射到任意的`targetPort`。默认情况下，`targetPort`会被设置成与`port`字段一样的值。可能更有意思的地方在于，`targetPort`可以是一个字符串，能引用一个后端Pod中定义的端口名。实际指派给该名称的端口号在每一个`Pod`中可能会不同。这为部署和更新你的`Service`提供了很大的灵活性。例如，你可以在你的后端的下一个版本中更改开放的端口，而无需导致客户出现故障。
+
+Kubernetes的`Service`支持`TCP`和`UDP`协议。默认是`TCP`。
 
 ### 没有选择器的Service
 
@@ -77,7 +79,7 @@ Service一般是用来对Kubernetes　Pod的访问进行抽象，但是也可以
 ```
 
 
-因为没有选择器，相应的`Endpoints`对象不会被创建．你可以手动将service映射到自己特定的endpoint．
+因为没有选择器，相应的`Endpoints`对象不会被创建。你可以手动将service映射到自己特定的endpoint。
 
 ```json
 {
@@ -99,15 +101,15 @@ Service一般是用来对Kubernetes　Pod的访问进行抽象，但是也可以
 }
 ```
 
-注意：Endpoint的IP不能是loopback (127.0.0.0/8),本地链路地址(169.254.0.0/16)或者本地链路多播地址((224.0.0.0/24)．
+注意：Endpoint的IP不能是本地回环接口 (127.0.0.0/8),本地链路地址(169.254.0.0/16)或者本地链路多播地址((224.0.0.0/24)。
 
-不用选择器来访问一个`Service`的表现就像它有一个选择器一样．流量会被路由到用户定义的endpoint（在这个例子是：`1.2.3.4:80`）．
+不用选择器来访问一个`Service`的表现就像它有一个选择器一样。流量会被路由到用户定义的endpoint（在这个例子是：`1.2.3.4:80`）。
 
 ## 虚拟IP和服务代理
 
-每一个Kubernetes集群中的node都运行了一个`kube-proxy`,这个应用会监控Kubernetes　master中对于`Service`和`Endpoints`对象的添加和删除．对于每一个Service它都会在本地node上开放一个端口（随机选择）．任何向这个端口的链接都会被代理到响应的后端`Pod`．至于到底是哪个后端会被使用决定于`Service`的`SessionAffinity`(会话亲和度)．最后，它会添加iptables的规则，用来获取向`Service`的集群IP（这是虚拟的）和端口的流量，然后把该流量转发到之前描述的端口．
+每一个Kubernetes集群中的node都运行了一个`kube-proxy`,这个应用会监控Kubernetes　master中对于`Service`和`Endpoints`对象的添加和删除。对于每一个Service它都会在本地node上开放一个端口（随机选择）。任何向这个端口的链接都会被代理到响应的后端`Pod`。至于到底是哪个后端会被使用决定于`Service`的`SessionAffinity`(会话亲和度)。最后，它会添加iptables的规则，用来获取向`Service`的集群IP（这是虚拟的）和端口的流量，然后把该流量转发到之前描述的端口。
 
-这样的结果是任何绑定到`Service`的流量都被代理到了一个适合的后端，而不需要客户端知道任何Kubernetes，或者`Services`，`Pod`这些内容．
+这样的结果是任何绑定到`Service`的流量都被代理到了一个适合的后端，而不需要客户端知道任何Kubernetes，或者`Services`，`Pod`这些内容。
 
 ![Services overview diagram](/images/docs/services-overview.svg)
 
@@ -151,10 +153,10 @@ Service一般是用来对Kubernetes　Pod的访问进行抽象，但是也可以
 
 ## 选择自己的IP地址
 
-你可以在`Service`创建的请求中指定自己的集群IP地址。做法就是设置`spec.clusterIP`字段。例如，如果你已经有了一个DNS条目，并且想替换它，或者一个已经配置到了一个特定IP地址的老系统，并且难以重新配置。用户选择的IP地址必须是一个可用的IP地址，并且必须在由向API服务器
-### 为什么不使用
-Kubernetes支持两种主要的发现`Service`的模式 - 环境变量和DNS。
-DNS？
+你可以在`Service`创建的请求中指定自己的集群IP地址。做法就是设置`spec.clusterIP`字段。例如，如果你已经有了一个DNS条目，并且想替换它，或者一个已经配置到了一个特定IP地址的老系统，并且难以重新配置。用户选择的IP地址必须是一个可用的IP地址，并且必须在API Server的service-cluster-ip-range启动参数所指定的CIDR范围内。如果设置了一个非法的IP地址，API Server将会返回422 HTTP状态码来指明这是一个无效值。
+
+
+### 为什么不使用轮询式DNS？
 
 一个经常不时冒出来的问题是，为什么我选择用虚拟IP而不是使用标准的轮询式DNS做法。这有一些原因：
 
@@ -165,7 +167,6 @@ DNS？
 我们试着让用户不要做会伤害自己的事情。尽管如此，如果有足够的人想要这个特性，我们可能会实现它作为一个备选方案。
 
 ## 发现服务
-
 
 Kubernetes支持两种主要的发现`Service`的模式 - 环境变量和DNS。
 
@@ -185,24 +186,24 @@ REDIS_MASTER_PORT_6379_TCP_PORT=6379
 REDIS_MASTER_PORT_6379_TCP_ADDR=10.0.0.11
 ```
 
-*这确实隐含了一个顺序的要求* - 任何一个`Pod`想要访问的`Service`必须在`Pod`自身被创建之前被创建好，否则环境变量就尚未被设置好。DNS没有这种限制。
+*这确实隐含了一个对顺序的要求* - 任何一个`Pod`想要访问的`Service`必须在`Pod`自身被创建之前被创建好，否则环境变量无法被设置到这个Pod中去。DNS没有这种限制。
 
 ### DNS
 
-一个可选的（尽管是我们强烈建议的）[cluster
+一个可选的（也是我们强烈建议的）[cluster
 add-on](http://releases.k8s.io/{{page.githubbranch}}/cluster/addons/README.md)是一个DNS服务器。DNS会监控Kubernetes的新的`Service`并且会为其创建一组DNS记录。如果DNS在整个集群中都被启用的话，那所有的`Pod`应该能自动对`Service`进行命名解析。
 
 例如，如果你有一个叫做`my-service`的`Service`，其位于`"my-ns"`的`Namespace`下，那么对于`"my-service.my-ns"`就会有一个DNS的记录被创建。位于名为`"my-ns"` `Namespace`下的`Pod`可以通过简单地使用`"my-service"`进行查找。而位于其他`Namespaces`的`Pod`必须把查找名称指定为`"my-service.my-ns"`。这些命名查找的结果是一个集群的IP地址。
 
-对于命名的端口，Kubernetes也支持DNS SRV (service)记录。如果名为`"my-service.my-ns"`的`Service` 有一个协议为`TCP`的名叫`"http"`的端口，你用`"_http._tcp.my-service.my-ns"`做一个DNS SRV查询来发现`"http"`使用的端口。
+对于命名的端口，Kubernetes也支持DNS SRV (service)记录。如果名为`"my-service.my-ns"`的`Service` 有一个协议为`TCP`的名叫`"http"`的端口，你可以对`"_http._tcp.my-service.my-ns"`做一次DNS SRV查询来发现"http"的端口号。
 
-## Headless services （无开销的服务）
+## Headless services
 
-有时你不需要一个单独的服务IP地址，或者不需要做负载均衡。在这种情况下，你可以创建一个"headless"的Service，只需要把集群IP(`spec.clusterIP`)指定为`"None"`即可。
+有时你也不需要一个单独的服务IP地址，或者不需要做负载均衡。在这种情况下，你可以创建一个"headless"的Service，只需要把集群IP(`spec.clusterIP`)指定为`"None"`即可。
 
-对于这种类型的`Service`，没有集群IP地址的分配。也不会有DNS的配置来为一个`Service`名称返回多个A记录，这些记录会直接指向支撑这个`Service`的`Pod`。另外，kube代理不会处理这些service，并且平台不会为它们做负载均衡或者代理。endpoints controller仍然会在API中创建`Endpoints`的记录。
+对于这种类型的`Service`，没有集群IP地址的分配。也不会有DNS的配置来为一个`Service`名称返回多个A记录，这些记录会直接指向支撑这个`Service`的`Pod`。另外，kube-proxy不会处理这些service，并且平台不会为它们做负载均衡或者代理。endpoints controller仍然会在API中创建`Endpoints`的记录。
 
-这个选项让开发者可以减少对Kubernetes系统的耦合度，在他们想要的时候，能让他们自由决定如何用自己的方式去发现这些服务。应用仍然使用一个半注册的模式，并且其它服务发现的系统的适配器可以轻易的基于这个API被构建出来。
+这个选项让开发者可以减少对Kubernetes系统的耦合度，在他们想要的时候，能让他们自由决定如何用自己的方式去发现这些服务。应用仍然使用一个自注册的模式，并且其它服务发现的系统的适配器可以轻易的基于这个API被构建出来。
 
 ## 发布 services - service的类型
 
@@ -214,25 +215,21 @@ Kubernetes的`ServiceTypes`能让你指定你想要哪一种服务。默认的�
 
   * `ClusterIP`: 仅仅使用一个集群内部的IP地址 - 这是默认值，在上面已经讨论过。选择这个值意味着你只想这个服务在集群内部才可以被访问到。
   * `NodePort`: 在集群内部IP的基础上，在集群的每一个节点的端口上开放这个服务。你可以在任意`<NodeIP>:NodePort`地址上访问到这个服务。
-  * `LoadBalancer`: 在使用一个集群内部IP地址和在NodePort上开放一个服务之外，向云提供者要一个负载均衡器，会让流量转发到这个在每个节点上以`<NodeIP>:NodePort`的形式开放的服务上。
+  * `LoadBalancer`: 在使用一个集群内部IP地址和在NodePort上开放一个服务之外，向云提供商申请一个负载均衡器，会让流量转发到这个在每个节点上以`<NodeIP>:NodePort`的形式开放的服务上。
 
-  Note that while `NodePort`s can be TCP or UDP, `LoadBalancer`s only support TCP
-  as of Kubernetes 1.0.
+  在使用一个集群内部IP地址和在NodePort上开放一个Service的基础上，还可以向云提供者申请一个负载均衡器，将流量转发到已经以NodePort形式开发的Service上。
 
   注意尽管`NodePort`可以是TCP或者UDP的，对于Kubernetes 1.0来说，`LoadBalancer`还支持TCP。
 
 ### NodePort类型
 
-Note that this Service will be visible as both `<NodeIP>:spec.ports[*].nodePort`
-and `spec.clusterIp:spec.ports[*].port`.
+如果你把`type`字段设置为`"NodePort"`，Kubernetes的master就会从由启动参数配置的范围（默认是：30000-32767）中分配一个端口，然后每一个Node都会将这个端口（在每一个Node上相同的端口）代理到你的`Service`。这个端口会被写入你的Service的`spec.ports[*].nodePort`字段中。
 
-如果你把`type`字段设置为`"NodePort"`，Kubernetes的master就会从由flag配置的范围（默认是：30000-32767）中分配一个端口，然后每一个Node都会将这个端口（在每一个Node上相同的端口）代理到你的`Service`。这个端口会在你的`Service`的`spec.ports[*].nodePort`字段中被报告出来。
+如果你想要一个特定的端口号，你可以在`nodePort`字段中指定一个值，确保系统能为你分配这个端口，否则API请求将会失败（例如你需要自己处理可能出现的端口冲突）。你指定的值必须在节点端口配置的范围内。
 
-如果你想要一个特定的端口号，你可以在`nodePort`字段中指定一个值，然后系统就会为你分配这个端口或者该API处理事务就会失败（例如你需要自己处理可能出现的端口冲突）。你指定的值必须在节点端口配置的范围内。
+这给了开发者了设置他们自己的负载均衡器的自由，配置那些没有被Kubernetes完全支持的云环境，或者甚至可以直接开放一个或者多个节点的IP。
 
-这给开发者了设置他们自己的负载均衡器的自由，配置那些没有完全被Kubernetes支持云环境，或者甚至可以直接开放一个或者多个节点的IP。
-
-注意这种Service可以同时以`<NodeIP>:spec.ports[*].nodePort`和`spec.clusterIp:spec.ports[*].port`的形式可见。
+注意这种Service可以同时以`<NodeIP>:spec.ports[*].nodePort`和`spec.clusterIp:spec.ports[*].port`的形式访问。
 
 ### LoadBalancer类型
 
@@ -311,14 +308,10 @@ and `spec.clusterIp:spec.ports[*].port`.
 
 ## 缺点
 
-The `Type` field is designed as nested functionality - each level adds to the
-previous.  This is not strictly required on all cloud providers (e.g. Google Compute Engine does
-not need to allocate a `NodePort` to make `LoadBalancer` work, but AWS does)
-but the current API requires it.
 
-我们预想使用iptables和对于VIP的用户空间的代理能应付小或者中等的规模，但是可能对于那些有成千的服务的非常大的集群来说可能不行。更多细节请参见[the original design proposal for portals](http://issue.k8s.io/1107) 。
+我们认为使用iptables和userspace来处理虚拟IP能应付小或者中等的规模，但是可能对于那些有成千的服务的非常大的集群来说可能不行。更多细节请参见[the original design proposal for portals](http://issue.k8s.io/1107) 。
 
-使用kube-proxy会混淆访问一个`Service`的包的来源IP。这让一些类型的防火墙措辞无法实现。
+使用kube-proxy会混淆访问一个`Service`的包的来源IP。这让一些类型的防火墙规则无法实现。
 
 负载均衡器只支持TCP，不支持UDP。
 
@@ -330,14 +323,14 @@ but the current API requires it.
 
 在未来我们可以展望代理策略会更加细致而不只是简单的轮询式的负载均衡，例如选主式的或者分片式的。我们也能预见一些`Service`将会有真正的负载均衡器，这样VIP仅仅是将数据包运送到此。
 
-有一个[提案](http://issue.k8s.io/3760) 来消除用户空间的代理，然后全部用iptables取而代之。这样性能会更好，而且也会消除来源IP不明的问题，尽管这较之随意的用户空间代码来说灵活性下降了。
+有一个[提案](http://issue.k8s.io/3760) 提出取消用户空间的代理，然后全部用iptables取而代之。这样性能会更好，而且也会消除来源IP不明的问题，尽管这较之随意的用户空间代码来说灵活性下降了。
 
-我们想添加L7（HTTP）的`Service`作为第一公民的支持。
+我们想添加L7（HTTP）的`Service`作为作为首选的支持。
 
 我们想有更多灵活的Service入口模式，包含目前的`ClusterIP`, `NodePort`, `LoadBalancer`和更多其他模式。
 
 
-## 虚拟IP血淋淋的的细节
+## 虚拟IP残酷的细节
 
 之前的信息对于很多只想使用`Service`的人来说应该足够了。然而，背后还有很多细节值得理解。
 
@@ -347,7 +340,7 @@ Kubernetes的一个主要哲学是用户不应该被暴露在可能因为非自�
 
 为了让用户为自己的`Service`选择一个端口，我们必须确保任意两个服务的端口不会发生冲突。我们通过给每一个Service分配自己的IP地址来完成这一点。
 
-为了保证每一个Service都能获得一个独一无二的IP，一个内部的分配器会自动更新一个全局的在etcd中的分配map。这个map对象必须存在于注册表中才能让sercvie获得IP，否则创建就会失败并且提示不能分配IP。一个后台控制器负责创建这个map（从老的使用内存加锁的Kubernetes中迁移）同时检查因为管理员的干预而出现的无效的分配，并且清理任何已经分配的IP的没有任何Service正在使用的IP。
+为了保证每一个Service都能获得一个唯一的IP，一个内部的分配器会自动更新一个etcd中的全局分配表（map）。这个map对象必须存在于注册表中才能让sercvie获得IP，否则创建就会失败并且提示不能分配IP。一个后台控制器负责创建这个map（从老版本的Kubernetes在内存中保存的方式迁移）同时检查因为管理员的干预而出现的无效的分配，并且清理任何已经分配的且没有任何Service正在使用的IP。
 
 ### IPs和VIPs
 
