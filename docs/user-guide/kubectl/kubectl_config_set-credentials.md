@@ -2,32 +2,25 @@
 layout: docwithnav
 title: "kubectl config set-credentials"
 ---
-<!-- BEGIN MUNGE: UNVERSIONED_WARNING -->
-
-
-<!-- END MUNGE: UNVERSIONED_WARNING -->
-
 ## kubectl config set-credentials
 
-Sets a user entry in kubeconfig
+在kubeconfig配置文件中设置一个用户项。
 
-### Synopsis
+### 摘要
 
+在kubeconfig配置文件中设置一个用户项。
+如果指定了一个已存在的名字，将合并新字段并覆盖旧字段。
 
-Sets a user entry in kubeconfig
-Specifying a name that already exists will merge new fields on top of existing values.
-
-  Client-certificate flags:
+  客户端证书设置：
     --client-certificate=certfile --client-key=keyfile
 
-  Bearer token flags:
+  不记名令牌设置：
     --token=bearer_token
 
-  Basic auth flags:
+  基础认证设置：
     --username=basic_user --password=basic_password
 
-  Bearer token and basic auth are mutually exclusive.
-
+  不记名令牌和基础认证不能同时使用。
 
 ```
 {% raw %}
@@ -35,74 +28,64 @@ kubectl config set-credentials NAME [--client-certificate=path/to/certfile] [--c
 {% endraw %}
 ```
 
-### Examples
+### 示例
 
 ```
 {% raw %}
-# Set only the "client-key" field on the "cluster-admin"
-# entry, without touching other values:
+# 仅设置cluster-admin用户项下的client-key字段，不影响其他值
 $ kubectl config set-credentials cluster-admin --client-key=~/.kube/admin.key
 
-# Set basic auth for the "cluster-admin" entry
+# 为cluster-admin用户项设置基础认证选项
 $ kubectl config set-credentials cluster-admin --username=admin --password=uXFGweU9l35qcif
 
-# Embed client certificate data in the "cluster-admin" entry
+# 为cluster-admin用户项开启证书验证并设置证书文件路径
 $ kubectl config set-credentials cluster-admin --client-certificate=~/.kube/admin.crt --embed-certs=true
 {% endraw %}
 ```
 
-### Options
+### 选项
 
 ```
 {% raw %}
-      --client-certificate="": path to client-certificate for the user entry in kubeconfig
-      --client-key="": path to client-key for the user entry in kubeconfig
-      --embed-certs=false: embed client cert/key for the user entry in kubeconfig
-      --password="": password for the user entry in kubeconfig
-      --token="": token for the user entry in kubeconfig
-      --username="": username for the user entry in kubeconfig
+      --client-certificate="": 设置kuebconfig配置文件中用户选项中的证书文件路径。
+      --client-key="": 设置kuebconfig配置文件中用户选项中的证书密钥路径。
+      --embed-certs=false: 设置kuebconfig配置文件中用户选项中的embed-certs开关。
+      --password="": 设置kuebconfig配置文件中用户选项中的密码。
+      --token="": 设置kuebconfig配置文件中用户选项中的令牌。
+      --username="": 设置kuebconfig配置文件中用户选项中的用户名。
 {% endraw %}
 ```
 
-### Options inherited from parent commands
+### 继承自父命令的选项
 
 ```
 {% raw %}
-      --alsologtostderr[=false]: log to standard error as well as files
-      --api-version="": The API version to use when talking to the server
-      --certificate-authority="": Path to a cert. file for the certificate authority.
-      --cluster="": The name of the kubeconfig cluster to use
-      --context="": The name of the kubeconfig context to use
-      --insecure-skip-tls-verify[=false]: If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure.
-      --kubeconfig="": use a particular kubeconfig file
-      --log-backtrace-at=:0: when logging hits line file:N, emit a stack trace
-      --log-dir="": If non-empty, write log files in this directory
-      --log-flush-frequency=5s: Maximum number of seconds between log flushes
-      --logtostderr[=true]: log to standard error instead of files
-      --match-server-version[=false]: Require server version to match client version
-      --namespace="": If present, the namespace scope for this CLI request.
-  -s, --server="": The address and port of the Kubernetes API server
-      --stderrthreshold=2: logs at or above this threshold go to stderr
-      --user="": The name of the kubeconfig user to use
-      --v=0: log level for V logs
-      --vmodule=: comma-separated list of pattern=N settings for file-filtered logging
+      --alsologtostderr[=false]: 同时输出日志到标准错误控制台和文件。
+      --api-version="": 和服务端交互使用的API版本。
+      --certificate-authority="": 用以进行证书权威性认证的.cert文件路径。
+      --client-certificate="": TLS使用的客户端证书路径。
+      --client-key="": TLS使用的客户端密钥路径。
+      --cluster="": 指定使用的kubeconfig配置文件中的集群名。
+      --context="": 指定使用的kubeconfig配置文件中的环境名。
+      --insecure-skip-tls-verify[=false]: 如果为true，将不会检查服务器凭证的有效性，这会导致你的HTTPS链接变得不安全。
+      --kubeconfig="": 命令行请求使用的配置文件路径。
+      --log-backtrace-at=:0: 当日志长度超过定义的行数时，忽略堆栈信息。
+      --log-dir="": 如果不为空，将日志文件写入此目录。
+      --log-flush-frequency=5s: 刷新日志的最大时间间隔。
+      --logtostderr[=true]: 输出日志到标准错误控制台，不输出到文件。
+      --match-server-version[=false]: 要求服务端和客户端版本匹配。
+      --namespace="": 如果不为空，命令将使用此namespace。
+      --password="": API Server进行简单认证使用的密码。
+  -s, --server="": Kubernetes API Server的地址和端口号。
+      --stderrthreshold=2: 高于此级别的日志将被输出到错误控制台。
+      --token="": 认证到API Server使用的令牌。
+      --user="": 指定使用的kubeconfig配置文件中的用户名。
+      --username="": API Server进行简单认证使用的用户名。
+      --v=0: 指定输出日志的级别。
+      --vmodule=: 指定输出日志的模块，格式如下：pattern=N，使用逗号分隔。
 {% endraw %}
 ```
 
-### SEE ALSO
+### 参见
 
-* [kubectl config](kubectl_config.html)	 - config modifies kubeconfig files
-
-###### Auto generated by spf13/cobra at 2015-09-10 18:53:03.162045132 +0000 UTC
-
-
-
-<!-- BEGIN MUNGE: IS_VERSIONED -->
-<!-- TAG IS_VERSIONED -->
-<!-- END MUNGE: IS_VERSIONED -->
-
-
-<!-- BEGIN MUNGE: GENERATED_ANALYTICS -->
-[![Analytics](https://kubernetes-site.appspot.com/UA-36037335-10/GitHub/docs/user-guide/kubectl/kubectl_config_set-credentials.md?pixel)]()
-<!-- END MUNGE: GENERATED_ANALYTICS -->
-
+* [kubectl config](kubectl_config.html)	 - 修改kubeconfig配置文件。
