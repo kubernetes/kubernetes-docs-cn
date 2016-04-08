@@ -42,7 +42,7 @@ Kubernetes中的`Service`是一个REST对象，这点与`Pod`类似。正如所�
 }
 ```
 
-这个定义会创建一个新的`Service`对象，名字为"my-service"，它指向所有带有"app=MyApp"标签的Pod上面的9376端口。这个`Service`同时也会被分配一个IP地址（有时被称作"cluster ip"），它会被服务的代理所使用（见下面）。这个`Service`的选择器会被不断的评估，会不断的对Pod进行筛选，并将结果POST到名字同样为“my-service”的Endpoints对象。
+这个定义会创建一个新的`Service`对象，名字为"my-service"，它指向所有带有"app=MyApp"标签的Pod上面的9376端口。这个`Service`同时也会被分配一个IP地址（有时被称作"cluster ip"），它会被服务的代理所使用（见下面）。这个`Service`的选择器，会不断的对Pod进行筛选，并将结果POST到名字同样为“my-service”的Endpoints对象。
 
 
 注意一个`Service`能将一个来源的端口映射到任意的`targetPort`。默认情况下，`targetPort`会被设置成与`port`字段一样的值。可能更有意思的地方在于，`targetPort`可以是一个字符串，能引用一个后端Pod中定义的端口名。实际指派给该名称的端口号在每一个`Pod`中可能会不同。这为部署和更新你的`Service`提供了很大的灵活性。例如，你可以在你的后端的下一个版本中更改开放的端口，而无需导致客户出现故障。
@@ -153,7 +153,7 @@ Service一般是用来对Kubernetes　Pod的访问进行抽象，但是也可以
 
 ## 选择自己的IP地址
 
-你可以在`Service`创建的请求中指定自己的集群IP地址。做法就是设置`spec.clusterIP`字段。例如，如果你已经有了一个DNS条目，并且想替换它，或者一个已经配置到了一个特定IP地址的老系统，并且难以重新配置。用户选择的IP地址必须是一个可用的IP地址，并且必须在API Server的service-cluster-ip-range启动参数所指定的CIDR范围内。如果设置了一个非法的IP地址，API Server将会返回422 HTTP状态码来指明这是一个无效值。
+你可以在`Service`创建的请求中指定自己的集群IP地址。做法就是设置`spec.clusterIP`字段。例如，如果你已经有了一个DNS条目，并且想替换它，或者一个已经配置到了一个特定IP地址的老系统，并且难以重新配置。用户选择的IP地址必须是一个可用的IP地址，并且必须在API Server的`service-cluster-ip-range`启动参数所指定的CIDR范围内。如果设置了一个非法的IP地址，API Server将会返回422 HTTP状态码来指明这是一个无效值。
 
 
 ### 为什么不使用轮询式DNS？
@@ -199,7 +199,7 @@ add-on](http://releases.k8s.io/{{page.githubbranch}}/cluster/addons/README.md)�
 
 ## Headless services
 
-有时你也不需要一个单独的服务IP地址，或者不需要做负载均衡。在这种情况下，你可以创建一个"headless"的Service，只需要把集群IP(`spec.clusterIP`)指定为`"None"`即可。
+有时你不需要一个单独的服务IP地址，也不需要做负载均衡。在这种情况下，你可以创建一个"headless"的Service，只需要把集群IP(`spec.clusterIP`)指定为`"None"`即可。
 
 对于这种类型的`Service`，没有集群IP地址的分配。也不会有DNS的配置来为一个`Service`名称返回多个A记录，这些记录会直接指向支撑这个`Service`的`Pod`。另外，kube-proxy不会处理这些service，并且平台不会为它们做负载均衡或者代理。endpoints controller仍然会在API中创建`Endpoints`的记录。
 
