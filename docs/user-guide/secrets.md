@@ -39,7 +39,7 @@ data:
   username: dmFsdWUtMQ0K
 ```
 
-data字段是一个map。它的键必须符合[`DNS_SUBDOMAIN`](https://github.com/kubernetes/kubernetes/blob/{{page.githubbranch}}/docs/design/identifiers.md)的要求，除了位于开头的点（`.`）是允许的外。它的值是使用base64编码的任意数据。上面例子中username和password的值，在base64编码之前，分别是`value-1`和`value-2`，后面跟着回车和换行符。
+data字段是一个map。它的键必须符合[`DNS_SUBDOMAIN`](https://github.com/kubernetes/kubernetes/blob/{{page.githubbranch}}/docs/design/identifiers.md)的要求，除此之外，开头的点（`.`）是允许的。它的值是使用base64编码的任意数据。上面例子中username和password的值，在base64编码之前，分别是`value-1`和`value-2`，后面跟着回车和换行符。
 
 使用[`kubectl create`](/docs/user-guide/kubectl/kubectl_create)来创建secret。
 
@@ -90,9 +90,9 @@ data字段是一个map。它的键必须符合[`DNS_SUBDOMAIN`](https://github.c
 
 imagePullSecrets的使用可以在[images文档](/docs/user-guide/images/#specifying-imagepullsecrets-on-a-pod)中找到。
 
-### 自动挂载手动创建的secret
+### 自动附加imagePullSecret
 
-你可以自手动创建一个imagePullSecret，然后在serviceAccount中引用它。任何用该serviceAccount创建的pod，或者那些默认使用该Service Account的pod，它们的imagePullSecret字段都会设置成该service account的该字段。更多该流程的详细细节，请查看这里[这里](/docs/user-guide/service-accounts/#adding-imagepullsecrets-to-a-service-account)。
+你可以手动创建一个imagePullSecret，然后在serviceAccount中引用它。任何用该serviceAccount创建的pod，或者那些默认使用该Service Account的pod，它们的imagePullSecret字段都会设置成该service account的该字段。更多该流程的详细细节，请查看这里[这里](/docs/user-guide/service-accounts/#adding-imagepullsecrets-to-a-service-account)。
 
 
 ### 手动创建的Secret的自动挂载
