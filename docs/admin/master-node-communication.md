@@ -62,7 +62,7 @@ to run over untrusted and/or public networks as they are subject to
 man-in-the-middle attacks.
 
 The connections from the apiserver to a node, pod, or service default to plain
-HTTP connections and are therefore neither authenticated nor encrypted. They
+HTTP connections are therefore neither authenticated nor encrypted. They
 can be run over a secure HTTPS connection by prefixing `https:` to the node,
 pod, or service name in the API URL, but they will not validate the certificate
 provided by the HTTPS endpoint nor provide client credentials so while the
