@@ -1,59 +1,31 @@
 ---
 ---
 
-On-disk files in a container are ephemeral, which presents some problems for
-non-trivial applications when running in containers.  First, when a container
-crashes kubelet will restart it, but the files will be lost - the
-container starts with a clean slate.  Second, when running containers together
-in a `Pod` it is often necessary to share files between those containers.  The
-Kubernetes `Volume` abstraction solves both of these problems.
+在容器中的磁盘文件是非持久的，当运行在容器中时这对于一些重要的应用会造成一些问题。首先，当容器崩溃的时候，kubelet会重启容器，但是文件丢失了 - 容器会重新以一个白板的状态开始。其次，当在`Pod`中一起运行容器的时候，通常需要在这些容器之间分享文件。Kubernetes的`Volume`的抽象同时解决了这些问题。
 
-Familiarity with [pods](/docs/user-guide/pods) is suggested.
+建议在读这一部分时候，已经对[pods](/docs/user-guide/pods)有一定的熟悉度。
 
 * TOC
 {:toc}
 
 
-## Background
+## 背景
 
-Docker also has a concept of
-[volumes](https://docs.docker.com/userguide/dockervolumes/), though it is
-somewhat looser and less managed.  In Docker, a volume is simply a directory on
-disk or in another container.  Lifetimes are not managed and until very
-recently there were only local-disk-backed volumes.  Docker now provides volume
-drivers, but the functionality is very limited for now (e.g. as of Docker 1.7
-only one volume driver is allowed per container and there is no way to pass
-parameters to volumes).
 
-A Kubernetes volume, on the other hand, has an explicit lifetime - the same as
-the pod that encloses it.  Consequently, a volume outlives any containers that run
-within the Pod, and data is preserved across Container restarts. Of course, when a
-Pod ceases to exist, the volume will cease to exist, too.  Perhaps more
-importantly than this, Kubernetes supports many type of volumes, and a Pod can
-use any number of them simultaneously.
+在Docker中也有[volumes](https://docs.docker.com/userguide/dockervolumes/)的概念，然而它更松散一些，管理更少一点。在Docker中，volume只是简单的一个磁盘上或者另外一个容器中的目录。生命周期没有管理，而且直到最近只有本地磁盘类型的volume。Docker现在提供了volume的驱动，但是暂时这个功能还比较有限（比如，对于Docker 1.7，一个容器只能指定一个volume驱动，而且没有什么办法可以向volume传递参数）。
 
-At its core, a volume is just a directory, possibly with some data in it, which
-is accessible to the containers in a pod.  How that directory comes to be, the
-medium that backs it, and the contents of it are determined by the particular
-volume type used.
 
-To use a volume, a pod specifies what volumes to provide for the pod (the
-[`spec.volumes`](http://kubernetes.io/third_party/swagger-ui/#!/v1/createPod)
-field) and where to mount those into containers(the
-[`spec.containers.volumeMounts`](http://kubernetes.io/third_party/swagger-ui/#!/v1/createPod)
-field).
+而Kubernetes中的Volumne，有着明确的生命周期 - 正如环绕着它的pod一样。结果，volumne的可以活的比Pod中的容器更加长久，即使容器反复重启数据仍然存在。当然，当一个Pod消失的时候，volumne也会随之消失。可能更加重要的一点是，Kubernetes支持很多类型的Volume，并且Pod可以同时使用任意的数量。
 
-A process in a container sees a filesystem view composed from their Docker
-image and volumes.  The [Docker
-image](https://docs.docker.com/userguide/dockerimages/) is at the root of the
-filesystem hierarchy, and any volumes are mounted at the specified paths within
-the image.  Volumes can not mount onto other volumes or have hard links to
-other volumes.  Each container in the Pod must independently specify where to
-mount each volume.
+从本质上说，一个Volume只是一个目录，里面可能有一些数据，这些数据对于Pod中的容器可以访问。至于该目录是如何存在的，后面有什么媒介支撑着它，里面有什么内容是决定于使用的volume类型。
 
-## Types of Volumes
+要使用一个volume，pod需要指定要给该pod提供什么volume（[`spec.volumes`](http://kubernetes.io/third_party/swagger-ui/#!/v1/createPod)字段）和从该挂载的位置（[`spec.containers.volumeMounts`](http://kubernetes.io/third_party/swagger-ui/#!/v1/createPod)字段）。
 
-Kubernetes supports several types of Volumes:
+容器中的进程看到的文件系统视图包含Docker镜像和Volume。[Docker镜像](https://docs.docker.com/userguide/dockerimages/) 位于文件系统层级的根部，任何volume都是挂载在该镜像中的指定路径。Volume不能挂载到其他的Volume上，或者有到其他Volume的硬连接。每一个Pod中的容器必须独立地指定该在什么地方挂载每一个volume。
+
+## Volume的类型
+
+Kubernetes支持很多类型的Volume：
 
    * `emptyDir`
    * `hostPath`
@@ -68,81 +40,53 @@ Kubernetes supports several types of Volumes:
    * `secret`
    * `persistentVolumeClaim`
 
-We welcome additional contributions.
+我们欢迎贡献其他类型的Volume。
 
 ### emptyDir
 
-An `emptyDir` volume is first created when a Pod is assigned to a Node, and
-exists as long as that Pod is running on that node.  As the name says, it is
-initially empty.  Containers in the pod can all read and write the same
-files in the `emptyDir` volume, though that volume can be mounted at the same
-or different paths in each container.  When a Pod is removed from a node for
-any reason, the data in the `emptyDir` is deleted forever.  NOTE: a container
-crashing does *NOT* remove a pod from a node, so the data in an `emptyDir`
-volume is safe across container crashes.
 
-Some uses for an `emptyDir` are:
+一个`emptyDir`的volume首先在一个Pod指派给一个Node时候被创建，只要该Pod运行在该node上就会一直存在。正如名字说的那样，开始的时候她是空的。pod中的容器都可以对`emptyDir`中相同的文件进行读或者写，尽管这个volume可以在每一个容器中挂载在相同或者不同的路径下面。当一个Pod从node中因为任意原因被删除的时候，`emptyDir`中的数据就会被永久删除。注意：容器崩溃不会把pod从node中删除掉，所有在`emptyDir`Volume中的数据在容器崩溃的情况下是安全的。
 
-* scratch space, such as for a disk-based mergesortcw
-* checkpointing a long computation for recovery from crashes
-* holding files that a content-manager container fetches while a webserver
-  container serves the data
+一些`emptyDir`的用途有：
 
-By default, `emptyDir` volumes are stored on whatever medium is backing the
-machine - that might be disk or SSD or network storage, depending on your
-environment.  However, you can set the `emptyDir.medium` field to `"Memory"`
-to tell Kubernetes to mount a tmpfs (RAM-backed filesystem) for you instead.
-While tmpfs is very fast, be aware that unlike disks, tmpfs is cleared on
-machine reboot and any files you write will count against your container's
-memory limit.
+* 暂存空间（scratch space），例如基于磁盘的归并排序
+* 用于实现一个长耗时计算的检查点，方便在崩溃后恢复
+* 用于保存一个内容管理器容器要获取的文件，而另外一个web服务器容器用来对外服务这些文件
+
+默认情况下，`emptyDir` volume可以保存在任意支撑机器的媒介上 - 可以是磁盘或者是SSD或者是网络存储，这取决于你的环境。然而，你可以把`emptyDir.medium`字段设置为`"Memory"`来告诉Kubernetes为你挂载一个tmpfs（RAM文件系统）。尽管tmpfs非常快，要留意与磁盘不同，tmpfs在机器重启的时候会清空数据，你写的任意文件都要算在你的容器的内存限制内。
+
 
 ### hostPath
 
-A `hostPath` volume mounts a file or directory from the host node's filesystem
-into your pod.  This is not something that most Pods will need, but it offers a
-powerful escape hatch for some applications.
+一个`hostPath`的volume会挂载来自host node的文件系统中的一个文件或者目录。这不是一个绝大多数Pod需要的功能，但是它为一些应用提供了一个强大的应急出口。
 
-For example, some uses for a `hostPath` are:
+例如，`hostPath`可以用来：
+* 运行一个需要访问Docker内部的的容器；使用`/var/lib/docker`作为`hostPath`
+* 在容器中运行cAdvisor；使用`/dev/cgroups`作为`hostPath`
 
-* running a container that needs access to Docker internals; use a `hostPath`
-  of `/var/lib/docker`
-* running cAdvisor in a container; use a `hostPath` of `/dev/cgroups`
+要当心这种类型的volume,因为：
 
-Watch out when using this type of volume, because:
-
-* pods with identical configuration (such as created from a podTemplate) may
-  behave differently on different nodes due to different files on the nodes
-* when Kubernetes adds resource-aware scheduling, as is planned, it will not be
-  able to account for resources used by a `hostPath`
+* 在不同的node上的pod虽然有一样配置(如一些从podTemplate创建的Pod)，可能会因为nodes上不同的文件而表现出不同的行为
+* 当Kubernetes添加把资源考虑在内（resource-aware）的调度的时候，正如计划的一样，它可能不会考虑被`hostPath`使用的资源
 
 ### gcePersistentDisk
 
-A `gcePersistentDisk` volume mounts a Google Compute Engine (GCE) [Persistent
-Disk](http://cloud.google.com/compute/docs/disks) into your pod.  Unlike
-`emptyDir`, which is erased when a Pod is removed, the contents of a PD are
-preserved and the volume is merely unmounted.  This means that a PD can be
-pre-populated with data, and that data can be "handed off" between pods.
+`gcePersistentDisk`类型的volume会挂载一个把一个Google Compute Engine (GCE)的[Persistent Disk（持久化磁盘）](http://cloud.google.com/compute/docs/disks)挂载进你的pod里面。不同于会在Pod被删除的时候会被抹去数据的`emptyDir`，PD的内容会被被保留，并且该volume仅仅是被卸载了而已。这意味着一个PD可以预先填充数据，而且这些数据可以在pod间过手。
 
-__Important: You must create a PD using `gcloud` or the GCE API or UI
-before you can use it__
+__重要提示：你必须用`gcloud`或者GCE API或者UI创建一个PD先，然后才可以使用它__
 
-There are some restrictions when using a `gcePersistentDisk`:
+在使用`gcePersistentDisk`的时候有一些限制：
 
-* the nodes on which pods are running must be GCE VMs
-* those VMs need to be in the same GCE project and zone as the PD
+* pod运行所在的node必须是GCE VM
+* 这些VM需要跟PD位于相同的GCE项目和zone
 
-A feature of PD is that they can be mounted as read-only by multiple consumers
-simultaneously.  This means that you can pre-populate a PD with your dataset
-and then serve it in parallel from as many pods as you need.  Unfortunately,
-PDs can only be mounted by a single consumer in read-write mode - no
-simultaneous readers allowed.
+一个PD的特性是他们可以被不同的用户（消费者）以只读的方式挂载。这意味着，你可以用你的数据预先填充PD，然后根据你的需要从任意多的pod中提供这些文件。糟糕的是，PD只能同时被一个消费者以读写的模式挂载 - 不支持同时多个reader。
 
-Using a PD on a pod controlled by a ReplicationController will fail unless
-the PD is read-only or the replica count is 0 or 1.
+在一个由ReplicationController控制的pod上使用PD将会失败，除非这个PD是只读的或者副本的数量是0或者1。
 
-#### Creating a PD
+#### 创建一个PD
 
-Before you can use a GCE PD with a pod, you need to create it.
+要在Pod中使用一个GCE PD，需要首先创建它：
 
 ```shell
 gcloud compute disks create --size=500GB --zone=us-central1-a my-data-disk
@@ -172,34 +116,29 @@ spec:
 
 ### awsElasticBlockStore
 
-An `awsElasticBlockStore` volume mounts an Amazon Web Services (AWS) [EBS
-Volume](http://aws.amazon.com/ebs/) into your pod.  Unlike
-`emptyDir`, which is erased when a Pod is removed, the contents of an EBS
-volume are preserved and the volume is merely unmounted.  This means that an
-EBS volume can be pre-populated with data, and that data can be "handed off"
-between pods.
+一个`awsElasticBlockStore`的volume会挂载一个Amazon Web Services (AWS)[EBSVolume](http://aws.amazon.com/ebs/)到你的pod中。不同于会在Pod被删除的时候会被抹去数据的`emptyDir`，PD的内容会被被保留，并且该volume仅仅是被卸载了而已。这意味着一个PD可以预先填充数据，而且这些数据可以在pod间过手。
 
-__Important: You must create an EBS volume using `aws ec2 create-volume` or
-the AWS API before you can use it__
 
-There are some restrictions when using an awsElasticBlockStore volume:
+__重要：你必须用`aws ec2 create-volume`或者AWS API先创建一个EBS volume，然后才可以使用它__
 
-* the nodes on which pods are running must be AWS EC2 instances
-* those instances need to be in the same region and availability-zone as the EBS volume
-* EBS only supports a single EC2 instance mounting a volume
+在使用`awsElasticBlockStore`的时候有一些限制：
+
+* pod运行所在的node必须是一个AWS EC2的实例
+* 这些实例必须与该EBS volume处于同一个region和availability-zone
+* EBS支持一个EC2实例挂载一个volume
+
 
 #### Creating an EBS volume
 
-Before you can use a EBS volume with a pod, you need to create it.
+在pod中使用EBS卷之前，你需要创建它：
 
 ```shell
 aws ec2 create-volume --availability-zone eu-west-1a --size 10 --volume-type gp2
 ```
 
-Make sure the zone matches the zone you brought up your cluster in.  (And also check that the size and EBS volume
-type are suitable for your use!)
+确保该zone和你要操作的集群所在zone匹配。（同时也要检查size和EBS volume的类型符合你的用途）。
 
-#### AWS EBS Example configuration
+#### AWS EBS的示例配置
 
 ```yaml
 apiVersion: v1
@@ -221,99 +160,61 @@ spec:
       fsType: ext4
 ```
 
-(Note: the syntax of volumeID is currently awkward; #10181 fixes it)
+(提示: volumeID的语法目前很怪异; #10181修复了这个问题)
 
 ### nfs
 
-An `nfs` volume allows an existing NFS (Network File System) share to be
-mounted into your pod. Unlike `emptyDir`, which is erased when a Pod is
-removed, the contents of an `nfs` volume are preserved and the volume is merely
-unmounted.  This means that an NFS volume can be pre-populated with data, and
-that data can be "handed off" between pods.  NFS can be mounted by multiple
-writers simultaneously.
+`nfs`的volume允许一个已经存在的NFS share挂载进你的POD里面。不同于会在Pod被删除的时候会被抹去数据的`emptyDir`，PD的内容会被被保留，并且该volume仅仅是被卸载了而已。这意味着一个PD可以预先填充数据，而且这些数据可以在pod间过手。NFS可以被不同的writer同时挂载。
 
-__Important: You must have your own NFS server running with the share exported
-before you can use it__
+__重要: 你必须保证你的NFS服务器正常运行，并且share已经导出，然后才能使用__
 
-See the [NFS example](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/examples/nfs/) for more details.
+更多细节请查看[NFS example](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/examples/nfs/) 。
 
 ### iscsi
 
-An `iscsi` volume allows an existing iSCSI (SCSI over IP) volume to be mounted
-into your pod.  Unlike `emptyDir`, which is erased when a Pod is removed, the
-contents of an `iscsi` volume are preserved and the volume is merely
-unmounted.  This means that an iscsi volume can be pre-populated with data, and
-that data can be "handed off" between pods.
+一个`iscsi` volume能让你把一个现有的iSCSI (SCSI over IP)volume挂载进你的Pod里面。不同于会在Pod被删除的时候会被抹去数据的`emptyDir`，PD的内容会被被保留，并且该volume仅仅是被卸载了而已。这意味着一个PD可以预先填充数据，而且这些数据可以在pod间过手。
 
-__Important: You must have your own iSCSI server running with the volume
-created before you can use it__
+__重要: 在使用前请确保你的iSCSI服务器正常运行，并且volume已经创建好__
 
-A feature of iSCSI is that it can be mounted as read-only by multiple consumers
-simultaneously.  This means that you can pre-populate a volume with your dataset
-and then serve it in parallel from as many pods as you need.  Unfortunately,
-iSCSI volumes can only be mounted by a single consumer in read-write mode - no
-simultaneous readers allowed.
+一个iSCSI的特性是他们可以被不同的用户（消费者）以只读的方式挂载。这意味着，你可以用你的数据预先填充PD，然后根据你的需要从任意多的pod中提供这些文件。糟糕的是，iSCSI类型的Volume只能同时被一个消费者以读写的模式挂载 - 不支持同时多个reader。
 
-See the [iSCSI example](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/examples/iscsi/) for more details.
+更多细节参见[iSCSI示例](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/examples/iscsi/).
 
 ### flocker
 
-[Flocker](https://clusterhq.com/flocker) is an open-source clustered container data volume manager. It provides management
-and orchestration of data volumes backed by a variety of storage backends.
 
-A `flocker` volume allows a Flocker dataset to be mounted into a pod. If the
-dataset does not already exist in Flocker, it needs to be created with Flocker
-CLI or the using the Flocker API. If the dataset already exists it will
-reattached by Flocker to the node that the pod is scheduled. This means data
-can be "handed off" between pods as required.
+[Flocker](https://clusterhq.com/flocker) 是一个开源的集群容器数据卷管理器。它提供了数据卷的管理和编排功能，支持很多类型的后端存储。
 
-__Important: You must have your own Flocker installation running before you can use it__
+`flocker`的卷能让一个Flocker的dataset（数据集）挂载到pod中。如果该dataset尚未在Flocker中存在，需要先使用Flocker CLI或者使用Flocker API创建。如果dataset已经存在，它会重新被Flocker附加到pod被调度到的node上。这意味着数据可以根据需要在pod之间传递。
 
-See the [Flocker example](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/examples/flocker/) for more details.
+__重要: 使用前请确保安装的Flocker正常运行__
+
+
+更多内容请查看[Flocker示例](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/examples/flocker/).
 
 ### glusterfs
 
-A `glusterfs` volume allows a [Glusterfs](http://www.gluster.org) (an open
-source networked filesystem) volume to be mounted into your pod.  Unlike
-`emptyDir`, which is erased when a Pod is removed, the contents of a
-`glusterfs` volume are preserved and the volume is merely unmounted.  This
-means that a glusterfs volume can be pre-populated with data, and that data can
-be "handed off" between pods.  GlusterFS can be mounted by multiple writers
-simultaneously.
+一个`glusterfs` volume能让你把一个[Glusterfs](http://www.gluster.org)（一个开源的网络文件系统）挂载进你的Pod里面。不同于会在Pod被删除的时候会被抹去数据的`emptyDir`，`glusterfs` volume 的内容会被被保留，并且该volume仅仅是被卸载了而已。这意味着一个glusterfs volume可以预先填充数据，而且这些数据可以在pod间过手。GlusterFS被多个写入者同时挂载。
 
-__Important: You must have your own GlusterFS installation running before you
-can use it__
+__重要: 使用前请确保你自己的GlusterFS正常运行__
 
-See the [GlusterFS example](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/examples/glusterfs/) for more details.
+更多内容请查看[GlusterFS示例](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/examples/glusterfs/) 。
 
 ### rbd
 
-An `rbd` volume allows a [Rados Block
-Device](http://ceph.com/docs/master/rbd/rbd/) volume to be mounted into your
-pod.  Unlike `emptyDir`, which is erased when a Pod is removed, the contents of
-a `rbd` volume are preserved and the volume is merely unmounted.  This
-means that a RBD volume can be pre-populated with data, and that data can
-be "handed off" between pods.
+一个`rbd`类型的volume能让你把一个[Rados Block Device](http://ceph.com/docs/master/rbd/rbd/)的卷挂载进你的Pod里面。不同于会在Pod被删除的时候数据会被抹去的`emptyDir`，`rbd`卷的内容会被被保留，并且该volume仅仅是被卸载了而已。这意味着一个glusterfs volume可以预先填充数据，而且这些数据可以在pod间传递。
 
-__Important: You must have your own Ceph installation running before you
-can use RBD__
+__重要: 使用RBD前请确保你的Ceph正常运行__
 
-A feature of RBD is that it can be mounted as read-only by multiple consumers
-simultaneously.  This means that you can pre-populate a volume with your dataset
-and then serve it in parallel from as many pods as you need.  Unfortunately,
-RBD volumes can only be mounted by a single consumer in read-write mode - no
-simultaneous writers allowed.
+一个RBD的特性是他们可以被不同的使用者以只读的方式挂载。这意味着，你可以用你的数据预先填充它，然后根据你的需要从任意多的pod中提供这些文件。但是，iSCSI类型的Volume只能同时被一个使用者以读-写的模式挂载 - 不支持同时多个写入者。
 
-See the [RBD example](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/examples/rbd/) for more details.
+更多细节请查看[RBD示例](https://github.com/kubernetes/kubernetes/tree/{{page.githubbranch}}/examples/rbd/) 。
 
 ### gitRepo
 
-A `gitRepo` volume is an example of what can be done as a volume plugin.  It
-mounts an empty directory and clones a git repository into it for your pod to
-use.  In the future, such volumes may be moved to an even more decoupled model,
-rather than extending the Kubernetes API for every such use case.
+一个`gitRepo`卷是一个很好例子来说明一个volume插件可以做些什么。它会挂载一个空的目录，然后把一个git仓库克隆进去，方便你的pod使用。在以后，这样的volume可能会被移到一个更加低耦合的模型中，而不是对于每一个这样的使用场景，都要扩展一下Kubernetes API。
 
-Here is a example for gitRepo volume:
+这里是一个gitRepo卷的例子：
 
 ```yaml
 apiVersion: v1
@@ -336,43 +237,24 @@ spec:
 
 ### secret
 
-A `secret` volume is used to pass sensitive information, such as passwords, to
-pods.  You can store secrets in the Kubernetes API and mount them as files for
-use by pods without coupling to Kubernetes directly.  `secret` volumes are
-backed by tmpfs (a RAM-backed filesystem) so they are never written to
-non-volatile storage.
+一个`secret`类型的卷可以用来传递敏感信息，比如密码，给pod。你可以在Kubernetes API中保存一些秘密的信息，然后把它们作为文件挂载而不需要要与Kubernetes直接产生耦合。`secret`卷后边是tmpfs（一个内存文件系统）因此它们永远不会被写入到非易失的存储中。
 
-__Important: You must create a secret in the Kubernetes API before you can use
-it__
+__重要: 在使用之前请确保你已经通过Kubernetes API创建了一个sercret__
 
-Secrets are described in more detail [here](/docs/user-guide/secrets).
+关于Secret的更多细节请参见[这里](/docs/user-guide/secrets).
 
 ### persistentVolumeClaim
 
-A `persistentVolumeClaim` volume is used to mount a
-[PersistentVolume](/docs/user-guide/persistent-volumes) into a pod.  PersistentVolumes are a
-way for users to "claim" durable storage (such as a GCE PersistentDisk or an
-iSCSI volume) without knowing the details of the particular cloud environment.
-
-See the [PersistentVolumes example](/docs/user-guide/persistent-volumes/) for more
-details.
+`persistentVolumeClaim`的卷是用来挂载一个[PersistentVolume](/docs/user-guide/persistent-volumes)到pod里面。PersistentVolumes可以用户声明持久化的存储（例如一个GCE PersistentDisk或者iSCSI卷），而不需要知道具体特定云环境的细节。
 
 ### downwardAPI
 
-A `downwardAPI` volume is used to make downward API data available to applications.
-It mounts a directory and writes the requested data in plain text files.
+`downwardAPI`卷是用来让downward API的数据可以被应用使用。它挂载一个目录然后把请求的数据写入明文的文本文件中。、
 
-See the [`downwardAPI` volume example](/docs/user-guide/downward-api/volume/)  for more details.
+更多细节请参考[`downwardAPI` volume 实例](/docs/user-guide/downward-api/volume/)。
 
 ## Resources
 
-The storage media (Disk, SSD, etc) of an `emptyDir` volume is determined by the
-medium of the filesystem holding the kubelet root dir (typically
-`/var/lib/kubelet`).  There is no limit on how much space an `emptyDir` or
-`hostPath` volume can consume, and no isolation between containers or between
-pods.
+一个`emptyDir`卷的存储媒介（磁盘，SSD等）是由存放kubelet根目录的文件系统的媒介决定的（通常是`/var/lib/kubelet`）。`emptyDir`或者`hostPath`卷能消耗多少空间是没有限制的，并且在容器或者pod之间也没有隔离。
 
-In the future, we expect that `emptyDir` and `hostPath` volumes will be able to
-request a certain amount of space using a [resource](/docs/user-guide/compute-resources)
-specification, and to select the type of media to use, for clusters that have
-several media types.
+在以后，我们希望`emptyDir`和`hostPath`的卷可以使用[resource](/docs/user-guide/compute-resources)的规范请求定量的空间，并且对于那些有多种媒介类型的集群来说，可以选择使用哪种媒介。
