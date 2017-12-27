@@ -3,11 +3,19 @@ title: Federation API Reference
 ---
 # API Reference
 
-Federation API server supports the following group versions:
+<!-- 
+Federation API server supports the following group versions: 
+-->
+Federatoin API server 支持以下的group版本：
 
+<!-- 
 * federation/v1beta1: [operations](/docs/federation/api-reference/federation/v1beta1/operations.html), [model definitions](/docs/federation/api-reference/federation/v1beta1/definitions.html)
+-->
+* federation/v1beta1: [操作](/docs/federation/api-reference/federation/v1beta1/operations.html), [model 定义](/docs/federation/api-reference/federation/v1beta1/definitions.html)
+<!-- 
 * v1: [operations](/docs/federation/api-reference/v1/operations.html), [model definitions](/docs/federation/api-reference/v1/definitions.html)
-* extensions/v1beta1: [operations](/docs/federation/api-reference/extensions/v1beta1/operations.html), [model definitions](/docs/federation/api-reference/extensions/v1beta1/definitions.html)
+-->
+* extensions/v1beta1: [操作](/docs/federation/api-reference/extensions/v1beta1/operations.html), [model 定义](/docs/federation/api-reference/extensions/v1beta1/definitions.html)
 
 
 <!-- BEGIN MUNGE: GENERATED_ANALYTICS -->
