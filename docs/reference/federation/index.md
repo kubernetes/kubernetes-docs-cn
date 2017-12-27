@@ -9,7 +9,7 @@ title: Federation API Reference
 <!-- 
 Federation API server supports the following group versions: 
 -->
-Federatoin API server 支持以下的group版本：
+Federatoin API server 支持以下的 group 版本：
 
 <!-- 
 * federation/v1beta1: [operations](/docs/federation/api-reference/federation/v1beta1/operations.html), [model definitions](/docs/federation/api-reference/federation/v1beta1/definitions.html)
