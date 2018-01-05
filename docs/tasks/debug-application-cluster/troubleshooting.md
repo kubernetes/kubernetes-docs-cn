@@ -57,20 +57,6 @@ and command-line interfaces (CLIs), such as [`kubectl`](/docs/user-guide/kubectl
 本站已经按照问题的范围进行结构化。[Concepts](/docs/concepts/) 解释 Kubernetes 架构以及每个组件的工作原理；[Setup](/docs/setup/) 提供了开始使用的实用指导。[Tasks](/docs/tasks/) 展示了如何完成常用任务；[Tutorials](/docs/tutorials/) 是对现实世界、特定行业或端到端开发场景的更全面的演练。[Reference](/docs/reference/) 提供了有关[Kubernetes API](/docs/api-reference/{{page.version}}/) 和命令行界面（CLIs）的详细文档，例如 [`kubectl`](/docs/user-guide/kubectl-overview/)。
 
 <!--
-We also have a number of FAQ pages:
-
-   * [User FAQ](https://github.com/kubernetes/kubernetes/wiki/User-FAQ)
-   * [Debugging FAQ](https://github.com/kubernetes/kubernetes/wiki/Debugging-FAQ)
-   * [Services FAQ](https://github.com/kubernetes/kubernetes/wiki/Services-FAQ)
--->
-
-我们也有很多 FAQ 页面：
-
-   * [User FAQ](https://github.com/kubernetes/kubernetes/wiki/User-FAQ)
-   * [Debugging FAQ](https://github.com/kubernetes/kubernetes/wiki/Debugging-FAQ)
-   * [Services FAQ](https://github.com/kubernetes/kubernetes/wiki/Services-FAQ)
-
-<!--
 You may also find the Stack Overflow topics relevant:
 
    * [Kubernetes](http://stackoverflow.com/questions/tagged/kubernetes)
