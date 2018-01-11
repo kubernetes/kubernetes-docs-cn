@@ -102,8 +102,8 @@ When a user is done with their volume, they can delete the PVC objects from the 
 The Retain reclaim policy allows for manual reclamation of the resource. When the `PersistentVolumeClaim` is deleted, the `PersistentVolume` still exists and the volume is considered "released". But it is not yet available for another claim because the previous claimant's data remains on the volume. An administrator can manually reclaim the volume with the following steps.
 
 1. Delete the `PersistentVolume`. The associated storage asset in external infrastructure (such as an AWS EBS, GCE PD, Azure Disk, or Cinder volume) still exists after the PV is deleted.
-2. Manually clean up the data on the associated storage asset accordingly.
-3. Manually delete the associated storage asset, or if you want to reuse the same storage asset, create a new `PersistentVolume` with the storage asset definition.
+1. Manually clean up the data on the associated storage asset accordingly.
+1. Manually delete the associated storage asset, or if you want to reuse the same storage asset, create a new `PersistentVolume` with the storage asset definition.
 
 #### Recycling
 
@@ -270,28 +270,28 @@ In the CLI, the access modes are abbreviated to:
 > __Important!__ A volume can only be mounted using one access mode at a time, even if it supports many.  For example, a GCEPersistentDisk can be mounted as ReadWriteOnce by a single node or ReadOnlyMany by many nodes, but not at the same time.
 
 
-| Volume Plugin        | ReadWriteOnce | ReadOnlyMany |           ReadWriteMany            |
-| :------------------- | :-----------: | :----------: | :--------------------------------: |
-| AWSElasticBlockStore |   &#x2713;    |      -       |                 -                  |
-| AzureFile            |   &#x2713;    |   &#x2713;   |              &#x2713;              |
-| AzureDisk            |   &#x2713;    |      -       |                 -                  |
-| CephFS               |   &#x2713;    |   &#x2713;   |              &#x2713;              |
-| Cinder               |   &#x2713;    |      -       |                 -                  |
-| FC                   |   &#x2713;    |   &#x2713;   |                 -                  |
-| FlexVolume           |   &#x2713;    |   &#x2713;   |                 -                  |
-| Flocker              |   &#x2713;    |      -       |                 -                  |
-| GCEPersistentDisk    |   &#x2713;    |   &#x2713;   |                 -                  |
-| Glusterfs            |   &#x2713;    |   &#x2713;   |              &#x2713;              |
-| HostPath             |   &#x2713;    |      -       |                 -                  |
-| iSCSI                |   &#x2713;    |   &#x2713;   |                 -                  |
-| PhotonPersistentDisk |   &#x2713;    |      -       |                 -                  |
-| Quobyte              |   &#x2713;    |   &#x2713;   |              &#x2713;              |
-| NFS                  |   &#x2713;    |   &#x2713;   |              &#x2713;              |
-| RBD                  |   &#x2713;    |   &#x2713;   |                 -                  |
-| VsphereVolume        |   &#x2713;    |      -       | - (works when pods are collocated) |
-| PortworxVolume       |   &#x2713;    |      -       |              &#x2713;              |
-| ScaleIO              |   &#x2713;    |   &#x2713;   |                 -                  |
-| StorageOS            |   &#x2713;    |      -       |                 -                  |
+| Volume Plugin        | ReadWriteOnce| ReadOnlyMany| ReadWriteMany|
+| :---                 |     :---:    |    :---:    |    :---:     |
+| AWSElasticBlockStore | &#x2713;     | -           | -            |
+| AzureFile            | &#x2713;     | &#x2713;    | &#x2713;     |
+| AzureDisk            | &#x2713;     | -           | -            |
+| CephFS               | &#x2713;     | &#x2713;    | &#x2713;     |
+| Cinder               | &#x2713;     | -           | -            |
+| FC                   | &#x2713;     | &#x2713;    | -            |
+| FlexVolume           | &#x2713;     | &#x2713;    | -            |
+| Flocker              | &#x2713;     | -           | -            |
+| GCEPersistentDisk    | &#x2713;     | &#x2713;    | -            |
+| Glusterfs            | &#x2713;     | &#x2713;    | &#x2713;     |
+| HostPath             | &#x2713;     | -           | -            |
+| iSCSI                | &#x2713;     | &#x2713;    | -            |
+| PhotonPersistentDisk | &#x2713;     | -           | -            |
+| Quobyte              | &#x2713;     | &#x2713;    | &#x2713;     |
+| NFS                  | &#x2713;     | &#x2713;    | &#x2713;     |
+| RBD                  | &#x2713;     | &#x2713;    | -            |
+| VsphereVolume        | &#x2713;     | -           | - (works when pods are collocated)  |
+| PortworxVolume       | &#x2713;     | -           | &#x2713;     |
+| ScaleIO              | &#x2713;     | &#x2713;    | -            |
+| StorageOS            | &#x2713;     | -           | -            |
 
 ### Class
 
@@ -536,17 +536,17 @@ If a user requests a raw block volume by indicating this using the volumeMode fi
 Listed is a table of possible combinations the user and admin might specify for requesting a raw block device. The table indicates if the volume will be bound or not given the combinations:
 Volume binding matrix for statically provisioned volumes:
 
-| PV volumeMode | PVC volumeMode |  Result |
-| ------------- | :------------: | ------: |
-| unspecified   |  unspecified   |    BIND |
-| unspecified   |     Block      | NO BIND |
-| unspecified   |   Filesystem   |    BIND |
-| Block         |  unspecified   | NO BIND |
-| Block         |     Block      |    BIND |
-| Block         |   Filesystem   | NO BIND |
-| Filesystem    |   Filesystem   |    BIND |
-| Filesystem    |     Block      | NO BIND |
-| Filesystem    |  unspecified   |    BIND |
+| PV volumeMode | PVC volumeMode  | Result           |
+| --------------|:---------------:| ----------------:|
+|   unspecified | unspecified     | BIND             |
+|   unspecified | Block           | NO BIND          |
+|   unspecified | Filesystem      | BIND             |
+|   Block       | unspecified     | NO BIND          |
+|   Block       | Block           | BIND             |
+|   Block       | Filesystem      | NO BIND          |
+|   Filesystem  | Filesystem      | BIND             |
+|   Filesystem  | Block           | NO BIND          |
+|   Filesystem  | unspecified     | BIND             |
 
 **Note:** Only statically provisioned volumes are supported for alpha release. Administrators should take care to consider these values when working with raw block devices.
 {: .note}
