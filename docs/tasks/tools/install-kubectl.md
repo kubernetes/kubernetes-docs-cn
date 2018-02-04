@@ -114,7 +114,7 @@ kubectl 可以作为 Google Cloud SDK 的一部分进行安装。
 
         gcloud components install kubectl
 
-<!--3. Run `kubectl version` to verify that the verison you've installed is sufficiently up-to-date.-->
+<!--3. Run `kubectl version` to verify that the version you've installed is sufficiently up-to-date.-->
 3. 运行 `kubectl version` 命令来验证所安装的 kubectl 版本是最新的。
 
 <!--## Install with snap on Ubuntu-->
@@ -128,7 +128,7 @@ kubectl 可作为 [snap](https://snapcraft.io/) 应用程序安装使用。
 
         sudo snap install kubectl --classic
 
-<!--2. Run `kubectl version` to verify that the verison you've installed is sufficiently up-to-date.-->
+<!--2. Run `kubectl version` to verify that the version you've installed is sufficiently up-to-date.-->
 2. 运行 `kubectl version` 命令来验证所安装的 kubectl 版本是最新的。
 
 <!--## Install with Homebrew on macOS-->
@@ -139,7 +139,7 @@ kubectl 可作为 [snap](https://snapcraft.io/) 应用程序安装使用。
 
         brew install kubectl
 
-<!--2. Run `kubectl version` to verify that the verison you've installed is sufficiently up-to-date.-->
+<!--2. Run `kubectl version` to verify that the version you've installed is sufficiently up-to-date.-->
 2. 运行 `kubectl version` 命令来验证所安装的 kubectl 版本是最新的。
 
 <!--## Install with Chocolatey on Windows-->
@@ -150,7 +150,7 @@ kubectl 可作为 [snap](https://snapcraft.io/) 应用程序安装使用。
 
         choco install kubernetes-cli
 
-<!--2. Run `kubectl version` to verify that the verison you've installed is sufficiently up-to-date.
+<!--2. Run `kubectl version` to verify that the version you've installed is sufficiently up-to-date.
 3. Configure kubectl to use a remote Kubernetes cluster:-->
 2. 运行 `kubectl version` 命令来验证所安装的 kubectl 版本是最新的。
 3. 使用以下命令配置 kubectl 连接到远程 Kubernetes 集群：

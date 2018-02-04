@@ -101,7 +101,7 @@ required. If the `KUBECONFIG` environment variable doesn't exist,
 <!--
 If the `KUBECONFIG` environment variable does exist, `kubectl` uses
 an effective configuration that is the result of merging the files
-listed in the `KUBECONFIG` evironment variable.
+listed in the `KUBECONFIG` environment variable.
 -->
 如果环境变量 `KUBECONFIG` 存在，那么 `kubectl` 使用的有效配置，是环境变量 `KUBECONFIG` 中列出的所有文件融合之后的结果。
 

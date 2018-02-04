@@ -160,7 +160,7 @@ $(document).ready(function() {
     var scrollPosition = $(window).scrollTop();
     scrollActions(scrollPosition);
     checkActiveElement(flatToc, scrollPosition);
-    // TODO: prevent scroll on sidebar from propogating to window
+    // TODO: prevent scroll on sidebar from propagating to window
     $(window).on('scroll', function(event) {
         var scrollPosition = $(window).scrollTop();
         var activeSectionTokens = scrollActions(scrollPosition);

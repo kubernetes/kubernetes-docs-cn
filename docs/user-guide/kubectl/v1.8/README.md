@@ -19,7 +19,7 @@ Static compilation of html from markdown including processing for grouping code 
 \> bdocs-tab:kubectl 部署运行三个 nginx 实例（最大修改次数设置为 10）
 
 <!--
-bdocs-tab:tab will be stripped during rendering and utilized to with CSS to show or hide the prefered tab. kubectl indicates the desired tab, since blockquotes have no specific syntax highlighting.
+bdocs-tab:tab will be stripped during rendering and utilized to with CSS to show or hide the preferred tab. kubectl indicates the desired tab, since blockquotes have no specific syntax highlighting.
 -->
 在渲染过程中，bdocs-tab:tab 将被剥离，并用于与 CSS 一起显示或隐藏首选选项卡。kubectl 指示所需的选项，因为 blockquote 没有特定的语法高亮。
 
