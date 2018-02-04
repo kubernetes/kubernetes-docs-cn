@@ -144,7 +144,7 @@ IP for the default interface will be used.
 这是 API server 用来告知集群中其它成员的地址，这也是在 init 流程的时候用来构建 `kubeadm join` 命令行的地址。如果不设置（或者设置为 0.0.0.0）那么将使用默认接口的 IP 地址。
 
 <!--
-This address is also added to the certifcate that the API Server uses.
+This address is also added to the certificate that the API Server uses.
 -->
 该地址也被添加到 API Server 使用的证书中。
 

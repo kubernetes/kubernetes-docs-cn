@@ -78,7 +78,7 @@ Then, developers can request devices in a
 [Container](/docs/api-reference/{{page.version}}/#container-v1-core)
 specification by using the same process that is used for
 [opaque integer resources](/docs/tasks/configure-pod-container/opaque-integer-resource/).
-In version 1.8, extended resources are spported only as integer resources and must have
+In version 1.8, extended resources are supported only as integer resources and must have
 `limit` equal to `request` in the Container specification.
 -->
 然后，开发人员可以在申请 [容器资源](/docs/api-reference/{{page.version}}/#container-v1-core) 时使用和 [不透明整数资源](/docs/tasks/configure-pod-container/opaque-integer-resource/) 相同的过程来请求第三方设备资源。在1.8版本中，可扩展资源只支持按整数分配，并且在容器规格定义中的 `limit` 必须和 `request` 相等。
@@ -108,7 +108,7 @@ The general workflow of a device plugin includes the following steps:
   ```gRPC
   service DevicePlugin {
         // ListAndWatch returns a stream of List of Devices
-        // Whenever a Device state change or a Device disapears, ListAndWatch
+        // Whenever a Device state change or a Device disappears, ListAndWatch
         // returns the new list
         rpc ListAndWatch(Empty) returns (stream ListAndWatchResponse) {}
 

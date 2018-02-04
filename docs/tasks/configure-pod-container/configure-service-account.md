@@ -28,7 +28,7 @@ as recommended by the Kubernetes project.  Your cluster administrator may have
 customized the behavior in your cluster, in which case this documentation may
 not apply.*
 -->
-*注意：本文档描述的关于 Serivce Account 的行为只有当您按照 Kubernetes 项目建议的方式搭建起集群的情况下才有效。您的集群管理员可能在您的集群中有自定义配置，这种情况下该文档可能并不适用。*
+*注意：本文档描述的关于 Service Account 的行为只有当您按照 Kubernetes 项目建议的方式搭建起集群的情况下才有效。您的集群管理员可能在您的集群中有自定义配置，这种情况下该文档可能并不适用。*
 <!--
 When you (a human) access the cluster (e.g. using `kubectl`), you are
 authenticated by the apiserver as a particular User Account (currently this is

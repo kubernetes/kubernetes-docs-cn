@@ -4235,7 +4235,7 @@ Appears In:
 </tr>
 <tr>
 <td>groupPriorityMinimum <br /> <em>integer</em></td>
-<td>GroupPriorityMininum is the priority this group should have at least. Higher priority means that the group is prefered by clients over lower priority ones. Note that other versions of this group might specify even higher GroupPriorityMininum values such that the whole group gets a higher priority. The primary sort is based on GroupPriorityMinimum, ordered highest number to lowest (20 before 10). The secondary sort is based on the alphabetical comparison of the name of the object.  (v1.bar before v1.foo) We&#39;d recommend something like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to be in the 2000s</td>
+<td>GroupPriorityMininum is the priority this group should have at least. Higher priority means that the group is preferred by clients over lower priority ones. Note that other versions of this group might specify even higher GroupPriorityMininum values such that the whole group gets a higher priority. The primary sort is based on GroupPriorityMinimum, ordered highest number to lowest (20 before 10). The secondary sort is based on the alphabetical comparison of the name of the object.  (v1.bar before v1.foo) We&#39;d recommend something like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to be in the 2000s</td>
 </tr>
 <tr>
 <td>insecureSkipTLSVerify <br /> <em>boolean</em></td>
@@ -6647,7 +6647,7 @@ Appears In:
 </tr>
 <tr>
 <td>kind <br /> <em>string</em></td>
-<td>Expected values Shared: mulitple blob disks per storage account  Dedicated: single blob disk per storage account  Managed: azure managed data disk (only in managed availability set). defaults to shared</td>
+<td>Expected values Shared: multiple blob disks per storage account  Dedicated: single blob disk per storage account  Managed: azure managed data disk (only in managed availability set). defaults to shared</td>
 </tr>
 <tr>
 <td>readOnly <br /> <em>boolean</em></td>
@@ -8053,7 +8053,7 @@ Appears In:
 </tr>
 <tr>
 <td>prefix <br /> <em>string</em></td>
-<td>An optional identifer to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.</td>
+<td>An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.</td>
 </tr>
 <tr>
 <td>secretRef <br /> <em><a href="#secretenvsource-v1-core">SecretEnvSource</a></em></td>

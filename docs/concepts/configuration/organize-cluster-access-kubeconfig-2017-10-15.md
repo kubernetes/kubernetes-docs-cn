@@ -58,7 +58,7 @@ required. If the `KUBECONFIG` environment variable doesn't exist,
 
 If the `KUBECONFIG` environment variable does exist, `kubectl` uses
 an effective configuration that is the result of merging the files
-listed in the `KUBECONFIG` evironment variable.
+listed in the `KUBECONFIG` environment variable.
 
 ## Merging kubeconfig files
 

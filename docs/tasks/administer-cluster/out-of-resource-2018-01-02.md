@@ -80,7 +80,7 @@ where:
 
 * `eviction-signal` is an eviction signal token as defined in the previous table.
 * `operator` is the desired relational operator, such as `<` (less than).
-* `quantity` is the eviction threshhold quantity, such as `1Gi`. These tokens must
+* `quantity` is the eviction threshold quantity, such as `1Gi`. These tokens must
 match the quantity representation used by Kubernetes. An eviction threshold can also
 be expressed as a percentage using the `%` token.
 
@@ -147,7 +147,7 @@ The following node conditions are defined that correspond to the specified evict
 | Node Condition | Eviction Signal  | Description                                                      |
 |-------------------------|-------------------------------|--------------------------------------------|
 | `MemoryPressure` | `memory.available` | Available memory on the node has satisfied an eviction threshold |
-| `DiskPressure` | `nodefs.available`, `nodefs.inodesFree`, `imagefs.available`, or `imagefs.inodesFree` | Available disk space and inodes on either the node's root filesytem or image filesystem has satisfied an eviction threshold |
+| `DiskPressure` | `nodefs.available`, `nodefs.inodesFree`, `imagefs.available`, or `imagefs.inodesFree` | Available disk space and inodes on either the node's root filesystem or image filesystem has satisfied an eviction threshold |
 
 The `kubelet` continues to report node status updates at the frequency specified by
 `--node-status-update-frequency` which defaults to `10s`.

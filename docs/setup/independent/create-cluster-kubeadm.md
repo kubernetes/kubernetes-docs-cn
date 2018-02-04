@@ -401,8 +401,8 @@ kubectl apply -f https://raw.githubusercontent.com/projectcalico/canal/master/k8
 **Note:**
 
  - For flannel to work correctly, `--pod-network-cidr=10.244.0.0/16` has to be passed to `kubeadm init`.
- - flannel works on `amd64`, `arm`, `arm64` and `ppc64le`, but for it to work on an other platform than
-`amd64` you have to manually download the manifest and replace `amd64` occurences with your chosen platform.
+ - flannel works on `amd64`, `arm`, `arm64` and `ppc64le`, but for it to work on another platform than
+`amd64` you have to manually download the manifest and replace `amd64` occurrences with your chosen platform.
 -->
 **注意:**
  - 为了flannel可以正常运行, 必须在执行`kubeadm init`时使用参数`--pod-network-cidr=10.244.0.0/16`。

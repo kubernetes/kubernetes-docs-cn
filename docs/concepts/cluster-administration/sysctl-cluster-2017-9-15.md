@@ -58,8 +58,8 @@ namespacing a _safe_ sysctl must be properly _isolated_ between pods on the same
 node. This means that setting a _safe_ sysctl for one pod
 
 - must not have any influence on any other pod on the node
-- must not allow to harm the node's health
-- must not allow to gain CPU or memory resources outside of the resource limits
+- must not allow one to harm the node's health
+- must not allow one to gain CPU or memory resources outside of the resource limits
   of a pod.
 
 By far, most of the _namespaced_ sysctls are not necessarily considered _safe_.
