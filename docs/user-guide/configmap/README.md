@@ -9,8 +9,7 @@
 <!-- This example assumes you have a Kubernetes cluster installed and running, and that you have
 installed the `kubectl` command line tool somewhere in your path. Please see [pick the right solution
 started](/docs/setup/pick-right-solution/) for installation instructions for your platform. -->
-本例假定您已经安装好一个 Kubernetes 集群并且正在运行，并在您的路径中安装了 `kubectl` 命令行工具。 请访问 [pick the right solution
-started](/docs/setup/pick-right-solution/) 查看适合您的平台的安装说明。
+本例假定您已经安装好一个 Kubernetes 集群并正在运行，并在您的路径中安装了 `kubectl` 命令行工具。 请访问 [选择正确的解决方案](/docs/setup/pick-right-solution/) 查看适合您的平台的安装说明。
 
 <!-- ## Step One: Create the ConfigMap -->
 ## 2 创建 ConfigMap
