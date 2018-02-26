@@ -1,5 +1,7 @@
+---
 cn-approvers:
 - niuhp
+---
 
 <!-- # ConfigMap example -->
 # ConfigMap 示例
