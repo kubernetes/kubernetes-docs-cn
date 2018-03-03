@@ -202,7 +202,7 @@ running `kube-up.sh` set the environment variable `ALLOWED_NOTREADY_NODES` to wh
 with. This will allow `kube-up.sh` to succeed with fewer than `NUM_NODES` coming up. Depending on the
 reason for the failure, those additional nodes may join later or the cluster may remain at a size of
 `NUM_NODES - ALLOWED_NOTREADY_NODES`. -->
-由于各种原因 (详细信息见 [#18969](https://github.com/kubernetes/kubernetes/issues/18969))，运行 `kube-up.sh` 建立非常大
+由于各种原因（详细信息见 [#18969](https://github.com/kubernetes/kubernetes/issues/18969)），运行 `kube-up.sh` 建立非常大
 的 `NUM_NODES` 数量的集群会由于个别的节点的启动失败而失败。目前你有两个选择：重启集群（再次运行 `kube-down.sh` 和 `kube-up.sh`），
 或者，在运行 `kube-up.sh` 之前，将 `ALLOWED_NOTREADY_NODES` 环境变量设置成合适的值。这会让 `kube-up.sh` 在少于 `NUM_NODES`
 节点启动的时候成功完成。根据不同的失败原因，这些额外的节点可以在稍后再加入集群，或者集群可以保持在 `NUM_NODES - ALLOWED_NOTREADY_NODES` 的规模。
