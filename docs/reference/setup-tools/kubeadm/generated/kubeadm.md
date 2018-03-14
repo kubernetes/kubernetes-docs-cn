@@ -23,9 +23,9 @@ kubeadm: 轻松引导一个安全的kubernetes集群
     ┌──────────────────────────────────────────────────────────┐
     │ KUBEADM 目前还处于测试阶段                                │
     │                                                          │
-    │ 但是请试用它，并在以下地址给我们反馈:                          │
+    │ 但是请试用它，并在以下地址给我们反馈:                       │
     │ https://github.com/kubernetes/kubeadm/issues             │
-    │ 并抄送给 @kubernetes/sig-cluster-lifecycle-bugs 或者       │
+    │ 并抄送给 @kubernetes/sig-cluster-lifecycle-bugs 或者      │
     │ @kubernetes/sig-cluster-lifecycle-feature-requests       │
     └──────────────────────────────────────────────────────────┘
 
@@ -57,9 +57,9 @@ kubeadm: 轻松引导一个安全的kubernetes集群
     └──────────────────────────────────────────────────────────┘
  -->
     ┌──────────────────────────────────────────────────────────┐
-    │ 在第二个节点上:                                             │
+    │ 在第二个节点上:                                           │
     ├──────────────────────────────────────────────────────────┤
-    │ node# kubeadm join <init 返回的参数>                       │
+    │ node# kubeadm join <init 返回的参数>                      │
     └──────────────────────────────────────────────────────────┘
 
 <!--     You can then repeat the second step on as many other machines as you like.
