@@ -32,7 +32,7 @@ The REST API is the fundamental fabric of Kubernetes. All operations and communi
 platform is treated as an API object and has a corresponding entry in the
 [API](/docs/api-reference/{{page.version}}/).
 -->
-REST API 是 Kubernetes 的基础结构。所有的操作和组件间的通信，包括外部的用户命令，都是由 API Server 处理的 REST API 调用。因此，Kubernetes 中的所有事物都被视为一个 API 对象并且都有一个与之对应的 [API](/docs/api-reference) 入口。
+REST API 是 Kubernetes 的基础结构。所有的操作和组件间的通信，包括外部的用户命令，都是由 API Server 处理的 REST API 调用。因此，Kubernetes 中的所有事物都被视为一个 API 对象并且都有一个与之对应的 [API](/docs/api-reference/{{page.version}}/) 入口。
 
 <!--
 Most operations can be performed through the
