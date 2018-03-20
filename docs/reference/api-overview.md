@@ -40,13 +40,13 @@ Most operations can be performed through the
 command-line tools, such as [kubeadm](/docs/admin/kubeadm/), which in turn use
 the API. However, the API can also be accessed directly using REST calls.
 -->
-大部分的操作都可以通过 [kubectl](/docs/user-guide/kubectl-overview/) 命令行界面或者其它命令行工具完成，例如 [kubeadm](/docs/admin/kubeadm/)，它也是使用的 API。尽管如此，API 也是能够通过 REST 调用直接访问的。
+大部分的操作都可以通过 [kubectl](/docs/user-guide/kubectl-overview.md) 命令行界面或者其它命令行工具完成，例如 [kubeadm](/docs/admin/kubeadm.md)，它也是使用的 API。尽管如此，API 也是能够通过 REST 调用直接访问的。
 
 <!--
 Consider using one of the [client libraries](/docs/reference/client-libraries/)
 if you are writing an application using the Kubernetes API.
 -->
-如果您正在使用 Kubernetes API 来编写应用程序，您可以考虑选择一个 [客户端库](/docs/reference/client-libraries/)。
+如果您正在使用 Kubernetes API 来编写应用程序，您可以考虑选择一个 [客户端库](/docs/reference/client-libraries.md)。
 
 <!--
 ## API versioning
@@ -69,7 +69,7 @@ The version is set at the API level rather than at the resource or field level t
 Note that API versioning and software versioning are only indirectly related.  The [API and release
 versioning proposal](https://git.k8s.io/community/contributors/design-proposals/versioning.md) describes the relationship between API versioning and software versioning.
 -->
-这里需要注意到 API 版本控制和软件版本控制只是间接相关的。[API 和发布版本建议](https://git.k8s.io/community/contributors/design-proposals/versioning.md) 描述了 API 版本控制和软件版本控制的关系。
+这里需要注意到 API 版本控制和软件版本控制只是间接相关的。[API 和发布版本建议](https://git.k8s.io/community/contributors/design-proposals/release/versioning.md) 描述了 API 版本控制和软件版本控制的关系。
 
 <!--
 Different API versions imply different levels of stability and support.  The criteria for each level are described
@@ -126,7 +126,7 @@ The criteria are summarized here:
 <!--
 [*API groups*](https://git.k8s.io/community/contributors/design-proposals/api-group.md) make it easier to extend the Kubernetes API. The API group is specified in a REST path and in the `apiVersion` field of a serialized object.
 -->
-[*API 组*](https://git.k8s.io/community/contributors/design-proposals/api-group.md) 使得 Kubernetes API 更容易扩展。API 的组别在 REST 路径或者序列化对象的 `apiVersion` 字段中指定。
+[*API 组*](https://git.k8s.io/community/contributors/design-proposals/api-machinery/api-group.md) 使得 Kubernetes API 更容易扩展。API 的组别在 REST 路径或者序列化对象的 `apiVersion` 字段中指定。
 
 <!--
 Currently, there are several API groups in use:
@@ -144,17 +144,17 @@ Currently, there are several API groups in use:
 <!--
 There are two supported paths to extending the API with [custom resources](/docs/concepts/api-extension/custom-resources/):
 -->
-目前支持两种方法来扩展 [自定义资源](/docs/concepts/api-extension/custom-resources/) API：
+目前支持两种方法来扩展 [自定义资源](/docs/concepts/api-extension/custom-resources.md) API：
 
 <!--
-1. [CustomResourceDefinition](/docs/tasks/access-kubernetes-api/extend-api-custom-resource-definitions/)
+1. [CustomResourceDefinition](/docs/tasks/access-kubernetes-api/extend-api-custom-resource-definitions.md)
    is for users with very basic CRUD needs.
 1. Coming soon: users needing the full set of Kubernetes API semantics can implement their own apiserver
    and use the [aggregator](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/aggregated-api-servers.md)
    to make it seamless for clients.
 -->
-1. [CustomResourceDefinition](/docs/tasks/access-kubernetes-api/extend-api-custom-resource-definitions/) 提供给需要最基本 CRUD 的用户。
-1. 即将支持：需要 Kubernetes API 语义全集的用户可以通过使用 [aggregator](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/aggregated-api-servers.md) 来实现自己的 apiserver，这能够与您的客户端无缝对接。
+1. [CustomResourceDefinition](/docs/tasks/access-kubernetes-api/extend-api-custom-resource-definitions.md) 提供给需要最基本 CRUD 的用户。
+1. 即将支持：需要 Kubernetes API 语义全集的用户可以通过使用 [aggregator](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/aggregated-api-servers.md) 来实现自己的 apiserver，这能够与您的客户端无缝对接。
  
 
 <!--
