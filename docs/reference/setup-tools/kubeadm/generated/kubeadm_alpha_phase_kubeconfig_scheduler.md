@@ -1,13 +1,24 @@
 ---
+<<<<<<< HEAD
 title: 生成kubeconfig文件给调度器使用
+=======
+title: 生成kubeconfig文件以便调度器使用
+>>>>>>> babea19203d7b3d09c4f4414a74ed219464f3560
 approvers:
 cn-approvers:
 - okzhchy
 cn-approvers-update:
 cn-reviewers:
+<<<<<<< HEAD
 ---
 
 <!-- 
+=======
+
+---
+
+<!--
+>>>>>>> babea19203d7b3d09c4f4414a74ed219464f3560
 Generates a kubeconfig file for the scheduler to use
 
 ### Synopsis
@@ -16,6 +27,7 @@ Generates a kubeconfig file for the scheduler to use
 Generates the kubeconfig file for the scheduler to use and saves it to /etc/kubernetes/scheduler.conf file. 
 
 Alpha Disclaimer: this command is currently alpha.
+<<<<<<< HEAD
  -->
 
 生成kubeconfig文件给调度器使用
@@ -26,6 +38,11 @@ Alpha Disclaimer: this command is currently alpha.
 生成kubeconfig文件给调度器使用且把它保存至/etc/kubernetes/scheduler.conf。
 
 Alpha Disclaimer: 此命令目前为alpha阶段。
+=======
+-->
+
+
+>>>>>>> babea19203d7b3d09c4f4414a74ed219464f3560
 
 <!-- 
 ```
