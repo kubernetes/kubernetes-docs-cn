@@ -1,4 +1,13 @@
+---
+title: 生成kubeconfig文件以便调度器使用
+approvers:
+cn-approvers:
+- okzhchy
+cn-approvers-update:
+cn-reviewers:
+---
 
+<!--
 Generates a kubeconfig file for the scheduler to use
 
 ### Synopsis
@@ -7,6 +16,9 @@ Generates a kubeconfig file for the scheduler to use
 Generates the kubeconfig file for the scheduler to use and saves it to /etc/kubernetes/scheduler.conf file. 
 
 Alpha Disclaimer: this command is currently alpha.
+-->
+
+
 
 ```
 kubeadm alpha phase kubeconfig scheduler
