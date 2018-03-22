@@ -138,7 +138,7 @@ provides load balancing for an application that has two running instances.
 
 -->
 
-## 为在两个 pod 中运行的应用程序创建 service
+## 为在两个 pod 中运行的应用程序创建 Service
 
 1. 在集群中运行 Hello World 应用程序：
 
