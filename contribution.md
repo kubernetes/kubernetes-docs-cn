@@ -3,6 +3,67 @@
 本文档只包含新增更新，[更新参考](contribution-update.md)。
 
 
+### 第 33 周：2018-03-05 ~ 2018-03-11 - 有效合并 6 篇
+
+[https://k8smeetup.github.io/docs/setup/independent/high-availability](https://k8smeetup.github.io/docs/setup/independent/high-availability) by [xiaosuiba](https://github.com/xiaosuiba)
+
+[https://k8smeetup.github.io/docs/getting-started-guides/ubuntu/troubleshooting](https://k8smeetup.github.io/docs/getting-started-guides/ubuntu/troubleshooting) by [tianshapjq](https://github.com/tianshapjq)
+
+[https://k8smeetup.github.io/docs/getting-started-guides/ubuntu/security](https://k8smeetup.github.io/docs/getting-started-guides/ubuntu/security) by [tianshapjq](https://github.com/tianshapjq)
+
+[https://k8smeetup.github.io/docs/home/contribute/generated-reference/kubernetes-components](https://k8smeetup.github.io/docs/home/contribute/generated-reference/kubernetes-components) by [niuhp](https://github.com/niuhp)
+
+[https://k8smeetup.github.io/docs/setup/hosted-solutions/overview](https://k8smeetup.github.io/docs/setup/hosted-solutions/overview) by [xiaosuiba](https://github.com/xiaosuiba)
+
+[https://k8smeetup.github.io/docs/admin/high-availability/building](https://k8smeetup.github.io/docs/admin/high-availability/building) by [xiaosuiba](https://github.com/xiaosuiba)
+
+
+### 第 32 周：2018-02-26 ~ 2018-03-04 - 有效合并 5 篇
+
+[https://k8smeetup.github.io/docs/tutorials/online-training/overview](https://k8smeetup.github.io/docs/tutorials/online-training/overview) by [xiaosuiba](https://github.com/xiaosuiba)
+
+[https://k8smeetup.github.io/docs/user-journeys/users/application-developer/intermediate](https://k8smeetup.github.io/docs/user-journeys/users/application-developer/intermediate) by [xiaosuiba](https://github.com/xiaosuiba)
+
+[https://k8smeetup.github.io/docs/getting-started-guides/aws](https://k8smeetup.github.io/docs/getting-started-guides/aws) by [xiaosuiba](https://github.com/xiaosuiba)
+
+[https://k8smeetup.github.io/docs/user-guide/configmap/README](https://k8smeetup.github.io/docs/user-guide/configmap/README) by [niuhp](https://github.com/niuhp)
+
+[https://k8smeetup.github.io/docs/user-journeys/users/cluster-operator/intermediate](https://k8smeetup.github.io/docs/user-journeys/users/cluster-operator/intermediate) by [xiaosuiba](https://github.com/xiaosuiba)
+
+
+### 第 31 周：2018-02-19 ~ 2018-02-25 - 有效合并 2 篇
+
+[https://k8smeetup.github.io/docs/user-journeys/users/cluster-operator/foundational](https://k8smeetup.github.io/docs/user-journeys/users/cluster-operator/foundational) by [bjdzliu](https://github.com/bjdzliu)
+
+[https://k8smeetup.github.io/docs/getting-started-guides/ubuntu/scaling](https://k8smeetup.github.io/docs/getting-started-guides/ubuntu/scaling) by [tianshapjq](https://github.com/tianshapjq)
+
+
+### 第 30 周：2018-02-12 ~ 2018-02-18 - 有效合并 1 篇
+
+[https://k8smeetup.github.io/docs/getting-started-guides/ubuntu/operational-considerations](https://k8smeetup.github.io/docs/getting-started-guides/ubuntu/operational-considerations) by [tianshapjq](https://github.com/tianshapjq)
+
+
+### 第 29 周：2018-02-05 ~ 2018-02-11 - 有效合并 9 篇
+
+[https://k8smeetup.github.io/docs/tasks/debug-application-cluster/debug-service](https://k8smeetup.github.io/docs/tasks/debug-application-cluster/debug-service) by [chentao1596](https://github.com/chentao1596)
+
+[https://k8smeetup.github.io/docs/reference/feature-gates](https://k8smeetup.github.io/docs/reference/feature-gates) by [lichuqiang](https://github.com/lichuqiang)
+
+[https://k8smeetup.github.io/docs/setup/building-from-source](https://k8smeetup.github.io/docs/setup/building-from-source) by [lichuqiang](https://github.com/lichuqiang)
+
+[https://k8smeetup.github.io/docs/concepts/overview/object-management-kubectl/overview](https://k8smeetup.github.io/docs/concepts/overview/object-management-kubectl/overview) by [lichuqiang](https://github.com/lichuqiang)
+
+[https://k8smeetup.github.io/docs/getting-started-guides/fedora/fedora_ansible_config](https://k8smeetup.github.io/docs/getting-started-guides/fedora/fedora_ansible_config) by [tianshapjq](https://github.com/tianshapjq)
+
+[https://k8smeetup.github.io/docs/getting-started-guides/stackpoint](https://k8smeetup.github.io/docs/getting-started-guides/stackpoint) by [tianshapjq](https://github.com/tianshapjq)
+
+[https://k8smeetup.github.io/docs/getting-started-guides/ubuntu/local](https://k8smeetup.github.io/docs/getting-started-guides/ubuntu/local) by [tianshapjq](https://github.com/tianshapjq)
+
+[https://k8smeetup.github.io/docs/user-journeys/users/application-developer/advanced](https://k8smeetup.github.io/docs/user-journeys/users/application-developer/advanced) by [rootsongjc](https://github.com/rootsongjc)
+
+[https://k8smeetup.github.io/docs/concepts/example-concept-template](https://k8smeetup.github.io/docs/concepts/example-concept-template) by [tianshapjq](https://github.com/tianshapjq)
+
+
 ### 第 28 周：2018-01-29 ~ 2018-02-04 - 有效合并 22 篇
 
 [https://k8smeetup.github.io/docs/setup/pick-right-solution](https://k8smeetup.github.io/docs/setup/pick-right-solution) by [chentao1596](https://github.com/chentao1596)

@@ -1,6 +1,8 @@
 # K8SMeetup 翻译流程与翻译校稿规范
 
-time：2017-07-13 update：2017-12-21 author：xiaolong@caicloud.io
+time：2017-07-13 update：2018-3-22 author：xiaolong@caicloud.io
+
+2018年3月发布翻译版本[路线图](./roadmap.md)，计划2018年6月底发布全量版本的中文文献第一个版本。
 
 K8SMeetup 维护两个仓库：
 
@@ -16,7 +18,7 @@ K8SMeetup 维护两个仓库：
 
 `K8SMeetup` 翻译社区 [DashBoard](https://k8smeetup.github.io/chart)，附每周的翻译[文章汇总](contribution.md)。建议翻译之前，了解一下[上游贡献流程](upstream-pr.md)。
 
-后期计划: 考虑到英文版本的文档已经可以多版本预览，后期我们也会推出多版本的翻译方法，考虑到社区当前的实际情况，还是维持每月一更的态势，重点是把最新版本的`Kubernetes`资料译好,后面在扩展多版本的翻译分支。
+后期计划: 考虑到英文版本的文档已经可以多版本预览，后期我们也会推出多版本的翻译方法，考虑到社区当前的实际情况，还是维持每月一更的态势，重点是把最新版本的`Kubernetes`资料译好,后面再扩展多版本的翻译分支。
 ## 一、k8s 翻译流程讲解
 
 ![](./images/k8s.png)

@@ -211,7 +211,7 @@ $ curl $APISERVER/api --header "Authorization: Bearer $TOKEN" --insecure
 
 以上的例子中使用了参数 `--insecure` 。 这样的话会使集群很容易受到中间人攻击.  当 kubectl 访问集群时， 它会使用一个已经保存的根证书和客户端证书。 ( 这些证书会被安装在 `~/.kube` 目录下).  由于集群的证书一般是自行签发的，可能需要特殊的配置使你的 http 客户端可以使用到根证书。
 
-在一些集群，  apiserver  不需要验证； 它是可能是在本机上提供服务的， 或者被防火墙隔离起来。 没有一个针对这方面的标准。[配置 API 的访问](/docs/admin/accessing-the-api) 这篇文档介绍了集群管理员如何进行这方面的配置。
+在一些集群上，  apiserver  不需要验证； 它可能是在本机上提供服务的， 或者被防火墙隔离起来。 没有一个针对这方面的标准。[配置 API 的访问](/docs/admin/accessing-the-api) 这篇文档介绍了集群管理员如何进行这方面的配置。
 这些方法可能会和将来的高可用支持互相冲突。
 
 <!--
@@ -283,10 +283,10 @@ import (
 <!--
 #### Python client
 
-To use [Python client](https://github.com/kubernetes-incubator/client-python), run the following command: `pip install kubernetes` See [Python Client Library page](https://github.com/kubernetes-incubator/client-python) for more installation options.
+To use [Python client](https://github.com/kubernetes-client/python), run the following command: `pip install kubernetes` See [Python Client Library page](https://github.com/kubernetes-client/python) for more installation options.
 
 The Python client can use the same [kubeconfig file](/docs/user-guide/kubeconfig-file)
-as the kubectl CLI does to locate and authenticate to the apiserver. See this [example](https://github.com/kubernetes-incubator/client-python/tree/master/examples/example1.py):
+as the kubectl CLI does to locate and authenticate to the apiserver. See this [example](https://github.com/kubernetes-client/python/tree/master/examples/example1.py):
 
 ```python
 from kubernetes import client, config
@@ -309,10 +309,10 @@ There are [client libraries](/docs/reference/client-libraries/) for accessing th
 
 #### Python 客户端
 
-要使用  [Python 客户端](https://github.com/kubernetes-incubator/client-python), 运行如下命令: `pip install kubernetes` 参考 [Python 客户端库页面](https://github.com/kubernetes-incubator/client-python) 获取更多的安装说明。
+要使用  [Python 客户端](https://github.com/kubernetes-client/python), 运行如下命令: `pip install kubernetes` 参考 [Python 客户端库页面](https://github.com/kubernetes-client/python) 获取更多的安装说明。
 
 The Python 客户端使用和 kubectl 命令行相同的 [kubeconfig 配置文件](/docs/user-guide/kubeconfig-file)
-来定位和认证 apiserver。 参考这个 [例子](https://github.com/kubernetes-incubator/client-python/tree/master/examples/example1.py):
+来定位和认证 apiserver。 参考这个 [例子](https://github.com/kubernetes-client/python/tree/master/examples/example1.py):
 
 ```python
 from kubernetes import client, config
