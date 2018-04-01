@@ -246,7 +246,7 @@ The cloud controller manager uses Go interfaces to allow implementations from an
 The implementation of the four shared controllers highlighted above, and some scaffolding along with the shared cloudprovider interface, will stay in the Kubernetes core, but implementations specific to cloud providers will
 be built outside of the core, and implement interfaces defined in the core.
 -->
-上面强调的四种共享控制器的实现以及共享 cloudprovider 接口相关的一些框架，会保留在 Kubernetes 核心代码中，
+上面强调的四种共享控制器的实现以及共享 CloudProvider 接口相关的一些框架，会保留在 Kubernetes 核心代码中，
 但特定云供应商的实现将在核心代码之外，并实现核心代码中定义的接口。
 
 <!--
