@@ -49,7 +49,7 @@ Resource quotas work like this:
 资源配额工作如下：
 * 不同的团队在不同的命名空间下工作。目前这是自发的，但是通过ACLs实现强制性已在计划内。
 * 管理员为每个命名空间创建一个或多个资源配额。
-* 用户在命名空间下创建资源对象（pods, services 等），这个配额系统跟踪使用率来确保它不会超出在资源配额中定义的限制。
+* 用户在命名空间下创建资源对象（pod, service 等），这个配额系统跟踪使用率来确保它不会超出在资源配额中定义的限制。
 * 如果在创建或者更新一个资源时违反了配额的限制，这个请求将会失败，并返回`403 FORBIDDEN`HTTP状态码，以及超出限制条件的信息。
 * 如果在命名空间下开启了计算资源的配额，比如`cpu`和内存，用户必须为这些资源指定请求和限制；否则，配额系统将拒绝创建pod。提示： 可以使用`LimitRanger`准入控制组件来创建默认的资源请求。参考  [walkthrough](https://kubernetes.io/docs/tasks/administer-cluster/apply-resource-quota-limit/) 这个示例来解决此问题。
 
@@ -193,7 +193,7 @@ supply of Pod IPs.
 | secrets | 命名空间中可以存在的`secrets`的总数量。
 
 例如，pod 数量配额，则表示在单个命名空间中可以创建的pod的最大值。
-你可能想要在一个命名空间中定义一个pod限额来避免一个用户创建了许多小的pod从而耗光这个集群Pod IPs 的情况。
+你可能想要在一个命名空间中定义一个pod限额来避免一个用户创建了许多小的pod从而耗光这个集群Pod IP 的情况。
 
 <!--
 ## Quota Scopes
