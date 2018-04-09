@@ -24,7 +24,7 @@ Application and systems logs can help you understand what is happening inside yo
 However, the native functionality provided by a container engine or runtime is usually not enough for a complete logging solution. For example, if a container crashes, a pod is evicted, or a node dies, you'll usually still want to access your application's logs. As such, logs should have a separate storage and lifecycle independent of nodes, pods, or containers. This concept is called _cluster-level-logging_. Cluster-level logging requires a separate backend to store, analyze, and query logs. Kubernetes provides no native storage solution for log data, but you can integrate many existing logging solutions into your Kubernetes cluster.
 -->
 
-但是，由容器引擎或 runtime 提供的原生功能通常不足以满足完整的日志记录方案。例如，如果发生容器崩溃，pod 被驱逐,或 node 宕机,此时您仍然想访问到应用日志。这种情形下，日志应该具有独立的存储和生命周期，不依赖于 node, pods,或容器。这个概念叫 _集群级的日志_ 。集群级日志方案需要一个独立的后台来存储，分析和查询日志。Kubernetes 没有为日志数据提供原生存储方案，但是您可以集成许多现有的日志解决方案到 Kubernetes 集群。
+但是，由容器引擎或 runtime 提供的原生功能通常不足以满足完整的日志记录方案。例如，如果发生容器崩溃，pod 被驱逐,或 node 宕机,此时您仍然想访问到应用日志。这种情形下，日志应该具有独立的存储和生命周期，不依赖于 node, pod,或容器。这个概念叫 _集群级的日志_ 。集群级日志方案需要一个独立的后台来存储，分析和查询日志。Kubernetes 没有为日志数据提供原生存储方案，但是您可以集成许多现有的日志解决方案到 Kubernetes 集群。
 
 
 * TOC
