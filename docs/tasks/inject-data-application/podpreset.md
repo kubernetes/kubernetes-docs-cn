@@ -3,7 +3,7 @@ approvers:
 - jessfraz
 cn-approvers:
 - lichuqiang
-title: 使用 PodPreset 将信息注入 Pods
+title: 使用 PodPreset 将信息注入 Pod
 ---
 <!--
 ---

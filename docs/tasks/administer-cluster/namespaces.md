@@ -49,7 +49,7 @@ Each user community has its own:
 
 A cluster operator may create a Namespace for each unique user community.
 -->
-1. 资源（pods, 服务, rc等）
+1. 资源（pod, 服务, rc等）
 2. 策略（能否在他们的社区执行）
 3. 限制约束（这个社区允许这么多配额等）
 
