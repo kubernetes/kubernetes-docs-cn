@@ -23,7 +23,7 @@ See [PodPreset proposal](https://git.k8s.io/community/contributors/design-propos
 在 pod 创建时，用户可以使用 `podpreset` 对象将特定信息注入 pod 中，这些信息可以包括 secret、 卷、
 卷挂载和环境变量。
 
-查看 [PodPreset 提案](https://git.k8s.io/community/contributors/design-proposals/service-catalog/pod-preset.md) 了解更多信息。
+查看 [Pod Preset 提案](https://git.k8s.io/community/contributors/design-proposals/service-catalog/pod-preset.md) 了解更多信息。
 
 * TOC
 {:toc}
