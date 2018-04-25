@@ -27,7 +27,7 @@ This document shows you how to perform setup tasks that kubeadm doesn't perform:
 **Note:** This guide is only one potential solution, and there are many ways to configure a highly available cluster. If a better solution works for you, please use it. If you find a better solution that can be adopted by the community, feel free to contribute it back.
 {: .note}
 -->
-**注意：**本指南只是一个潜在的解决方案，还存在很多可以配置高可用集群的方法。如果有更好的解决方案适合您，请使用它。如果您找到了社区可以使用的更好的解决方案，请随时为社区提供回馈。
+**注意：**本指南只是一种可能的解决方案，还存在很多可以配置高可用集群的方法。如果有更好的解决方案适合您，请使用它。如果您找到了社区可以使用的更好的解决方案，请随时为社区提供回馈。
 {: .note}
 
 {% endcapture %}
