@@ -204,7 +204,7 @@ INFO file "foo-buildconfig.yaml" created
 ## Kompose安装
 
 <!--Kompose supports a straightforward way to deploy your "composed" application to Kubernetes or OpenShift via `kompose -up`. -->
-Kompose支持直接通过`kompose up` 命令完成 "composed" 应用部署。
+Kompose支持直接通过`kompose -up` 命令完成 "composed" 应用部署。
 
 ### Kubernetes
 ```console
