@@ -102,7 +102,7 @@ are, of course, alpha.
 **Be sure to read the [limitations](#limitations)**.  Specifically, configuring
 cloud providers is difficult.
 -->
-**一定要阅读这个 [限制说明](#limitations)**.  但是配置云服务是不同的方式。
+**一定要阅读这个 [限制说明](#limitations)**.  明确的说，配置云提供商是很难的。
 {% endcapture %}
 
 {% capture prerequisites %}
