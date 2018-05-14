@@ -225,11 +225,11 @@ In this new model, the kubelet initializes a node without cloud-specific informa
 在这个新的模型中，kubelet 执行初始化节点时不感知特定云服务信息。 然而，它为新创建的节点添加 taint，使得节点处于不可调度的状态，直到 CCM 以特定云服务的信息对节点进行初始化后，才移除该 taint。 
 
 <!--
-### 3. Kubernets API server
+### 3. Kubernetes API server
 
 The PersistentVolumeLabels controller moves the cloud-dependent functionality of the Kubernetes API server to the CCM as described in the preceding sections.
 -->
-### 3. Kubernets API 服务器
+### 3. Kubernetes API 服务器
 
 如前面的章节所述，PersistentVolumeLabel 控制器将 Kubernetes API 服务器中依赖云服务的功能移到了 CCM 中。
 
