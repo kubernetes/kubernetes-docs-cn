@@ -35,7 +35,7 @@ and aggregation capabilities, a third party solution should be installed
 to capture events.
 -->
 
-由于事件是 API 对象，因此他们存储在 Kuberenetes 主节点（master）上的 apiserver 中。为了避免填满主节点的磁盘，会执行一个保留策略：删除最新事件一小时以前的事件。为了提供更长的历史和聚合能力，应该安装第三方解决方案来捕获事件。 
+由于事件是 API 对象，因此他们存储在 Kubernetes 主节点（master）上的 apiserver 中。为了避免填满主节点的磁盘，会执行一个保留策略：删除最新事件一小时以前的事件。为了提供更长的历史和聚合能力，应该安装第三方解决方案来捕获事件。 
 
 
 <!--
