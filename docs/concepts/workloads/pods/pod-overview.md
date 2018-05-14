@@ -37,7 +37,7 @@ A Pod encapsulates an application container (or, in some cases, multiple contain
 
 *Pod* 是 Kubernetes 最基本的组成块 -- 这是 Kubernetes 最小、最简单的可用来创建和部署的单元。 一个 Pod 代表了一个运行在集群里的进程。
 
-Pod 里封装了一个（或者多个）应用容器，存储资源，以及惟一的网络 IP，和指导容器如何运行的选贤。 一个 Pod 表示这样一组部署： 由一个容器或者一组紧耦合容器组成共享资源的 *Kubernets 应用实例*，
+Pod 里封装了一个（或者多个）应用容器，存储资源，以及惟一的网络 IP，和指导容器如何运行的选贤。 一个 Pod 表示这样一组部署： 由一个容器或者一组紧耦合容器组成共享资源的 *Kubernetes 应用实例*，
 
 > [Docker](https://www.docker.com)是 Kubernetes Pod 里最常见的运行环境， 当然 Pod 也支持其他的容器环境。
 
@@ -103,7 +103,7 @@ A Pod can specify a set of shared storage *volumes*. All containers in the Pod c
 
 ####存储
 
-Pod 可以指定一系列的共享存储*卷*。Pod 里所有的容器都由权限访问这个共享卷，同时也可以使用这个共享卷来分享数据。 卷的出现使 Pod 能够支持数据持久性，这样就算是在 Pod 内部容器需要重启的场景里，数据也可以长期保持。 更多关于卷的内容请参见[Kubernets 如何在 Pod 上实现共享存储]。
+Pod 可以指定一系列的共享存储*卷*。Pod 里所有的容器都由权限访问这个共享卷，同时也可以使用这个共享卷来分享数据。 卷的出现使 Pod 能够支持数据持久性，这样就算是在 Pod 内部容器需要重启的场景里，数据也可以长期保持。 更多关于卷的内容请参见[Kubernetes 如何在 Pod 上实现共享存储]。
 <!--
 ## Working with Pods
 
@@ -111,7 +111,7 @@ You'll rarely create individual Pods directly in Kubernetes--even singleton Pods
 
 > Note: Restarting a container in a Pod should not be confused with restarting the Pod. The Pod itself does not run, but is an environment the containers run in and persists until it is deleted.
 -->
-在 Kubernets 里很少直接创建一个单独的 Pod - 就算是在只有一个 pod 的场景里也是这样。 从设计上来说 Pod 是一个一次性的、短暂的实体，在创建一个 Pod（直接被创建，或者是通过 Controller 间接创建）时，这个 pod 会被调用到集群里某一个节点上。 除非 Pod 进程被终止，或者 pod 对象被删除，或者由于缺少资源、节点失败等原因 pod 被*驱逐*，Pod 将一直存在在这个节点上。
+在 Kubernetes 里很少直接创建一个单独的 Pod - 就算是在只有一个 pod 的场景里也是这样。 从设计上来说 Pod 是一个一次性的、短暂的实体，在创建一个 Pod（直接被创建，或者是通过 Controller 间接创建）时，这个 pod 会被调用到集群里某一个节点上。 除非 Pod 进程被终止，或者 pod 对象被删除，或者由于缺少资源、节点失败等原因 pod 被*驱逐*，Pod 将一直存在在这个节点上。
 <!--
 Pods do not, by themselves, self-heal. If a Pod is scheduled to a Node that fails, or if the scheduling operation itself fails, the Pod is deleted; likewise, a Pod won't survive an eviction due to a lack of resources or Node maintenance. Kubernetes uses a higher-level abstraction, called a *Controller*, that handles the work of managing the relatively disposable Pod instances. Thus, while it is possible to use Pod directly, it's far more common in Kubernetes to manage your pods using a Controller. See [Pods and Controllers](#pods-and-controllers) for more information on how Kubernetes uses Controllers to implement Pod scaling and healing.
 
@@ -127,7 +127,7 @@ Some examples of Controllers that contain one or more pods include:
 
 In general, Controllers use a Pod Template that you provide to create the Pods for which it is responsible.
 -->
-从 pod 本身而言，它不具备自我恢复的功能。如果 pod 被调度到一个宕机的节点，或者调度的操作本身就失败了，那么这个 pod 立刻会被删除；这个场景同样适用于缺少资源或者节点宕机的情况。Kubernetes 使用一个称作 *Controller* 高度抽象来管理相对可删除 pod。因此与单独直接使用一个 pod 相比，在 Kubernets 里更常见的情况是使用一个 Controller来管理所有的 pod。 更多关于 Kubernetes 如何使用Controllers 实现 Pod 扩展和自我恢复的内容请参见 [Pods and Controllers](#pods-and-controllers)。
+从 pod 本身而言，它不具备自我恢复的功能。如果 pod 被调度到一个宕机的节点，或者调度的操作本身就失败了，那么这个 pod 立刻会被删除；这个场景同样适用于缺少资源或者节点宕机的情况。Kubernetes 使用一个称作 *Controller* 高度抽象来管理相对可删除 pod。因此与单独直接使用一个 pod 相比，在 Kubernetes 里更常见的情况是使用一个 Controller来管理所有的 pod。 更多关于 Kubernetes 如何使用Controllers 实现 Pod 扩展和自我恢复的内容请参见 [Pods and Controllers](#pods-and-controllers)。
 
 ### Pods and Controllers
 一个 Controllers 可以创建和管理很多个 Pod, 也提供复制、初始化，以及提供集群范围的自我恢复的功能。比如说： 如果一个节点宕机，Controller 将调度一个在其他节点上完全相同的 pod 来自动取代当前的 pod。
