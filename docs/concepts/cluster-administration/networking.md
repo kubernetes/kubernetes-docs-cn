@@ -146,7 +146,7 @@ open while "app containers" (the things the user specified) join that namespace
 with Docker's `--net=container:<id>` function.
 -->
 
-到目前为止，文章已经讨论到了容器。实际上，kubernets 在 `Pod` 范围内使用IP地址 - `Pod` 中的容器共享它们网络命名空间 - 包括其 IP 地址。这意味着 `Pod` 中的容器都可以在 `localhost` 上达到对方的端口。`Pod` 中的容器必须协调端口的使用，但这与 VM 中的进程没什么别的区别。我们称作为 "IP-per-pod" 模型。在Docker 中实现一个 “pod容器”，需在该“应用容器”（用户指定）加入该命名空间的同时打开 Docker 的 `--net=container:<id>` 功能
+到目前为止，文章已经讨论到了容器。实际上，kubernetes 在 `Pod` 范围内使用IP地址 - `Pod` 中的容器共享它们网络命名空间 - 包括其 IP 地址。这意味着 `Pod` 中的容器都可以在 `localhost` 上达到对方的端口。`Pod` 中的容器必须协调端口的使用，但这与 VM 中的进程没什么别的区别。我们称作为 "IP-per-pod" 模型。在Docker 中实现一个 “pod容器”，需在该“应用容器”（用户指定）加入该命名空间的同时打开 Docker 的 `--net=container:<id>` 功能
 
 <!--
 As with Docker, it is possible to request host ports, but this is reduced to a
@@ -332,7 +332,7 @@ The Nuage platform uses overlays to provide seamless policy-based networking bet
 
 [Nuage](http://www.nuagenetworks.net)提供一个高度可伸缩的基于策略的软件定义网络(SDN)平台。Nuage 使用开源的 vSwitch 为数据平面的同时提供一个具有开放标准且功能丰富的 SDN 控制器。
 
-Nuage 平台使用 overlays 为 Kubernetes Pods 和 Kubernets 环境（VMs和裸机）之间提供了无缝的基于策略的网络。Nuage 的策略抽象模型是考虑到应用程序的设计，可以容易地为应用程序声明细颗粒度的策略。该平台的实时分析引擎可以实现 Kubernetes 应用程序的可视化和安全监控。
+Nuage 平台使用 overlays 为 Kubernetes Pods 和 Kubernetes 环境（VMs和裸机）之间提供了无缝的基于策略的网络。Nuage 的策略抽象模型是考虑到应用程序的设计，可以容易地为应用程序声明细颗粒度的策略。该平台的实时分析引擎可以实现 Kubernetes 应用程序的可视化和安全监控。
 
 <!--
 ### OpenVSwitch
@@ -388,7 +388,7 @@ Calico 还可以在策略实施模式下，与其他网络解决方案（如Flan
 
 ### Romana
 
-[Romana](http://romana.io)是一个开源的网络和安全自动化解决方案，可以无需 Overlay 网络而部署 Kubernetes。Romana 支持 Kubernets[网络策略](/docs/concepts/services-networking/network-policies/)，通过网络命名空间提供网络间的隔离。
+[Romana](http://romana.io)是一个开源的网络和安全自动化解决方案，可以无需 Overlay 网络而部署 Kubernetes。Romana 支持 Kubernetes[网络策略](/docs/concepts/services-networking/network-policies/)，通过网络命名空间提供网络间的隔离。
 
 <!--
 ### Weave Net from Weaveworks
