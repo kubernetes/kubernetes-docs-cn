@@ -131,7 +131,7 @@ The deploy wizard expects that you provide the following information:
 -->
 - **App name**（必填）：应用的名称。带有名称的 [label](/docs/concepts/overview/working-with-objects/labels/) 会被写入任何将被部署的 Deployment 和 Service。
 
-  在选定的 Kuberntes [namespace](/docs/tasks/administer-cluster/namespaces/) 中，要求应用名称唯一。必须由小写字母开头，以数字或者小写字母结尾，并且只含有小写字母、数字和中划线（-）。小于等于24个字符。开头和结尾的空格会被忽略。
+  在选定的 Kubernetes [namespace](/docs/tasks/administer-cluster/namespaces/) 中，要求应用名称唯一。必须由小写字母开头，以数字或者小写字母结尾，并且只含有小写字母、数字和中划线（-）。小于等于24个字符。开头和结尾的空格会被忽略。
 
 <!--
 - **Container image** (mandatory): The URL of a public Docker [container image](/docs/concepts/containers/images/) on any registry, or a private image (commonly hosted on the Google Container Registry or Docker Hub). The container image specification must end with a colon.
