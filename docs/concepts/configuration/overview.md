@@ -176,7 +176,7 @@ This is a living document. If you think of something that is not on this list bu
 
 ## 使用 kubectl
 
-- 尽量使用 `kubectl create -f <directory>`  。kubeclt 会自动查找该目录下的所有后缀名为 `.yaml`、`.yml` 和 `.json` 文件并将它们传递给`create`命令。
+- 尽量使用 `kubectl create -f <directory>`  。kubectl 会自动查找该目录下的所有后缀名为 `.yaml`、`.yml` 和 `.json` 文件并将它们传递给`create`命令。
 - 使用  `kubectl delete` 而不是 `stop`. `Delete` 是  `stop` 的超集，`stop` 已经被弃用。
 - 使用 kubectl bulk 操作（通过文件或者 label）来 get 和 delete。查看 [label selector ](docs/user-guide/labels/#label-selectors) 和  [有效地使用 label](docs/concepts/cluster-administration/manage-deployment/#using-labels-effectively)。
 - 使用  `kubectl run` 和 `expose` 命令快速创建只有单个容器的 Deployment。查看 [入门指南](docs/user-guide/quick-start/) 中的示例。
