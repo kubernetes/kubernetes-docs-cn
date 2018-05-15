@@ -35,7 +35,7 @@ A `PersistentVolume` (PV) is a piece of storage in the cluster that has been pro
 
 -->
 
-`PersistentVolume`（PV）是由管理员设置的存储，它是群集的一部分。就像节点是集群中的资源一样，PV 也是集群中的资源。 PV 是 Volume 之类的卷插件，但具有独立于使用 PV 的 Pod 的生命周期。此 API 对象包含存储实现的细节，即 NFS、iSCSI 或特定于云供应商的存储系统。
+`PersistentVolume`（PV）是由管理员设置的存储，它是集群的一部分。就像节点是集群中的资源一样，PV 也是集群中的资源。 PV 是 Volume 之类的卷插件，但具有独立于使用 PV 的 Pod 的生命周期。此 API 对象包含存储实现的细节，即 NFS、iSCSI 或特定于云供应商的存储系统。
 
 <!--
 
@@ -89,7 +89,7 @@ PV 属于集群中的资源。PVC 是对这些资源的请求，也作为对资�
 
 #### 静态
 
-集群管理员创建一些 PV。它们带有可供群集用户使用的实际存储的细节。它们存在于 Kubernetes API 中，可用于消费。
+集群管理员创建一些 PV。它们带有可供集群用户使用的实际存储的细节。它们存在于 Kubernetes API 中，可用于消费。
 
 <!--
 
@@ -131,7 +131,7 @@ Claims will remain unbound indefinitely if a matching volume does not exist. Cla
 
 再动态配置的情况下，用户创建或已经创建了具有特定存储量的 `PersistentVolumeClaim` 以及某些访问模式。master 中的控制环路监视新的 PVC，寻找匹配的 PV（如果可能），并将它们绑定在一起。如果为新的 PVC 动态调配 PV，则该环路将始终将该 PV 绑定到 PVC。否则，用户总会得到他们所请求的存储，但是容量可能超出要求的数量。一旦 PV 和 PVC 绑定后，`PersistentVolumeClaim` 绑定是排他性的，不管它们是如何绑定的。 PVC 跟 PV 绑定是一对一的映射。
 
-如果没有匹配的卷，声明将无限期地保持未绑定状态。随着匹配卷的可用，声明将被绑定。例如，配置了许多 50Gi PV的集群将不会匹配请求 100Gi 的PVC。将100Gi PV 添加到群集时，可以绑定 PVC。
+如果没有匹配的卷，声明将无限期地保持未绑定状态。随着匹配卷的可用，声明将被绑定。例如，配置了许多 50Gi PV的集群将不会匹配请求 100Gi 的PVC。将100Gi PV 添加到集群时，可以绑定 PVC。
 
 <!--
 
@@ -1108,7 +1108,7 @@ and need persistent storage, we recommend that you use the following pattern:
 
 ## 编写可移植配置
 
-如果您正在编写在多种群集上运行并需要持久存储的配置模板或示例，我们建议您使用以下模式：
+如果您正在编写在多种集群上运行并需要持久存储的配置模板或示例，我们建议您使用以下模式：
 
 - 不要在您的在配置组合中包含 `PersistentVolumeClaim` 对象（与 Deployment、ConfigMap等一起）。
 - 不要在配置中包含 `PersistentVolume` 对象，因为用户实例化配置可能没有创建 `PersistentVolume` 的权限。
