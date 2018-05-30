@@ -12,7 +12,9 @@ title: 遵循应用中断预算安全移除节点
 This page shows how to safely drain a machine, respecting the application-level
 disruption SLOs you have specified using PodDisruptionBudget.
 -->
-本页展示如何遵循使用 PodDisruptionBudget 指定的应用级中断预算安全地移除节点。
+本页展示如何遵循使用 PodDisruptionBudget 指定的PodDisruptionBudget安全地移除节点。
+
+
 {% endcapture %}
 
 {% capture prerequisites %}
