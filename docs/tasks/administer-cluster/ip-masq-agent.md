@@ -36,7 +36,7 @@ The ip-masq-agent configures iptables rules to hide a pod's IP address behind th
 
 ## IP 伪装代理用户指南
 
-ip-masq-agent 用户配置 iptables 规则将 Pod 的 IP 地址隐藏在集群 node 节点的 IP 地址后面。这通常在将流量发送到群集的 pod [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) 范围之外的目的地时执行。
+ip-masq-agent 用户配置 iptables 规则将 Pod 的 IP 地址隐藏在集群 node 节点的 IP 地址后面。这通常在将流量发送到集群的 pod [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) 范围之外的目的地时执行。
 
 <!--
 
