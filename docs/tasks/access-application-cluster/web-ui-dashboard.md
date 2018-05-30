@@ -152,13 +152,13 @@ The deploy wizard expects that you provide the following information:
 
   Other Services that are only visible from inside the cluster are called internal Services.
 
-  Irrespective of the Service type, if you choose to create a Service and your container listens on a port (incoming), you need to specify two ports. The Service will be created mapping the port (incoming) to the target port seen by the container. This Service will route to your deployed Pods. Supported protocols are TCP and UDP. The internal DNS name for this Service will be the value you specified as application name above.
+  Irrespective of the Service type, if you choose to create a Service and your container listens on a port ( ), you need to specify two ports. The Service will be created mapping the port (incoming) to the target port seen by the container. This Service will route to your deployed Pods. Supported protocols are TCP and UDP. The internal DNS name for this Service will be the value you specified as application name above.
 -->
 - **Service**（可选）：对于应用的某些部分（比如前端），您可能想对外暴露 [Service](/docs/concepts/services-networking/service/) ，可能是集群外部（external Service）的公网地址。对于外部服务，需要开放一个或者多个端口来满足。更多信息请参考 [这里](/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/。
 
   其它只能对集群内部可见的 Service 称为 internal Service。
 
-  不管哪种 Service 类型，如果您选择创建一个 Service，而且容器在一个端口上开启了监听（入向的），那么您需要定义两个端口。创建的 Service 会将（入向的）端口映射到容器可见的目标端口。Service 将会路由到您部署的 Pod。支持 TCP 和 UDP 协议。这个 Service 内部的 DNS 解析名就是之前您定义的应用名称。
+  不管哪种 Service 类型，如果您选择创建一个 Service，而且容器在一个端口上开启了监听（接入的），那么您需要定义两个端口。创建的 Service 会将（接入的）端口映射到容器可见的目标端口。Service 将会路由到您部署的 Pod。支持 TCP 和 UDP 协议。这个 Service 内部的 DNS 解析名就是之前您定义的应用名称。
 
 <!--
 If needed, you can expand the **Advanced options** section where you can specify more settings:
