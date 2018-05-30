@@ -83,7 +83,7 @@ Kubectl handles locating and authenticating to the apiserver. If you want to dir
 ### 直接访问 REST API
 Kubectl  会处理 apiserver 的定位和认证。 如果您要用一个 http 客户端， 比如 `curl` 或者 `wget`  或者 浏览器，  直接访问 REST API ， 有多种方法可以定位 apiserver 和 通过 apiserver 的认证：
 
-1. 运行 kubectl 的代理模式（推荐）。 比较推荐使用这种方法， 因为这种方式使用了已存储的的 apiserver 的位置信息， 并使用自行签发的证书来验证 apiserver 的身份。 使用这种方式不存在中间人攻击。
+1. 运行 kubectl 的代理模式（推荐）。 比较推荐使用这种方法， 因为这种方式使用了已存储的 apiserver 的位置信息， 并使用自行签发的证书来验证 apiserver 的身份。 使用这种方式不存在中间人攻击。
 2. 另外一种可选的方式，  您可以把 apiserver 的位置信息和凭证信息直接提供给http 客户端。 这种方式可以用于那些被代理拒绝的客户端代码。 为了确保不受到中间人攻击， 你需要往您的浏览器里导入根证书。
 
 使用Go 或者 Python 的客户端库， 可以访问代理模式下 kubectl 。
