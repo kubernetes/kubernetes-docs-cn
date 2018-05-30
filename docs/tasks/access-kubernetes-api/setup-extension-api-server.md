@@ -70,7 +70,7 @@ Alternatively, you can use an existing 3rd party solution, such as [apiserver-bu
 2. 您需要创建 RBAC 规则，以让您能有权限添加 APIserver 对象，或者让集群管理员创建一个。(由于 API 扩展对于整个集群生效，所以不推荐在生产集群中对 API 扩展进行 测试/开发/debug。)
 3. 创建一个 Kubernetes namespace 用于运行扩展 api-service。
 4. 创建／获取一张 CA 证书用于对 api-server 的 HTTPS 的服务器证书进行签名。
-5. 创建服务器证书／秘钥用于 api-server 的 HTTPS 服务。这个证书应该由上面提及的 CA 签名。它也应该包含含有 Kube DNS 名的 CN。这来自于 Kubernetes 服务并且是 <service name>.<service name namespace>.svc 的形式。
+5. 创建服务器证书／密钥用于 api-server 的 HTTPS 服务。这个证书应该由上面提及的 CA 签名。它也应该包含含有 Kube DNS 名的 CN。这来自于 Kubernetes 服务并且是 <service name>.<service name namespace>.svc 的形式。
 6. 在这个 namespace 中使用服务器证书／秘钥创建 Kubernetes secret。
 7. 为扩展 api-server 创建 Kubernetes deployment，并确认使用卷的方式加载 secret。它应改包含一个关于您扩展 api-server 镜像的 reference。deployment 也应该存在之前创建的 namespace 中。
 8. 确保 api-server 通过卷加载这些证书，并用于 HTTPS 握手。
