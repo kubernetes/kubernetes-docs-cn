@@ -251,7 +251,7 @@ it can be allowed to run in a namespace that is restricted by a quota.
 
 * [为命名空间配置内存和CPU配额](/docs/tasks/administer-cluster/quota-memory-cpu-namespace/)
 
-* [为命名空间配置配置Pod配额](/docs/tasks/administer-cluster/quota-pod-namespace/)
+* [为命名空间配置Pod配额](/docs/tasks/administer-cluster/quota-pod-namespace/)
 
 * [为API对象配置配额](/docs/tasks/administer-cluster/quota-api-object/)
 
