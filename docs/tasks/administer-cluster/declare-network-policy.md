@@ -75,7 +75,7 @@ po/nginx-701339712-o00ef    1/1           Running       0          35s
 <!--
 You should be able to access the new `nginx` service from other pods. To test, access the service from another pod in the default namespace. Make sure you haven't enabled isolation on the namespace.
 -->
-您应该可以从其它的 pod 访问这个新的 `nginx` 服务。为了验证它，从 default 命名空间下的其它 pod 来访问该服务。请您确保在该命名空间下没有执行孤立动作。
+您应该可以从其它的 pod 访问这个新的 `nginx` 服务。为了验证它，从 default 命名空间下的其它 pod 来访问该服务。请您确保在该命名空间下没有启用隔离。
 
 <!--
 Start a busybox container, and use `wget` on the `nginx` service:
