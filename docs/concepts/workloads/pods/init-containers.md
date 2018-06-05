@@ -248,7 +248,7 @@ Yaml file below outlines the `mydb` and `myservice` services:
 
 下面的 yaml 文件展示了 `mydb` 和 `myservice` 两个 Service：
 
-```
+```yaml
 kind: Service
 apiVersion: v1
 metadata:
