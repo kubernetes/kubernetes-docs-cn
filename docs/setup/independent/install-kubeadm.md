@@ -90,7 +90,7 @@ documentation for the plugins about what port(s) those need.
 
 虽然etcd 端口包含在主节点里，但是你也可以在集群外部部署你的etcd集群。
 
-你使用的pod网络插件可能要求开放对应端口。因为不同网络插件要求不同，所有请先查阅对应的文档。
+你使用的pod网络插件可能要求开放对应端口。因为不同网络插件要求不同，所以请先查阅对应的文档。
 
 <!--
 ## Installing Docker
