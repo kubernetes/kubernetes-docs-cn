@@ -223,7 +223,7 @@ spec:
 <!--
 - Kubernetes will automatically ensure that applications consuming GPUs gets the best possible performance.
 -->
-- Kubernets 将会自动确保应用在使用 GPU 时得到最佳性能
+- Kubernetes 将会自动确保应用在使用 GPU 时得到最佳性能
 <!--
 - Key usability problems like access to CUDA libraries will be addressed.
 -->

@@ -230,7 +230,7 @@ Docker Hub 的私有镜像例子：
 
     janedoe/jdoe-private:v1
 
-要从私有镜像拉取镜像， Kubernetes 需要有验证口令。这里 `imagePullSecrets` 告诉 Kubernets 应该从名为
+要从私有镜像拉取镜像， Kubernetes 需要有验证口令。这里 `imagePullSecrets` 告诉 Kubernetes 应该从名为
 `regsecret` 的 Secret 里获取验证口令。
 
 创建一个 Pod 来使用你的 Secret, 并验证是否运行成功：

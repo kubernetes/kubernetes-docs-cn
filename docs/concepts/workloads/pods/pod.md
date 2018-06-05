@@ -244,7 +244,7 @@ Pod作为Kubernetes的最小管理单元，带来了下述好处：
 <!--
 There is new first-class support for stateful pods with the [StatefulSet](/docs/concepts/abstractions/controllers/statefulsets/) controller (currently in beta). The feature was alpha in 1.4 and was called [PetSet](/docs/concepts/workloads/controllers/petset/). For prior versions of Kubernetes, best practice for having stateful pods is to create a replication controller with `replicas` equal to `1` and a corresponding service, see [this MySQL deployment example](/docs/tutorials/stateful-application/run-stateful-application/). 
 -->
-StatefulSet](/docs/concepts/abstractions/controllers/statefulsets/) 控制器（当前处于 beta 版本）中有状态 Pod 的优先支持。这个功能在 1.4 版本中是alpha版本，被称为 [PetSet](/docs/concepts/workloads/controllers/petset/)。 在 Kubernets 之前的版本里， 最好的实现有状态 pod 的方法是创建一个 replicas 设置为1的 replication controller 以及相应的 service，详细介绍请参考[this MySQL deployment example](/docs/tutorials/stateful-application/run-stateful-application/)。
+StatefulSet](/docs/concepts/abstractions/controllers/statefulsets/) 控制器（当前处于 beta 版本）中有状态 Pod 的优先支持。这个功能在 1.4 版本中是alpha版本，被称为 [PetSet](/docs/concepts/workloads/controllers/petset/)。 在 Kubernetes 之前的版本里， 最好的实现有状态 pod 的方法是创建一个 replicas 设置为1的 replication controller 以及相应的 service，详细介绍请参考[this MySQL deployment example](/docs/tutorials/stateful-application/run-stateful-application/)。
 <!--
 ## Termination of Pods
 
