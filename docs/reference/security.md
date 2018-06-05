@@ -100,4 +100,4 @@ As the security issue moves from triage, to identified fix, to release planning 
 <!--
 A public disclosure date is negotiated by the Kubernetes product security team and the bug submitter. We prefer to fully disclose the bug as soon as possible once a user mitigation is available. It is reasonable to delay disclosure when the bug or the fix is not yet fully understood, the solution is not well-tested, or for vendor coordination. The timeframe for disclosure is from immediate (especially if it's already publicly known) to a few weeks. As a basic default, we expect report date to disclosure date to be on the order of 7 days. The Kubernetes product security team holds the final say when setting a disclosure date.
 -->
-Kuberntes 产品安全团队会与问题提交者讨论决定正式发布时间。我们倾向于一旦在解决方案可用时就公布这个漏洞。但是，问题或者解决方案没有明确、测试不够充分、供应商的协调要求，这些因素导致安全漏洞延迟公布都是合理的。一般情况下，特别是公众已经知道的情况下，漏洞信息会在几周内被发布。通常，我们定在七天内发布漏洞信息。Kubernetes 产品安全团队保留漏洞信息发布日期的最终解释权利。
+Kubernetes 产品安全团队会与问题提交者讨论决定正式发布时间。我们倾向于一旦在解决方案可用时就公布这个漏洞。但是，问题或者解决方案没有明确、测试不够充分、供应商的协调要求，这些因素导致安全漏洞延迟公布都是合理的。一般情况下，特别是公众已经知道的情况下，漏洞信息会在几周内被发布。通常，我们定在七天内发布漏洞信息。Kubernetes 产品安全团队保留漏洞信息发布日期的最终解释权利。
