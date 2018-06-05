@@ -78,7 +78,7 @@ You have several options for connecting to nodes, pods and services from outside
     - 大部分情况下，都不需要应用开发者通过节点 IP 直接访问 nodes。
   - 通过 Proxy Verb 访问  services、nodes 或者  pods。
     - 在访问 Apiserver 远程服务之前是否经过认证和授权？如果你的服务暴露到因特网中不够安全，或者需要获取 node IP 之上的端口，又或者处于调试目的时，请使用这个特性。
-    - Proxies 可能给某些应用带来麻烦。
+    - Proxies 可能会导致一些Web应用程序出现问题。
     - 仅适用于 HTTP/HTTPS。
     - 在[这里](#manually-constructing-apiserver-proxy-urls)描述
   - 从集群中的 node 或者 pod 访问。
