@@ -21,9 +21,9 @@ This tutorial shows you how to deploy a WordPress site and a MySQL database usin
 本教程展示了如何使用 Minikube 部署 WordPress 站点和 MySQL 数据库。这两个应用都使用 PersistentVolume 和 PersistentVolumeClaim 存储数据。
 
 <!--
-A [PersistentVolume](/docs/concepts/storage/persistent-volumes/) (PV) is a piece of storage in the cluster that has been provisioned by an administrator, and a [PeristentVolumeClaim](/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) (PVC) is a set amount of storage in a PV. PersistentVolumes and PeristentVolumeClaims are independent from Pod lifecycles and preserve data through restarting, rescheduling, and even deleting Pods. 
+A [PersistentVolume](/docs/concepts/storage/persistent-volumes/) (PV) is a piece of storage in the cluster that has been provisioned by an administrator, and a [PersistentVolumeClaim](/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) (PVC) is a set amount of storage in a PV. PersistentVolumes and PersistentVolumeClaims are independent from Pod lifecycles and preserve data through restarting, rescheduling, and even deleting Pods. 
 -->
-[PersistentVolume](/docs/concepts/storage/persistent-volumes/) (PV) 是由管理员在集群中预先分配的一块存储。[PeristentVolumeClaim](/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) (PVC) 是 PV 中一定数量的存储。PersistentVolume 和 PeristentVolumeClaim 与 Pod 的生命周期无关，在重启、重新调度、甚至删除 Pod 后，它们仍然保存着数据。
+[PersistentVolume](/docs/concepts/storage/persistent-volumes/) (PV) 是由管理员在集群中预先分配的一块存储。[PersistentVolumeClaim](/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) (PVC) 是 PV 中一定数量的存储。PersistentVolume 和 PersistentVolumeClaim 与 Pod 的生命周期无关，在重启、重新调度、甚至删除 Pod 后，它们仍然保存着数据。
 
 <!--
 **Warning:**  This deployment is not suitable for production use cases, as it uses single instance WordPress and MySQL Pods. Consider using [WordPress Helm Chart](https://github.com/kubernetes/charts/tree/master/stable/wordpress) to deploy WordPress in production.
