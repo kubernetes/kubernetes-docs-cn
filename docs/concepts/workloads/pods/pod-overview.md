@@ -7,6 +7,8 @@ redirect_from:
 - "/docs/concepts/abstractions/pod.html"
 - "/docs/user-guide/pod-templates/"
 - "/docs/user-guide/pod-templates.html"
+reviewers:
+- angao
 ---
 
 <!--
@@ -33,11 +35,11 @@ A Pod encapsulates an application container (or, in some cases, multiple contain
 {:toc}
 
 {% capture body %}
-##什么是 Pod
+## 什么是 Pod
 
 *Pod* 是 Kubernetes 最基本的组成块 -- 这是 Kubernetes 最小、最简单的可用来创建和部署的单元。 一个 Pod 代表了一个运行在集群里的进程。
 
-Pod 里封装了一个（或者多个）应用容器，存储资源，以及惟一的网络 IP，和指导容器如何运行的选贤。 一个 Pod 表示这样一组部署： 由一个容器或者一组紧耦合容器组成共享资源的 *Kubernets 应用实例*，
+Pod 里封装了一个（或者多个）应用容器，存储资源，以及惟一的网络 IP，和指导容器如何运行的选贤。 一个 Pod 表示这样一组部署： 由一个容器或者一组紧耦合容器组成共享资源的 *Kubernets 应用实例* ，
 
 > [Docker](https://www.docker.com)是 Kubernetes Pod 里最常见的运行环境， 当然 Pod 也支持其他的容器环境。
 
@@ -49,7 +51,7 @@ Pods are employed in a number of ways in a Kubernetes cluster, including:
 -->
 Kubernetes 运用 pod 的方式：
 
-* **Pod 里只运行一个单独容器** "one-container-per-Pod" 模式是 Kubernetes 最常见的使用场景；在这种情况下，可以把 Pod 看做是一个单独容器的连接器， Kubernetes 通过 Pod 去管理容器。
+* **Pod 里只运行一个单独容器**。 "one-container-per-Pod" 模式是 Kubernetes 最常见的使用场景；在这种情况下，可以把 Pod 看做是一个单独容器的连接器， Kubernetes 通过 Pod 去管理容器。
 * **Pod 中运行多个相互作用容器**。 Pod 封装了一组紧耦合、共享资源、协同寻址的容器。 这些协同寻址的容器可能来自一组粘性很强的服务 -- 比如说：在用容器的共享卷提供对外文件服务的同时用 "sidecar" 容器刷新、更新这些文件。Pod 将这些容器和存储资源打包成一个管理实体。
 
 <!--
@@ -65,7 +67,7 @@ Each Pod is meant to run a single instance of a given application. If you want t
 * [分布式系统工具箱: 混合容器模式](http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html)。
 * [容器设计模式](http://blog.kubernetes.io/2016/06/container-design-patterns.html)。
 
-每一个 Pod 都是一个指定应用的实例。 如果想水平扩展某个应用（比如说：跑多个实例），应该部署多个 Pod 每个 pod 对应一个实例。 在 Kubernet 术语里， 这种方式被称为_replication_。 Replicated Pod 通常是由一个被称为 Controller 的抽象来创建和管理的。更多信息请参见 [Pods and Controllers](#pods-and-controllers)。
+每一个 Pod 都是一个指定应用的实例。 如果想水平扩展某个应用（比如说：跑多个实例），应该部署多个 Pod 每个 pod 对应一个实例。 在 Kubernet 术语里， 这种方式被称为 _replication_ 。 Replicated Pod 通常是由一个被称为 Controller 的抽象来创建和管理的。更多信息请参见 [Pods and Controllers](#pods-and-controllers)。
 <!--
 ### How Pods manage multiple Containers
 
@@ -86,7 +88,7 @@ Pod 被设计成支持用多个相互协作的进程（比如说：容器）来�
 
 ![pod 图](/images/docs/pod.svg){: style="max-width: 50%" }
 
-Pod 为它的容器们提供了两类共享资源： *网络*和*存储*
+Pod 为它的容器们提供了两类共享资源： *网络* 和 *存储*
 
 <!--
 
@@ -99,11 +101,11 @@ Each Pod is assigned a unique IP address. Every container in a Pod shares the ne
 A Pod can specify a set of shared storage *volumes*. All containers in the Pod can access the shared volumes, allowing those containers to share data. Volumes also allow persistent data in a Pod to survive in case one of the containers within needs to be restarted. See Volumes for more information on how Kubernetes implements shared storage in a Pod.
 -->
 #### 网络
-每一个 Pod 都被分配了一个唯一的 IP 地址。pod 里的所有容器共享着一个网络空间，这个网络空间包含了 IP 地址和网络端口。*Pod 内部*的容器彼此之间可以通过 `localhost` 相互通信。 但当 Pod 里的容器需要与*Pod 以外*实体进行通信时，就要使用到这个共享网络资源了（比如说：端口）。
+每一个 Pod 都被分配了一个唯一的 IP 地址。pod 里的所有容器共享着一个网络空间，这个网络空间包含了 IP 地址和网络端口。*Pod 内部* 的容器彼此之间可以通过 `localhost` 相互通信。 但当 Pod 里的容器需要与 *Pod 以外* 实体进行通信时，就要使用到这个共享网络资源了（比如说：端口）。
 
-####存储
+#### 存储
 
-Pod 可以指定一系列的共享存储*卷*。Pod 里所有的容器都由权限访问这个共享卷，同时也可以使用这个共享卷来分享数据。 卷的出现使 Pod 能够支持数据持久性，这样就算是在 Pod 内部容器需要重启的场景里，数据也可以长期保持。 更多关于卷的内容请参见[Kubernets 如何在 Pod 上实现共享存储]。
+Pod 可以指定一系列的共享存储 *卷* 。Pod 里所有的容器都由权限访问这个共享卷，同时也可以使用这个共享卷来分享数据。 卷的出现使 Pod 能够支持数据持久性，这样就算是在 Pod 内部容器需要重启的场景里，数据也可以长期保持。 更多关于卷的内容请参见[Kubernets 如何在 Pod 上实现共享存储]。
 <!--
 ## Working with Pods
 
@@ -111,7 +113,7 @@ You'll rarely create individual Pods directly in Kubernetes--even singleton Pods
 
 > Note: Restarting a container in a Pod should not be confused with restarting the Pod. The Pod itself does not run, but is an environment the containers run in and persists until it is deleted.
 -->
-在 Kubernets 里很少直接创建一个单独的 Pod - 就算是在只有一个 pod 的场景里也是这样。 从设计上来说 Pod 是一个一次性的、短暂的实体，在创建一个 Pod（直接被创建，或者是通过 Controller 间接创建）时，这个 pod 会被调用到集群里某一个节点上。 除非 Pod 进程被终止，或者 pod 对象被删除，或者由于缺少资源、节点失败等原因 pod 被*驱逐*，Pod 将一直存在在这个节点上。
+在 Kubernets 里很少直接创建一个单独的 Pod - 就算是在只有一个 pod 的场景里也是这样。 从设计上来说 Pod 是一个一次性的、短暂的实体，在创建一个 Pod（直接被创建，或者是通过 Controller 间接创建）时，这个 pod 会被调用到集群里某一个节点上。 除非 Pod 进程被终止，或者 pod 对象被删除，或者由于缺少资源、节点失败等原因 pod 被 *驱逐* ，Pod 将一直存在在这个节点上。
 <!--
 Pods do not, by themselves, self-heal. If a Pod is scheduled to a Node that fails, or if the scheduling operation itself fails, the Pod is deleted; likewise, a Pod won't survive an eviction due to a lack of resources or Node maintenance. Kubernetes uses a higher-level abstraction, called a *Controller*, that handles the work of managing the relatively disposable Pod instances. Thus, while it is possible to use Pod directly, it's far more common in Kubernetes to manage your pods using a Controller. See [Pods and Controllers](#pods-and-controllers) for more information on how Kubernetes uses Controllers to implement Pod scaling and healing.
 
