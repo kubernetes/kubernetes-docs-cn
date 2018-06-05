@@ -173,9 +173,9 @@ kubectl get pods -w -l app=zk
 ```
 
 <!--
-Once the `zk-2` Pod is Running and Ready, use `CRTL-C` to  terminate kubectl.
+Once the `zk-2` Pod is Running and Ready, use `CTRL-C` to  terminate kubectl.
 -->
-一旦  `zk-2` Pod 变成 Running 和 Ready 状态，使用 `CRTL-C` 结束 kubectl。
+一旦  `zk-2` Pod 变成 Running 和 Ready 状态，使用 `CTRL-C` 结束 kubectl。
 
 ```shell
 NAME      READY     STATUS    RESTARTS   AGE
@@ -511,9 +511,9 @@ kubectl get pods -w -l app=zk
 ```
 
 <!--
-When `zk-0` if fully terminated, use `CRTL-C` to terminate kubectl.
+When `zk-0` if fully terminated, use `CTRL-C` to terminate kubectl.
 -->
-当 `zk-0` 完全终止时，使用 `CRTL-C` 结束 kubectl。
+当 `zk-0` 完全终止时，使用 `CTRL-C` 结束 kubectl。
 
 ```shell
 zk-2      1/1       Terminating   0         9m
@@ -561,9 +561,9 @@ kubectl get pods -w -l app=zk
 ```
 
 <!--
-Once the `zk-2` Pod is Running and Ready, use `CRTL-C` to terminate kubectl.
+Once the `zk-2` Pod is Running and Ready, use `CTRL-C` to terminate kubectl.
 -->
-一旦 `zk-2` Pod 处于 Running 和 Ready 状态，使用 `CRTL-C` 停止 kubectl命令。
+一旦 `zk-2` Pod 处于 Running 和 Ready 状态，使用 `CTRL-C` 停止 kubectl命令。
 
 ```shell
 NAME      READY     STATUS    RESTARTS   AGE
@@ -1508,9 +1508,9 @@ pod/zk-2
 {% endraw %}```
 
 <!--
-Use `CRTL-C` to terminate to kubectl.
+Use `CTRL-C` to terminate to kubectl.
 -->
-使用 `CRTL-C` 终止 kubectl。
+使用 `CTRL-C` 终止 kubectl。
 
 <!--
 You can not drain the third node because evicting `zk-2` would violate `zk-budget`. However,
