@@ -276,7 +276,7 @@ With a single `kube-apiserver`, step 2 may be skipped.
 2. 重新启动所有 `kube-apiserver` 进程以确保每台服务器都可以使用新密钥进行解密
 3. 将新密钥设置为 `keys` 数组中的第一个条目，以便在配置中使用其进行加密
 4. 重新启动所有 `kube-apiserver` 进程以确保每个服务器现在都使用新密钥进行加密
-5. 运行 `kubectl get secrets --all-namespaces -o json | kubectl replace -f -` 以用新密钥加密所有现有的秘密
+5. 运行 `kubectl get secrets --all-namespaces -o json | kubectl replace -f -` 以用新密钥加密所有现有的secret
 6. 在使用新密钥备份 etcd 后，从配置中删除旧的解密密钥并更新所有密钥
 
 如果只有一个 `kube-apiserver`，第 2 步可能可以忽略。
