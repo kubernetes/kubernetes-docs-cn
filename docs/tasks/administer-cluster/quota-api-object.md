@@ -12,7 +12,7 @@ You specify quotas in a
 [ResourceQuota](/docs/api-reference/v1.7/#resourcequota-v1-core)
 object.-->
 本任务将展示如何配置API对象的配额，包括对Kubernetes PersistentVolumeClaim对象
-和Service对象的配额配置。配额限制了可以在某一名字空间（namespace）中所创建的特定类型的对象
+和Service对象的配额配置。配额限制了可以在某一命名空间（namespace）中所创建的特定类型的对象
 的数量。可以通过[ResourceQuota](/docs/api-reference/v1.7/#resourcequota-v1-core)
 对象设定配额。
 
