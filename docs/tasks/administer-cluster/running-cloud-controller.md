@@ -108,7 +108,7 @@ As of v1.8, cloud controller manager can implement:
 * service 控制器 - 负责在云服务上为类型为 LoadBalancer 的 service 提供负载均衡器。
 * route 控制器 - 负责在云服务上配置网络路由。
 * [PersistentVolumeLabel Admission 控制器](/docs/admin/admission-controllers#persistentvolumelabel) - 负责在云服务上标记 persistent volume - 请确保 persistent volume label 准入控制插件没有在您的 kube-apiserver 上启用。
-* 如果您使用的是 out-of-tree 提供商，请按需实现其余任意特性。
+* 如果您使用的是 out-of-tree 提供商，请按需实现其余任何特性。
 
 
 <!--
