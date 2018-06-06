@@ -118,7 +118,7 @@ PetSet 的目标是通过分配与底层物理架构无关的身份标识给应�
 <!--
 __Relationship between Pets and Pods__: PetSet requires there be {0..N-1} Pets. Each Pet has a deterministic name - PetSetName-Ordinal, and a unique identity. Each Pet has at most one pod, and each PetSet has at most one Pet with a given identity.
 -->
-__ Pet 和 Pod 的关系__：PetSet 中存在 {0..N-1} 个 Pet。每个Pet有固定的名称 - PetSetName-Ordinal，和一个唯一的身份标识。每个 Pet 最多拥有一个 Pod ，每个 PetSet 中最多只能有一个 Pet 使用一个特定的身份标识。
+__Pet 和 Pod 的关系__：PetSet 中存在 {0..N-1} 个 Pet。每个Pet有固定的名称 - PetSetName-Ordinal，和一个唯一的身份标识。每个 Pet 最多拥有一个 Pod ，每个 PetSet 中最多只能有一个 Pet 使用一个特定的身份标识。
 
 <!--
 ## When to use PetSet?
@@ -132,6 +132,7 @@ A PetSet ensures that a specified number of "pets" with unique identities are ru
 ## 何时使用 PetSet ?
 
 一个 PetSet 保证了在任何时刻都有指定数量的拥有独特身份标识的 Pet 正在运行。一个 Pet 的身份标识由以下几个属性组成：
+
 * 一个固定的主机名，在DNS中可获得
 * 一个序号索引
 * 稳定的存储：与序号和主机名有关联
@@ -158,6 +159,7 @@ Example workloads for PetSet:
 只有您的应用需要使用全部或部分这些特性时才使用 PetSet。否则将 pod 作为无状态的复本进行管理会更容易些。
 
 使用 PetSet 工作的例子：
+
 * 像 MySQL 或 PostgreSQL 这样的数据库应用，在任何时候都需要一个单独的实例连接到NFS持久卷上
 * 集群化软件，如Zookeeper、Etcd 或 Elasticsearch，它们需要稳定的成员关系。
 
@@ -179,7 +181,7 @@ Before you start deploying applications as PetSets, there are a few limitations 
 在您开始将应用部署为 PetSet之前，您需要明白几点局限性。
 
 * PetSet 是一个 *alpha* 资源，在Kubernetes 1.3 之前的版本不可用
-* 就像所有的 alpha/beta 资源一样，您也可以通过给 apiserver 传递 --runtime-config 选项来禁用 PetSet，事实上在市场上提供的 Kubernetes 托管服务中这些资源非常有可能已经被禁用了。
+* 就像所有的 alpha/beta 资源一样，您也可以通过给 apiserver 传递 `--runtime-config` 选项来禁用 PetSet，事实上在市场上提供的 Kubernetes 托管服务中这些资源非常有可能已经被禁用了。
 * PetSet 中唯一可以更改的域是 `replicas`.
 * 一个 Pet 的存储由基于请求的 `storage class` 的[persistent volume provisioner](https://github.com/kubernetes/examples/tree/{{page.githubbranch}}/staging/persistent-volume-provisioning/README.md) 提供，或者由管理员预先提供。需要注意的是提供 persistent volume 特性目前也处于 alpha 阶段。
 * 删除或减少 PetSet 的 Pet 数量不会删除已关联到 PetSet 的 volume。这是为了保证安全第一，您的数据比自动清除所有相关的PetSet资源更有价值。 **删除 Persistent Volume Claims 将导致关联的 volume 被删除**.
@@ -507,7 +509,7 @@ Edit the image on the PetSet to `gcr.io/google_containers/nginx-slim:0.7` and de
 -->
 ## 镜像升级
 
-当前，PetSet *不支持*镜像自动升级，这一点在[局限性](#alpha-limitations)章节有描述，但是您可以更新 podTemplate 中任一容器的 `image` 字段，然后一个个地删除掉所有的 Pet ，PetSet 控制器将使用新的镜像重新创建它们。
+当前，PetSet *不支持* 镜像自动升级，这一点在[局限性](#alpha-limitations)章节有描述，但是您可以更新 podTemplate 中任一容器的 `image` 字段，然后一个个地删除掉所有的 Pet ，PetSet 控制器将使用新的镜像重新创建它们。
 
 将 PetSet 的 镜像修改为 `gcr.io/google_containers/nginx-slim:0.7`，然后删除一个 Pet：
 
@@ -620,7 +622,7 @@ annotations:
 <!--
 This field is a debugging hook. It pauses any scale up/down operations on the entire PetSet. If you'd like to pause a petset after each pet, set it to `false` in the template, wait for each pet to come up, verify it has initialized correctly, and then set it to `true` using `kubectl edit` on the pet (setting it to `false` on *any pet* is enough to pause the PetSet). If you don't need it, create the PetSet with it set to `true` as shown. This is surprisingly useful in debugging bootstrapping race conditions.
 -->
-这个字段是一个调试勾子。它暂停了所有在 PetSet 上的扩张和收缩操作。如果你希望在任一个 Pet 之后暂停一个 PetSet，在模板中将这个字段设置为`false`，等待每个 pet 起来，验证其是否已经正确初始化，然后再使用 `kubectl edit` 将 Pet 的这个字段设置为 `true` （在 *任一个 Pet * 上将这个字段设置为 `false` 都足以暂停整个 PetSet）。如您不需要这个设置，像上面那样创建一个  PetSet 时将其值设置为 `true`。这在调试启动竞争条件时非常有用。
+这个字段是一个调试勾子。它暂停了所有在 PetSet 上的扩张和收缩操作。如果你希望在任一个 Pet 之后暂停一个 PetSet，在模板中将这个字段设置为`false`，等待每个 pet 起来，验证其是否已经正确初始化，然后再使用 `kubectl edit` 将 Pet 的这个字段设置为 `true` （在 *任一个 Pet* 上将这个字段设置为 `false` 都足以暂停整个 PetSet）。如您不需要这个设置，像上面那样创建一个  PetSet 时将其值设置为 `true`。这在调试启动竞争条件时非常有用。
 
 <!--
 ## Future Work
