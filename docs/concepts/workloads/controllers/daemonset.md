@@ -166,7 +166,7 @@ when the pod is created, so it is ignored by the scheduler).  Therefore:
    bootstrap.
 -->
 
-## 如果调度 Daemon Pod
+## 如何调度 Daemon Pod
 
 正常情况下，Pod 运行在哪个机器上是由 Kubernetes 调度器进行选择的。然而，由 Daemon Controller 创建的 Pod 已经确定了在哪个机器上（Pod 创建时指定了 `.spec.nodeName`），因此：
 
