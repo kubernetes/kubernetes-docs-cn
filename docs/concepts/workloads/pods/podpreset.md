@@ -68,7 +68,7 @@ Kubernetes 提供了一个准入控制器（`PodPreset`），当其启用时，�
 1. 检索所有可用的 `PodPresets`。
 2. 检查 PodPreset 标签选择器上的标签，看看其是否能够匹配正在创建的 Pod 上的标签。
 3. 尝试将由 `PodPreset` 定义的各种资源合并到正在创建的 Pod 中。
-4. 出现错误时，在该 Pod 上引发记录合并错误的事件，PodPreset *不会*注入任何资源到创建的 Pod 中。
+4. 出现错误时，在该 Pod 上引发记录合并错误的事件，PodPreset *不会* 注入任何资源到创建的 Pod 中。
 5. 注释刚生成的修改过的 Pod spec，以表明它已被 PodPreset 修改过。注释的格式为 `podpreset.admission.kubernetes.io/podpreset-<pod-preset name>": "<resource version>"`。
 
 <!--
@@ -82,7 +82,7 @@ Each Pod can be matched zero or more Pod Presets; and each `PodPreset` can be ap
 
 每个 Pod 可以匹配零个或多个 Pod Prestet；并且每个 `PodPreset` 可以应用于零个或多个 Pod。 `PodPreset` 应用于一个或多个 Pod 时，Kubernetes 会修改 Pod Spec。对于 `Env`、`EnvFrom` 和 `VolumeMounts` 的更改，Kubernetes 修改 Pod 中所有容器的容器 spec；对于 `Volume` 的更改，Kubernetes 修改 Pod Spec。
 
-**注意：**Pod Preset 可以在适当的时候修改 Pod spec 中的 `spec.containers` 字段。Pod Preset 中的资源定义将*不会*应用于 `initContainers` 字段。
+**注意：** Pod Preset 可以在适当的时候修改 Pod spec 中的 `spec.containers` 字段。Pod Preset 中的资源定义将 *不会* 应用于 `initContainers` 字段。
 
 {: .note}
 

@@ -90,7 +90,7 @@ web server that uses a persistent volume for shared storage between the containe
 
 ![pod diagram](/images/docs/pod.svg){: style="max-width: 50%" }
 
-*一个包含了多个容器的 pod，包含了一个文件下拉器和 web 服务器，其中 web 服务器使用持久卷作为容器间的共享存储。
+* 一个包含了多个容器的 pod，包含了一个文件下拉器和 web 服务器，其中 web 服务器使用持久卷作为容器间的共享存储。
 <!--
 ## Motivation for pods
 
@@ -106,7 +106,7 @@ handled automatically for containers in a pod.
 -->
 ## 为什么需要 pod ？
 
-###管理需求
+### 管理需求
 
 Pod 是这样一个模式的抽象：互相协作的多个进程共同形成一个完整的服务。通过提供对应用的更高层次的抽象，pod简化了应用部署和管理。pod是部署、水平扩展以及复制的基本单元。容器的协同工作（协同调度)，共享生命周期(比如说：终止), 复制协调，资源共享以及依赖管理都自动在 pod 内部进行处理。
 <!--
@@ -127,7 +127,7 @@ In addition to defining the application containers that run in the pod, the pod
 specifies a set of shared storage volumes. Volumes enable data to survive
 container restarts and to be shared among the applications within the pod.
 -->
-###资源共享和通信
+### 资源共享和通信
 
 Pod 内部实现了数据共享和相互通信。
 
@@ -152,11 +152,12 @@ programs, such as:
 ## pods 的使用
 
 Pods 可以被用于托管垂直集成的应用栈（比如说 LAMP)，但是 pod 最显著的优势是支持协同定位，协作管理辅助程序。比如说：
-*内容管理系统， 文件和数据的导入，本地缓存管理等。
-*日志和检查点的备份，压缩，轮转，快照等。
-*数据变化监测，日志检测，日志和监控，事件发布等。
-*代理， 桥接器, 和连接器。
-*控制，管理，配置和更新管理。
+
+* 内容管理系统， 文件和数据的导入，本地缓存管理等。
+* 日志和检查点的备份，压缩，轮转，快照等。
+* 数据变化监测，日志检测，日志和监控，事件发布等。
+* 代理， 桥接器, 和连接器。
+* 控制，管理，配置和更新管理。
 <!--
 Individual pods are not intended to run multiple instances of the same
 application, in general.
@@ -167,9 +168,7 @@ Containers](http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-pat
 -->
 通常独立的 pod 不应该用于运行同一应用的多个实例。
 
-关于这部分的详细解释，请参见[The Distributed System ToolKit: Patterns for
-Composite
-Containers](http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html)。
+关于这部分的详细解释，请参见[The Distributed System ToolKit: Patterns for Composite Containers](http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html)。
 <!--
 ## Alternatives considered
 
@@ -189,11 +188,14 @@ _Why not just run multiple programs in a single (Docker) container?_
 -->
 ## 关于选择的思考
 
-_为什么不在一个容器 (Docker) 里运行多个程序？
+_为什么不在一个容器 (Docker) 里运行多个程序_？
 
 1.透明度。让 pod 里的容器可见于框架，框架则可以很容易的给这些容器提供服务，比如说：进程管理，资源监控。 这种机制给用户带来了很大的便利。
+
 2.解耦软件依赖。每一个独立的容器都可以单独管理版本，也可以单独重构和重新部署。 Kubernetes 甚至有一天可以实现为单独容器的在线升级。
+
 3.易用性。用户们不需要运行自己的进程管理，也不需要担心信号和退出处理等等。
+
 4.效率。由于基础设施承担了更多的职责，容器从而变得更加轻量级。
 <!--
 _Why not support affinity-based co-scheduling of containers?_
@@ -288,7 +290,7 @@ Force deletion of a pod is defined as deletion of a pod from the cluster state a
 
 Force deletions can be potentially dangerous for some pods and should be performed with caution. In case of StatefulSet pods, please refer to the task documentation for [deleting Pods from a StatefulSet](/docs/tasks/run-application/force-delete-stateful-set-pod/).
 -->
-###强制删除 pods
+### 强制删除 pods
 
 强制删除一个 pod 是从集群状态还有 etcd 里立刻删除这个 pod. 当 Pod 被强制删除时， api 服务器不会等待来自 Pod 所在节点上的 kubelet 的确认信息：pod 已经被终止。在 API 里 pod 会被立刻删除，这样新的 pod 就能被创建并且使用完全一样的名字。在节点上， pods 被设置成立刻终止后，在强行杀掉前还会有一个很小的宽限期。
 
@@ -297,7 +299,7 @@ Force deletions can be potentially dangerous for some pods and should be perform
 
 From Kubernetes v1.1, any container in a pod can enable privileged mode, using the `privileged` flag on the `SecurityContext` of the container spec. This is useful for containers that want to use linux capabilities like manipulating the network stack and accessing devices. Processes within the container get almost the same privileges that are available to processes outside a container. With privileged mode, it should be easier to write network and volume plugins as separate pods that don't need to be compiled into the kubelet.
 -->
-##Pod 容器的特权模式
+## Pod 容器的特权模式
 
 从 Kubernetes v1.1 开始， pod 的容器都可以启动特权模式，只需要将 container spec 的 SecurityContext 指定为 privileged 标志。这对于那些想使用网络栈操作以及访问系统设备等 Linux 能力的容器来说，是个非常有用的功能。 容器里的进程获得了与容器外进程几乎完全相同的权限。有了特权模式，编写网络和卷插件变得更加容易，因为它们可以作为独立的 Pod 运行，而无需编译到 kubelet 中去。
 
@@ -325,5 +327,4 @@ API object can be found at: [Pod API
 object](/docs/api-reference/v1.6/#pod-v1-core).
 -->
 ## API 对象
-Pod 是一个 Kubernetes REST API 的顶层资源。更多关于 API 对象的信息可以在 [Pod API
-object](/docs/api-reference/v1.6/#pod-v1-core) 找到。
+Pod 是一个 Kubernetes REST API 的顶层资源。更多关于 API 对象的信息可以在 [Pod API object](/docs/api-reference/v1.6/#pod-v1-core) 找到。

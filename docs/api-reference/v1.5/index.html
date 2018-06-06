@@ -536,7 +536,7 @@ inspect them.</p>
 <p>本节包含用于在集群上运行工作负载的最基本命令 .</p>
 <ul>
 <li><code>run</code> 将开始在集群上运行一个或多个容器映像的实例 .</li>
-<li><code>expose</code> 将负载平衡运行实例的流量，并且可以创建一个HA代理，用于从群集外部访问容器 .</li>
+<li><code>expose</code> 将负载平衡运行实例的流量，并且可以创建一个HA代理，用于从集群外部访问容器 .</li>
 </ul>
 <p>一旦您的工作负载正在运行，您可以使用
 <a href="#-strong-working-with-apps-strong-">使用应用程序</a> 部分中的命令来检查它们</p>
@@ -4426,7 +4426,7 @@ viewing your workloads in a Kubernetes cluster.</p>
 -->
 <h1 id="-strong-app-management-strong-"><strong>APP 管理</strong></h1>
 <p>本节包含用于创建，更新，删除和
-在 Kubernetes 群集中查看您的工作负载.</p>
+在 Kubernetes 集群中查看您的工作负载.</p>
 <hr>
 <h1 id="annotate">annotate</h1>
 <blockquote class="code-block example">
@@ -4626,7 +4626,7 @@ viewing your workloads in a Kubernetes cluster.</p>
 </blockquote>
 <pre class="code-block example"><code class="lang-shell"><span class="hljs-comment">kubectl</span> <span class="hljs-comment">autoscale</span> <span class="hljs-comment">rc</span> <span class="hljs-comment">foo</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">max=5</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">cpu</span><span class="hljs-literal">-</span><span class="hljs-comment">percent=80</span>
 </code></pre>
-<p>创建一个自动缩放器，可自动选择并设置在 kubernetes 群集中运行的 pod 数量. </p>
+<p>创建一个自动缩放器，可自动选择并设置在 kubernetes 集群中运行的 pod 数量. </p>
 <p>通过名称查找 Deployment，ReplicaSet 或 ReplicationController，并创建一个使用给定资源作为参考的自动缩放器. 一个自动缩放器可以根据需要自动增加或减少系统中部署的 pod 数量.</p>
 <h3 id="usage">用法</h3>
 <p><code>$ autoscale (-f FILENAME | TYPE NAME | TYPE/NAME) [--min=MINPODS] --max=MAXPODS [--cpu-percent=CPU] [flags]</code></p>
@@ -6557,7 +6557,7 @@ viewing your workloads in a Kubernetes cluster.</p>
 <td>export</td>
 <td></td>
 <td>false</td>
-<td>如果为 true，请使用 “export” 作为资源. 导出的资源被剥离了针对特定于群集的信息. </td>
+<td>如果为 true，请使用 “export” 作为资源. 导出的资源被剥离了针对特定于集群的信息. </td>
 </tr>
 <tr>
 <td>filename</td>
@@ -9887,7 +9887,7 @@ applications.</p>
 </table>
 <hr>
 <h1 id="cluster-info">cluster-info</h1>
-<p>显示主机和服务的地址，标签为 kubernetes.io/cluster-service=true .要进一步调试和诊断群集问题，请使用 'kubectl cluster-info dump'.</p>
+<p>显示主机和服务的地址，标签为 kubernetes.io/cluster-service=true .要进一步调试和诊断集群问题，请使用 'kubectl cluster-info dump'.</p>
 <h3 id="usage">用法</h3>
 <p><code>$ cluster-info</code></p>
 <h3 id="flags">标示</h3>
@@ -9912,7 +9912,7 @@ applications.</p>
 <hr>
 <h2 id="-em-dump-em-"><em>dump</em></h2>
 <blockquote class="code-block example">
-<p> 将当前群集状态转储到 stdout</p>
+<p> 将当前集群状态转储到 stdout</p>
 </blockquote>
 <pre class="code-block example"><code class="lang-shell"><span class="hljs-attribute">kubectl</span> cluster-<span class="hljs-literal">info</span> dump
 </code></pre>
@@ -9932,7 +9932,7 @@ applications.</p>
 <pre class="code-block example"><code class="lang-shell">kubectl <span class="hljs-keyword">cluster</span>-info dump --namespaces <span class="hljs-keyword">default</span>,kube-<span class="hljs-keyword">system</span> --output-directory=/path/to/<span class="hljs-keyword">cluster</span>-state
 </code></pre>
 <p>转储集群信息适用于调试和诊断集群问题. 默认情况下，将所有内容转储到 stdout. 您可以选择使用 --output-directory 指定目录. 如果您指定一个目录，kubernetes 将在该目录中构建一组文件. 默认情况下，只会转储 “kube-system” 命名空间中的内容，但是您可以使用 --namespaces 标志切换到其他命名空间，也可以指定 --all 命名空间来转储所有命名空间.</p>
-<p>该命令还将转储群集中所有 pod 的日志，这些日志根据命名空间和 pod 名称转储到不同的目录中.</p>
+<p>该命令还将转储集群中所有 pod 的日志，这些日志根据命名空间和 pod 名称转储到不同的目录中.</p>
 <h3 id="usage">用法</h3>
 <p><code>$ dump</code></p>
 <h3 id="flags">标示</h3>
@@ -10858,7 +10858,7 @@ applications.</p>
 <hr>
 <h2 id="-em-set-cluster-em-"><em>set-cluster</em></h2>
 <blockquote class="code-block example">
-<p> 仅设置 e2e 群集条目上的服务器字段，而不触及其他值.</p>
+<p> 仅设置 e2e 集群条目上的服务器字段，而不触及其他值.</p>
 </blockquote>
 <pre class="code-block example"><code class="lang-shell"><span class="hljs-string">kubectl </span><span class="hljs-string">config </span><span class="hljs-built_in">set-cluster</span> <span class="hljs-string">e2e </span><span class="hljs-built_in">--server=https://1.2.3.4</span>
 </code></pre>
