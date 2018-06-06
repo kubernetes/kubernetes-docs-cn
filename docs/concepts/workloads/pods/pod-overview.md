@@ -7,8 +7,6 @@ redirect_from:
 - "/docs/concepts/abstractions/pod.html"
 - "/docs/user-guide/pod-templates/"
 - "/docs/user-guide/pod-templates.html"
-reviewers:
-- angao
 ---
 
 <!--
