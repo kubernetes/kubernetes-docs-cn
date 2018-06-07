@@ -275,7 +275,7 @@ The Node controller only works with Node objects. It requires full access to get
 节点控制器只作用于节点对象。 它需要对节点对象的全部访问权限：获取、列举、创建、更新、打补丁（patch）、监视（watch）和删除
 
 v1/Node: 
-
+`
 - Get
 - List
 - Create
