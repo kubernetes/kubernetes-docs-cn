@@ -229,7 +229,7 @@ In this new model, the kubelet initializes a node without cloud-specific informa
 
 The PersistentVolumeLabels controller moves the cloud-dependent functionality of the Kubernetes API server to the CCM as described in the preceding sections.
 -->
-### 3. Kubernets API 服务器
+### 3. Kubernetes API 服务器
 
 如前面的章节所述，PersistentVolumeLabel 控制器将 Kubernetes API 服务器中依赖云服务的功能移到了 CCM 中。
 
@@ -275,6 +275,7 @@ The Node controller only works with Node objects. It requires full access to get
 节点控制器只作用于节点对象。 它需要对节点对象的全部访问权限：获取、列举、创建、更新、打补丁（patch）、监视（watch）和删除
 
 v1/Node: 
+`
 - Get
 - List
 - Create
@@ -292,6 +293,7 @@ The route controller listens to Node object creation and configures routes appro
 路由控制器监听节点对象的创建，并适当地配置路由。 它需要节点对象的获取权限。
 
 v1/Node: 
+
 - Get
 
 <!--
@@ -312,6 +314,7 @@ To set up endpoints for the Services, it requires access to create, list, get, w
 
 为给服务设置端点，它需要创建、列举、获取、监视和更新的权限。
 v1/Service:
+
 - List
 - Get
 - Watch
@@ -329,6 +332,7 @@ PersistentVolumeLabel 控制器监听 PersistentVolume (PV) 创建事件，并�
 获取和更新权限。
 
 v1/PersistentVolume:
+
 - Get
 - List
 - Watch
@@ -344,11 +348,13 @@ The implementation of the core of CCM requires access to create events, and to e
 CCM 的核心实现需要事件对象的创建权限，同时为保证安全操作，需要创建服务账户（ServiceAccount）的权限。
 
 v1/Event:
+
 - Create
 - Patch
 - Update
 
 v1/ServiceAccount:
+
 - Create
 
 <!--
