@@ -122,7 +122,7 @@ Authorization in Kubernetes is intentionally high level, focused on coarse actio
 More powerful controls exist as **policies** to limit by use case how those objects act on the 
 cluster, themselves, and other resources.
 -->
-Kubernetes 中的授权故意设置为了高层级，它侧重于对资源的粗行为。更强大的控制是以通过用例限制这些对象如何作用于集群、自身和其他资源上的**策略**存在的。
+Kubernetes 中的授权有意设置为了高层级，它侧重于对资源的粗略行为。更强大的控制是以通过用例限制这些对象如何作用于集群、自身和其他资源上的**策略**存在的。
 
 <!--
 ### Limiting resource usage on a cluster
