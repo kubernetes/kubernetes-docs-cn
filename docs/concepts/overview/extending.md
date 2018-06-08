@@ -111,7 +111,7 @@ the guidance in this doc you can write highly available and robust automation.
 Automation generally works with any Kubernetes cluster, including hosted
 clusters and managed installations.
 -->
-Kubernetes 的设计是通过编写客户端程序来实现自动化的。任何 读和（或）写 Kubernetes API 的程序都可以提供有用的自动化工作。*自动化*程序可以运行在集群之中或之外。按照本文档的指导，您可以编写出高可用的和健壮的自动化程序。自动化程序通常适用于任何 Kubernetes 集群，包括托管集群和受管理安装的集群。
+Kubernetes 的设计是通过编写客户端程序来实现自动化的。任何 读和（或）写 Kubernetes API 的程序都可以提供有用的自动化工作。*自动化* 程序可以运行在集群之中或之外。按照本文档的指导，您可以编写出高可用的和健壮的自动化程序。自动化程序通常适用于任何 Kubernetes 集群，包括托管集群和受管理安装的集群。
 
 <!--
 There is a specific pattern for writing client programs that work well with
@@ -170,31 +170,31 @@ This diagram shows the extension points in a Kubernetes system.
 <!--
 1.   Users often interact with the Kubernetes API using `kubectl`. [Kubectl plugins](docs/tasks/extend-kubectl/kubectl-plugins) extend the kubectl binary. They only affect the individual user's local environment, and so cannot enforce site-wide policies.
 -->
-1.   用户通常使用 `kubectl` 与 Kubernetes API 进行交互。[kubectl 插件](docs/tasks/extend-kubectl/kubectl-plugins) 扩展了 kubectl 二进制程序。它们只影响个人用户的本地环境，因此不能执行站点范围的策略。
+1. 用户通常使用 `kubectl` 与 Kubernetes API 进行交互。[kubectl 插件](docs/tasks/extend-kubectl/kubectl-plugins) 扩展了 kubectl 二进制程序。它们只影响个人用户的本地环境，因此不能执行站点范围的策略。
 <!--
 2.   The apiserver handles all requests. Several types of extension points in the apiserver allow authenticating requests, or blocking them based on their content, editing content, and handling deletion. These are described in the [API Access Extensions](docs/concepts/overview/extending#api-access-extensions) section.
 -->
-2.   apiserver 处理所有请求。 apiserver 中的几种类型的扩展点允许对请求进行身份认证或根据其内容对其进行阻止、编辑内容以及处理删除操作。这些内容在 [API 访问扩展](docs/concepts/overview/extending#api-访问扩展) 小节中描述。
+2. apiserver 处理所有请求。 apiserver 中的几种类型的扩展点允许对请求进行身份认证或根据其内容对其进行阻止、编辑内容以及处理删除操作。这些内容在 [API 访问扩展](docs/concepts/overview/extending#api-访问扩展) 小节中描述。
 <!--
 3.   The apiserver serves various kinds of *resources*. *Built-in resource kinds*, like `pods`, are defined by the Kubernetes project and can't be changed. You can also add resources that you define, or that other projects have defined, called *Custom Resources*, as explained in the [Custom Resources](docs/concepts/overview/extending#custom-resources) section. Custom Resources are often used with API Access Extensions.
 -->
-3.   apiserver 提供各种 *资源*。 *内置的资源种类*，如 `pods` ，由 Kubernetes 项目定义，不能更改。 您还可以添加您自己定义的资源或其他项目已定义的资源，称为 *自定义资源*，如 [自定义资源](docs/concepts/overview/extending#用户自定义类型) 部分所述。 自定义资源通常与 API 访问扩展一起使用。
+3. apiserver 提供各种 *资源*。 *内置的资源种类*，如 `pods` ，由 Kubernetes 项目定义，不能更改。 您还可以添加您自己定义的资源或其他项目已定义的资源，称为 *自定义资源*，如 [自定义资源](docs/concepts/overview/extending#用户自定义类型) 部分所述。 自定义资源通常与 API 访问扩展一起使用。
 <!--
 4.   The Kubernetes scheduler decides which nodes to place pods on. There are several ways to extend scheduling. These are described in the [Scheduler Extensions](docs/concepts/overview/extending#shceduler-extensions) section.
 -->
-4.   Kubernetes 调度器决定将 pod 放置到哪个节点。 有几种方法可以扩展调度器。这些内容在 [Scheduler Extensions](docs/concepts/overview/extending#调度器扩展) 小节中描述。
+4. Kubernetes 调度器决定将 pod 放置到哪个节点。 有几种方法可以扩展调度器。这些内容在 [Scheduler Extensions](docs/concepts/overview/extending#调度器扩展) 小节中描述。
 <!--
 5.   Much of the behavior of Kubernetes is implemented by programs called Controllers which are clients of the API-Server. Controllers are often used in conjunction with Custom Resources.
 -->
-5.   Kubernetes 的大部分行为都是由称为控制器的程序实现的，这些程序是 API-Server 的客户端。 控制器通常与自定义资源一起使用。
+5. Kubernetes 的大部分行为都是由称为控制器的程序实现的，这些程序是 API-Server 的客户端。 控制器通常与自定义资源一起使用。
 <!--
 6.   The kubelet runs on servers, and helps pods appear like virtual servers with their own IPs on the cluster network. [Network Plugins](docs/concepts/overview/extending#network-plugins) allow for different implementations of pod networking.
 -->
-6.   kubelet 在主机上运行，并帮助 pod 看起来就像在集群网络上拥有自己的 IP 的虚拟服务器。[网络插件](docs/concepts/overview/extending#网络插件) 让您可以实现不同的 pod 网络。
+6. kubelet 在主机上运行，并帮助 pod 看起来就像在集群网络上拥有自己的 IP 的虚拟服务器。[网络插件](docs/concepts/overview/extending#网络插件) 让您可以实现不同的 pod 网络。
 <!--
 7.  The kubelet also mounts and unmounts volumes for containers. New types of storage can be supported via [Storage Plugins](docs/concepts/overview/extending#storage-plugins).
 -->
-7.  kubelet 也挂载和卸载容器的卷。 新的存储类型可以通过 [存储插件](docs/concepts/overview/extending#存储插件) 支持。
+7. kubelet 也挂载和卸载容器的卷。 新的存储类型可以通过 [存储插件](docs/concepts/overview/extending#存储插件) 支持。
 
 <!--
 If you are unsure where to start, this flowchart can help. Note that some solutions may involve several types of extensions.
@@ -314,15 +314,15 @@ After a request is authorized, if it is a write operation, it also t goes throug
 <!--
 *   The [Image Policy webhook](/docs/admin/admission-controllers/#imagepolicywebhook) restricts what images can be run in containers.
 -->
-*   [镜像策略 webhook](/docs/admin/admission-controllers/#imagepolicywebhook) 限制了哪些镜像可以在容器中运行。
+* [镜像策略 webhook](/docs/admin/admission-controllers/#imagepolicywebhook) 限制了哪些镜像可以在容器中运行。
 <!--
 *   To make arbitrary admission control decisions, a general [Admission webhook](/docs/admin/extensible-admission-controllers/#external-admission-webhooks) can be used. Admission Webhooks can reject creations or updates.
 -->
-*   为了进行灵活的准入控制决策，可以使用通用的 [Admission webhook](/docs/admin/extensible-admission-controllers/#external-admission-webhooks)。 Admission Webhook 可以拒绝创建或更新操作。
+* 为了进行灵活的准入控制决策，可以使用通用的 [Admission webhook](/docs/admin/extensible-admission-controllers/#external-admission-webhooks)。 Admission Webhook 可以拒绝创建或更新操作。
 <!--
 *   [Initializers](/docs/admin/extensible-admission-controllers/#initializers) are controllers that can modify objects before they are created. Initializers can modify initial object creations but cannot affect updates to objects. Initializers can also reject objects.
 -->
-*   [初始器](/docs/admin/extensible-admission-controllers/#initializers) 是可以在创建对象之前修改对象的控制器。初始器可以修改初始对象的创建，但不能影响对对象的更新。初始器也可以拒绝对象。
+* [初始器](/docs/admin/extensible-admission-controllers/#initializers) 是可以在创建对象之前修改对象的控制器。初始器可以修改初始对象的创建，但不能影响对对象的更新。初始器也可以拒绝对象。
 
 <!--
 ## Infrastructure Extensions
@@ -340,8 +340,7 @@ After a request is authorized, if it is a write operation, it also t goes throug
 ) allow users to mount volume types without built-in support by having the
 Kubelet call a Binary Plugin to mount the volume.
 -->
-[Flex Volumes](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/storage/flexvolume-deployment.md
-) 允许用户挂载无内置插件支持的卷类型，它通过 Kubelet 调用一个二进制插件来挂载卷。
+[Flex Volumes](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/storage/flexvolume-deployment.md) 允许用户挂载无内置插件支持的卷类型，它通过 Kubelet 调用一个二进制插件来挂载卷。
 
 
 <!--
@@ -379,9 +378,7 @@ continuing to use other Kubernetes components, or [multiple
 schedulers](/docs/tasks/administer-cluster/configure-multiple-schedulers/)
 can run at the same time.
 -->
-调度器是一种特殊类型的控制器，用于监视 pod 并将其分配到节点。默认的调度器可以完全被替换，而
-继续使用其他 Kubernetes 组件，或者可以同时运行 [多个
-调度器](/docs/tasks/administer-cluster/configure-multiple-schedulers/)。
+调度器是一种特殊类型的控制器，用于监视 pod 并将其分配到节点。默认的调度器可以完全被替换，而继续使用其他 Kubernetes 组件，或者可以同时运行 [多个调度器](/docs/tasks/administer-cluster/configure-multiple-schedulers/)。
 
 <!--
 This is a significant undertaking, and almost all Kubernetes users find they
