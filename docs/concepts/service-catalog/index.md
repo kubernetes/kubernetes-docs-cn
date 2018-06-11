@@ -183,34 +183,36 @@ The following is a sequence diagram illustrating the steps involved in listing M
 1. 一旦 `ClusterServiceBroker` 资源被添加到了服务目录之后，将会触发一个到外部服务代理的 *List Services* 调用。
 2. 服务代理返回可用的托管服务和服务计划列表，这些列表将本地缓存在 `ClusterServiceClass` 和 `ClusterServicePlan` 资源中。
 3. 然后{% glossary_tooltip text="集群运维人员" term_id="cluster-operator" %} 可以使用以下命令获取可用托管服务的列表：
-
+      ```shell
         kubectl get clusterserviceclasses -o=custom-columns=SERVICE\ NAME:.metadata.name,EXTERNAL\ NAME:.spec.externalName
+      ```
 
 <!--
     It should output a list of service names with a format similar to:
 -->
     它应该输出一个和以下格式类似的服务名称列表：
-
+      ```
         SERVICE NAME                           EXTERNAL NAME
         4f6e6cf6-ffdd-425f-a2c7-3c9258ad2468   cloud-provider-service
         ...                                    ...
-
+      ```
 <!--
     They can also view the Service Plans available using the following command:
 -->
     他们还可以使用以下命令查看可用的服务计划：
-
+      ```shell
         kubectl get clusterserviceplans -o=custom-columns=PLAN\ NAME:.metadata.name,EXTERNAL\ NAME:.spec.externalName
+      ```
 
 <!--
     It should output a list of plan names with a format similar to:
 -->
     它应该输出一个和以下格式类似的服务计划列表：
-
+      ```
         PLAN NAME                              EXTERNAL NAME
         86064792-7ea2-467b-af93-ac9694d96d52   service-plan-name
         ...                                    ...
-
+      ```
 
 <!--
 ### Provisioning a new instance
