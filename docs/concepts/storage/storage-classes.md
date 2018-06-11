@@ -361,7 +361,7 @@ parameters:
   -->
 * `secretNamespace`，`secretName`：Secret 实例的标识，包含与 Gluster REST 服务交互时使用的用户密码。
   这些参数是可选的，`secretNamespace` 和 `secretName` 都省略是使用空密码。提供的密码必须有 "kubernetes.io/glusterfs" type，例如以这种方式创建：
-  ```
+  ```shell
   kubectl create secret generic heketi-secret \
     --type="kubernetes.io/glusterfs" --from-literal=key='opensesame' \
     --namespace=default
@@ -458,7 +458,7 @@ parameters:
 
 1. 使用用户指定的磁盘格式创建一个 StorageClass。
 
-   ```
+   ```yaml
     kind: StorageClass
     apiVersion: storage.k8s.io/v1
     metadata:
@@ -480,7 +480,7 @@ parameters:
 
 2. 在用户指定的数据存储上创建磁盘格式的 StorageClass。
 
-```
+```yaml
  kind: StorageClass
  apiVersion: storage.k8s.io/v1
  metadata:
@@ -844,11 +844,11 @@ parameters:
   如果不提供存储帐户，会搜索所有与资源相关的存储帐户，以找到一个匹配 `skuName` 和 `location` 的账号。
   如果提供存储帐户，它必须存在于与集群相同的资源组中，`skuName` 和 `location` 会被忽略。
 
-During provision, a secret is created for mounting credentials. If the cluster
+<!-- During provision, a secret is created for mounting credentials. If the cluster
 has enabled both [RBAC](/docs/admin/authorization/rbac/) and
 [Controller Roles](/docs/admin/authorization/rbac/#controller-roles), add the
 `create` permission of resource `secret` for clusterrole
-`system:controller:persistent-volume-binder`.
+`system:controller:persistent-volume-binder`. -->
 在分配期间，为挂载凭证创建一个 secret。如果集群同时启用了 [RBAC](/docs/admin/authorization/rbac/) 和 [Controller Roles](/docs/admin/authorization/rbac/#controller-roles)，
 为 `system:controller:persistent-volume-binder` 的 clusterrole 添加 `secret` 资源的 `create` 权限。
 
