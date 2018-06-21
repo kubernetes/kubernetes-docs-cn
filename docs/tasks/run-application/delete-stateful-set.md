@@ -62,7 +62,7 @@ kubectl delete -f <file.yaml> --cascade=false
 ```
 
 <!--By passing `--cascade=false` to `kubectl delete`, the Pods managed by the StatefulSet are left behind even after the StatefulSet object itself is deleted. If the pods have a label `app=myapp`, you can then delete them as follows:-->
-通过在使用`kubectl delete`命令时设置`--cascade = false`，即使在StatefulSet对象本身被删除之后，StatefulSet所管理的Pod也将会被保留下来。如果这些Pod包含标签`app=myapp`，您可以通过以下命令删除它：
+通过在使用`kubectl delete`命令时设置`--cascade=false`，即使在StatefulSet对象本身被删除之后，StatefulSet所管理的Pod也将会被保留下来。如果这些Pod包含标签`app=myapp`，您可以通过以下命令删除它：
 
 ```shell
 kubectl delete pods -l app=myapp
