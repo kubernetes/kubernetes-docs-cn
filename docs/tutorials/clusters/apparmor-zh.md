@@ -9,10 +9,4 @@ title: AppArmor
 {% assign for_k8s_version="v1.4" %}{% include feature-state-beta.md %}
 
 
-AppArmor is a Linux kernel security module that supplements the standard Linux user and group based
-permissions to confine programs to a limited set of resources. AppArmor can be configured for any
-application to reduce its potential attack surface and provide greater in-depth defense. It is
-configured through profiles tuned to whitelist the access needed by a specific program or container,
-such as Linux capabilities, network access, file permissions, etc. Each profile can be run in either
-*enforcing* mode, which blocks access to disallowed resources, or *complain* mode, which only reports
-violations.
+AppArmor是一个Linux内核安全模块，它补充标准的Linux用户和组权限以将程序限制在一组有限的资源中。可以为任何应用程序配置AppArmor，以减少其潜在的攻击面并提供更深入的防御。它通过调整配置文件，将特定程序或容器所需的访问权限列入白名单，例如Linux功能，网络访问，文件权限等。每个配置文件都可以在两种模式下运行，一种是强制模式，可以保持对资源的访问许可，或者投诉模式，仅报告违规行为。
