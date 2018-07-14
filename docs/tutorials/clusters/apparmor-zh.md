@@ -11,7 +11,7 @@ title: AppArmor
 
 AppArmor是一个Linux内核安全模块，它补充标准的Linux用户和组权限以将程序限制在一组有限的资源中。可以为任何应用程序配置AppArmor，以减少其潜在的攻击面并提供更深入的防御。它通过调整配置文件，将特定程序或容器所需的访问权限列入白名单，例如Linux功能，网络访问，文件权限等。每个配置文件都可以在两种模式下运行，一种是强制模式，可以保持对资源的访问许可，另一种是投诉模式，仅报告违规行为。
 
-AppArmor对用户的帮助包括：通过限制容器运行以获得更安全的部署，通过系统日志提供更好的审计。然而，重要的是要记住，AppArmor功能是有限的，它在防止程序代码漏洞上，也只能做这些了。重要的是提供好的、限制性的配置文件，并在其他方面强化应用程序和集群。
+AppArmor可以帮助用户实现：通过限制容器运行以获得更安全的部署，通过系统日志提供更好的审计。然而，需要注意的是，AppArmor功能是有限的，它在防止程序代码漏洞上，也只能做这些了。重要的是提供好的、限制性的配置文件，并在其他方面强化应用程序和集群。
 
 
 {% endcapture %}
@@ -28,12 +28,9 @@ AppArmor对用户的帮助包括：通过限制容器运行以获得更安全的
 
 {% capture prerequisites %}
 
-Make sure:
+请确保:
 
-1. Kubernetes version is at least v1.4 -- Kubernetes support for AppArmor was added in
-   v1.4. Kubernetes components older than v1.4 are not aware of the new AppArmor annotations, and
-   will **silently ignore** any AppArmor settings that are provided. To ensure that your Pods are
-   receiving the expected protections, it is important to verify the Kubelet version of your nodes:
+1. Kubernetes 的版本不能低于v1.4 -- Kubernetes对AppArmor的支持是从v1.4开始的。 低于Kubernetes1.4的版本将无视AppArmor的注释及设置。 请用如下方法节点的版本:
 
    ```shell
    $ kubectl get nodes -o=jsonpath=$'{range .items[*]}{@.metadata.name}: {@.status.nodeInfo.kubeletVersion}\n{end}'
