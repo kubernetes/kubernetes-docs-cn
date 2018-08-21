@@ -142,7 +142,7 @@ The following manifest describes a single-instance WordPress Deployment and Serv
 1. Create a WordPress Service and Deployment from the `wordpress-deployment.yaml` file:
 
       ```shell
-      kubectl create -f https://k8s.io/examples/wordpress/wordpress-deployment.yaml
+      kubectl create -f https://k8s.io/examples/application/wordpress/wordpress-deployment.yaml
       ```
 
 2. Verify that a PersistentVolume got dynamically provisioned:
@@ -169,8 +169,8 @@ The following manifest describes a single-instance WordPress Deployment and Serv
       The response should be like this:
 
       ```
-      NAME        CLUSTER-IP   EXTERNAL-IP   PORT(S)        AGE
-      wordpress   10.0.0.89    <pending>     80:32406/TCP   4m
+      NAME        TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)        AGE
+      wordpress   ClusterIP   10.0.0.89    <pending>     80:32406/TCP   4m
       ```
 
       {{< note >}}**Note:** Minikube can only expose Services through `NodePort`. The EXTERNAL-IP is always pending.{{< /note >}}

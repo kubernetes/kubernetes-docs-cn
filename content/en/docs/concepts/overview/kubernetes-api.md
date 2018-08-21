@@ -12,7 +12,7 @@ Overall API conventions are described in the [API conventions doc](https://git.k
 
 API endpoints, resource types and samples are described in [API Reference](/docs/reference).
 
-Remote access to the API is discussed in the [access doc](/docs/admin/accessing-the-api).
+Remote access to the API is discussed in the [Controlling API Access doc](/docs/reference/access-authn-authz/controlling-access/).
 
 The Kubernetes API also serves as the foundation for the declarative configuration schema for the system. The [kubectl](/docs/reference/kubectl/overview/) command-line tool can be used to create, update, delete, and get API objects.
 
@@ -109,8 +109,8 @@ There are two supported paths to extending the API with [custom resources](/docs
 
 1. [CustomResourceDefinition](/docs/tasks/access-kubernetes-api/extend-api-custom-resource-definitions/)
    is for users with very basic CRUD needs.
-1. Coming soon: users needing the full set of Kubernetes API semantics can implement their own apiserver
-   and use the [aggregator](https://git.k8s.io/community/contributors/design-proposals/api-machinery/aggregated-api-servers.md)
+1. Users needing the full set of Kubernetes API semantics can implement their own apiserver
+   and use the [aggregator](/docs/tasks/access-kubernetes-api/configure-aggregation-layer/)
    to make it seamless for clients.
 
 
