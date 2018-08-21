@@ -1,6 +1,6 @@
 # K8SMeetup 翻译流程与翻译校稿规范
 
- website上游仓库自2018年7月9日从Jeklly成功迁移至hugo。hugo提供了完善的中文化支持,目前官网 kubernetes.io已可以轻松切换中文站点,欢迎参与K8SMeetup的翻译，您的贡献会以最快的速度呈现在官网。
+ website上游仓库自2018年7月9日从Jeklly成功迁移至hugo。hugo提供了完善的中文化支持,目前官网 kubernetes.io已可以轻松切换中文站点,欢迎参与K8SMeetup的翻译，您的贡献会以最快的速度呈现在官网。
 
 **翻译流程: 讲解译者如何参与 `Kubernetes` 中文化文档翻译的过程。**
 
