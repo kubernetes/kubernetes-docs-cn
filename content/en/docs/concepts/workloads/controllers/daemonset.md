@@ -153,7 +153,7 @@ nodeAffinity:
 In addition, `node.kubernetes.io/unschedulable:NoSchedule` toleration is added
 automatically to DaemonSet Pods. The DaemonSet controller ignores
 `unschedulable` Nodes when scheduling DaemonSet Pods. You must enable
-`TaintModesByCondition` to ensure that the default scheduler behaves the same
+`TaintNodesByCondition` to ensure that the default scheduler behaves the same
 way and schedules DaemonSet pods on `unschedulable` nodes.
 
 When this feature and `TaintNodesByCondition` are enabled together, if DaemonSet
@@ -165,7 +165,7 @@ uses the host network, you must also add the
 
 Although Daemon Pods respect
 [taints and tolerations](/docs/concepts/configuration/taint-and-toleration),
-the following tolerations are added to DamonSet Pods automatically according to
+the following tolerations are added to DaemonSet Pods automatically according to
 the related features.
 
 | Toleration Key                           | Effect     | Alpha Features                                               | Version | Description                                                  |
