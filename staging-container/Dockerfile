@@ -23,4 +23,4 @@ COPY start.sh /start.sh
 WORKDIR /k8sdocs
 
 CMD [ "/start.sh" ]
-# For instructions, see http://kubernetes.io/editdocs/
+# For instructions, see https://kubernetes.io/docs/contribute/
