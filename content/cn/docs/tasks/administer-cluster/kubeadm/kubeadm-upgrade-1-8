@@ -1,0 +1,453 @@
+<!--
+
+---
+reviewers:
+- pipejakob
+- luxas
+- roberthbailey
+- jbeda
+title: Upgrading kubeadm clusters from 1.7 to 1.8
+content_template: templates/task
+---
+
+--->
+
+---
+reviewers:
+- pipejakob
+- luxas
+- roberthbailey
+- jbeda
+title: 将kubeadm 集群从1.7升级到1.8版本
+content_template: templates/task
+---
+
+{{% capture overview %}}
+<!--
+This guide is for upgrading `kubeadm` clusters from version 1.7.x to 1.8.x, as well as 1.7.x to 1.7.y and 1.8.x to 1.8.y where `y > x`.
+See also [upgrading kubeadm clusters from 1.6 to 1.7](/docs/tasks/administer-cluster/kubeadm-upgrade-1-7/) if you're on a 1.6 cluster currently.
+--->
+本文指导您将 `kubeadm` 集群从 1.7.x 升级到 1.8.x 版本，也包括从 1.7.x 到 1.7.y 版本和从 1.8.x 到 1.8.y 版本（`y > x`）
+
+{{% /capture %}}
+
+{{% capture prerequisites %}}
+<!--
+Before proceeding:
+
+- You need to have a functional `kubeadm` Kubernetes cluster running version 1.7.0 or higher in order to use the process described here.
+- Make sure you read the [release notes](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md#v180-beta1) carefully.
+- As `kubeadm upgrade` does not upgrade etcd make sure to back it up. You can, for example, use `etcdctl backup` to take care of this.
+- Note that `kubeadm upgrade` will not touch any of your workloads, only Kubernetes-internal components. As a best-practice you should back up what's important to you. For example, any app-level state, such as a database an app might depend on (like MySQL or MongoDB) must be backed up beforehand.
+
+Also, note that only one minor version upgrade is supported. That is, you can only upgrade from, say 1.7 to 1.8, not from 1.7 to 1.9.
+--->
+进行升级之前：
+
+- 您需要一个运行 1.7.0 版本或者更高版本的 `kubeadm` kubernetes 集群以便使用本文来进行安装。
+- 确保您阅读了[发行说明](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md#v180-beta1)。 
+- 由于 `kubeadm upgrade` 不升级 etcd，您需要确保先备份它。例如，您可以使用 `etcdctl backup` 来进行备份。
+- 请注意，kubeadm 升级不增加任何的负载，只设计 kubernetes 内部组件。作为最佳实践，您应该备份最重要的东西，例如：任何 app-level 状态，比如应用程序依赖MySQL or MongoDB的数据库在升级之前必须备份。
+
+同时，注意只有小版本升级是支持的。比如可以从 1.7 升级到 1.8 版本，而不能从 1.7 升级到 1.9 版本
+{{% /capture %}}
+
+{{% capture steps %}}
+<!--
+## Upgrading your control plane
+-->
+##升级控制面板
+<!--
+You have to carry out the following steps by executing these commands on your master node:
+-->
+您必须依照步骤，在 master 节点上执行这些命令：
+<!--
+1. Install the most recent version of `kubeadm` using `curl` like so:
+-->
+1. 使用 `curl` 命令安装 `kubeadm` 最新的版本，例如：
+{{< caution >}}
+```shell
+export VERSION=$(curl -sSL https://dl.k8s.io/release/stable.txt) # or manually specify a released Kubernetes version
+export ARCH=amd64 # or: arm, arm64, ppc64le, s390x
+curl -sSL https://dl.k8s.io/release/${VERSION}/bin/linux/${ARCH}/kubeadm > /usr/bin/kubeadm
+chmod a+rx /usr/bin/kubeadm
+```
+
+<!--
+**Caution:** Upgrading the `kubeadm` package on your system prior to
+upgrading the control plane causes a failed upgrade. Even though 
+`kubeadm` is shipped in the Kubernetes repositories, it's important 
+to install `kubeadm` manually. The kubeadm team is working on fixing
+this limitation. 
+
+--->
+**注意:**：在您的系统上升级控制面板之前先升级 `kubeadm` 会导致升级失败。尽管 `kubeadm` 存储在 kubernetes 仓库中，
+手动安装 `kubeadm` 是重要的。kubeadm 团队在努力解决这种手动安装的限制。
+
+{{< /caution >}}
+
+<!--
+
+Verify that this download of kubeadm works, and has the expected version:
+
+--->
+
+验证下载的 kubeadm 是否正常工作，并是否为预期的版本：
+```shell
+kubeadm version
+```
+<!--
+2. If this the first time you use `kubeadm upgrade`, in order to preserve the configuration for future upgrades, do:
+
+Note that for below you will need to recall what CLI args you passed to `kubeadm init` the first time.
+
+If you used flags, do:
+--->
+2. 如果这是您第一次使用 `kubeadm upgrade`，为了以后的升级需要保存配置，运行：
+
+请注意，对于下面的内容需要回顾第一次传递给 `kubeadm init` 的 CLI 参数是什么。
+
+如果使用标记，运行：
+
+```shell
+kubeadm config upload from-flags [flags]
+```
+<!--
+Where `flags` can be empty.
+
+If you used a config file, do:
+--->
+`flags` 标记在哪里是空的。
+
+如果您使用配置文件，运行：
+```shell
+kubeadm config upload from-file --config [config]
+```
+<!--
+Where the `config` is mandatory.
+
+3. On the master node, run the following:
+--->
+`config` 是必填的
+
+3. 在 master 节点上，运行如下命令：
+
+```shell
+kubeadm upgrade plan
+```
+<!--
+You should see output similar to this:
+
+-->
+
+可以看到类似如下的结果：
+<!--
+
+```shell
+[preflight] Running pre-flight checks
+[upgrade] Making sure the cluster is healthy:
+[upgrade/health] Checking API Server health: Healthy
+[upgrade/health] Checking Node health: All Nodes are healthy
+[upgrade/health] Checking Static Pod manifests exists on disk: All manifests exist on disk
+[upgrade/config] Making sure the configuration is correct:
+[upgrade/config] Reading configuration from the cluster...
+[upgrade/config] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+[upgrade] Fetching available versions to upgrade to:
+[upgrade/versions] Cluster version: v1.7.1
+[upgrade/versions] kubeadm version: v1.8.0
+[upgrade/versions] Latest stable version: v1.8.0
+[upgrade/versions] Latest version in the v1.7 series: v1.7.6
+
+Components that must be upgraded manually after you've upgraded the control plane with 'kubeadm upgrade apply':
+
+COMPONENT   CURRENT      AVAILABLE
+Kubelet     1 x v1.7.1   v1.7.6
+
+Upgrade to the latest version in the v1.7 series:
+
+COMPONENT            CURRENT   AVAILABLE
+API Server           v1.7.1    v1.7.6
+Controller Manager   v1.7.1    v1.7.6
+Scheduler            v1.7.1    v1.7.6
+Kube Proxy           v1.7.1    v1.7.6
+Kube DNS             1.14.4    1.14.4
+
+
+You can now apply the upgrade by executing the following command:
+
+	kubeadm upgrade apply v1.7.6
+
+_____________________________________________________________________
+
+Components that must be upgraded manually after you've upgraded the control plane with 'kubeadm upgrade apply':
+
+COMPONENT   CURRENT      AVAILABLE
+Kubelet     1 x v1.7.1   v1.8.0
+
+Upgrade to the latest stable version:
+
+
+COMPONENT            CURRENT   AVAILABLE
+API Server           v1.7.1    v1.8.0
+Controller Manager   v1.7.1    v1.8.0
+Scheduler            v1.7.1    v1.8.0
+Kube Proxy           v1.7.1    v1.8.0
+Kube DNS             1.14.4    1.14.4
+
+You can now apply the upgrade by executing the following command:
+
+	kubeadm upgrade apply v1.8.0
+
+Note: Before you do can perform this upgrade, you have to update kubeadm to v1.8.0
+
+    kubeadm upgrade apply v1.8.0
+	
+_____________________________________________________________________
+```
+
+--->
+
+```shell
+[preflight] Running pre-flight checks
+[upgrade] Making sure the cluster is healthy:
+[upgrade/health] Checking API Server health: Healthy
+[upgrade/health] Checking Node health: All Nodes are healthy
+[upgrade/health] Checking Static Pod manifests exists on disk: All manifests exist on disk
+[upgrade/config] Making sure the configuration is correct:
+[upgrade/config] Reading configuration from the cluster...
+[upgrade/config] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+[upgrade] Fetching available versions to upgrade to:
+[upgrade/versions] Cluster version: v1.7.1
+[upgrade/versions] kubeadm version: v1.8.0
+[upgrade/versions] Latest stable version: v1.8.0
+[upgrade/versions] Latest version in the v1.7 series: v1.7.6
+
+在使用 'kubeadm upgrade apply' 升级控制面板后，必须手动升级组件:
+COMPONENT   CURRENT      AVAILABLE
+Kubelet     1 x v1.7.1   v1.7.6
+
+升级 v1.7 系列到最新的版本:
+COMPONENT            CURRENT   AVAILABLE
+API Server           v1.7.1    v1.7.6
+Controller Manager   v1.7.1    v1.7.6
+Scheduler            v1.7.1    v1.7.6
+Kube Proxy           v1.7.1    v1.7.6
+Kube DNS             1.14.4    1.14.4
+
+您可以执行如下的命令来进行升级：
+	kubeadm upgrade apply v1.7.6
+
+_____________________________________________________________________
+
+在使用 'kubeadm upgrade apply' 升级控制面板后，必须手动升级组件:
+COMPONENT   CURRENT      AVAILABLE
+Kubelet     1 x v1.7.1   v1.8.0
+
+升级到最新稳定的版本：
+COMPONENT            CURRENT   AVAILABLE
+API Server           v1.7.1    v1.8.0
+Controller Manager   v1.7.1    v1.8.0
+Scheduler            v1.7.1    v1.8.0
+Kube Proxy           v1.7.1    v1.8.0
+Kube DNS             1.14.4    1.14.4
+
+执行如下命令来进行升级：
+    kubeadm upgrade apply v1.8.0
+	
+请注意：在这次升级之前，必须升级 kubeadm 到 v1.8.0 版本	
+_____________________________________________________________________
+```
+
+<!--
+The `kubeadm upgrade plan` checks that your cluster is in an upgradeable state and fetches the versions available to upgrade to in an user-friendly way.
+
+4. Pick a version to upgrade to and run, for example, `kubeadm upgrade apply` as follows:
+--->
+`kubeadm upgrade plan` 检查集群是否处于可以升级的状态并且获取可以以用户友好方式升级到的版本。
+
+4. 选择一个版本来进行升级和运行，例如，参照如下使用 `kubeadm upgrade apply`：
+```shell
+kubeadm upgrade apply v1.8.0
+```
+<!--
+You should see output similar to this:
+--->
+可以看到类似下面的结果：
+```shell
+[preflight] Running pre-flight checks
+[upgrade] Making sure the cluster is healthy:
+[upgrade/health] Checking API Server health: Healthy
+[upgrade/health] Checking Node health: All Nodes are healthy
+[upgrade/health] Checking Static Pod manifests exists on disk: All manifests exist on disk
+[upgrade/config] Making sure the configuration is correct:
+[upgrade/config] Reading configuration from the cluster...
+[upgrade/config] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+[upgrade/version] You have chosen to upgrade to version "v1.8.0"
+[upgrade/versions] Cluster version: v1.7.1
+[upgrade/versions] kubeadm version: v1.8.0
+[upgrade/prepull] Will prepull images for components [kube-apiserver kube-controller-manager kube-scheduler]
+[upgrade/prepull] Prepulling image for component kube-scheduler.
+[upgrade/prepull] Prepulling image for component kube-apiserver.
+[upgrade/prepull] Prepulling image for component kube-controller-manager.
+[apiclient] Found 0 Pods for label selector k8s-app=upgrade-prepull-kube-scheduler
+[apiclient] Found 1 Pods for label selector k8s-app=upgrade-prepull-kube-scheduler
+[apiclient] Found 1 Pods for label selector k8s-app=upgrade-prepull-kube-apiserver
+[apiclient] Found 1 Pods for label selector k8s-app=upgrade-prepull-kube-controller-manager
+[upgrade/prepull] Prepulled image for component kube-apiserver.
+[upgrade/prepull] Prepulled image for component kube-controller-manager.
+[upgrade/prepull] Prepulled image for component kube-scheduler.
+[upgrade/prepull] Successfully prepulled the images for all the control plane components
+[upgrade/apply] Upgrading your Static Pod-hosted control plane to version "v1.8.0"...
+[upgrade/staticpods] Writing upgraded Static Pod manifests to "/etc/kubernetes/tmp/kubeadm-upgraded-manifests432902769"
+[controlplane] Wrote Static Pod manifest for component kube-apiserver to "/etc/kubernetes/tmp/kubeadm-upgraded-manifests432902769/kube-apiserver.yaml"
+[controlplane] Wrote Static Pod manifest for component kube-controller-manager to "/etc/kubernetes/tmp/kubeadm-upgraded-manifests432902769/kube-controller-manager.yaml"
+[controlplane] Wrote Static Pod manifest for component kube-scheduler to "/etc/kubernetes/tmp/kubeadm-upgraded-manifests432902769/kube-scheduler.yaml"
+[upgrade/staticpods] Moved upgraded manifest to "/etc/kubernetes/manifests/kube-apiserver.yaml" and backed up old manifest to "/etc/kubernetes/tmp/kubeadm-backup-manifests155856668/kube-apiserver.yaml"
+[upgrade/staticpods] Waiting for the kubelet to restart the component
+[apiclient] Found 1 Pods for label selector component=kube-apiserver
+[upgrade/staticpods] Component "kube-apiserver" upgraded successfully!
+[upgrade/staticpods] Moved upgraded manifest to "/etc/kubernetes/manifests/kube-controller-manager.yaml" and backed up old manifest to "/etc/kubernetes/tmp/kubeadm-backup-manifests155856668/kube-controller-manager.yaml"
+[upgrade/staticpods] Waiting for the kubelet to restart the component
+[apiclient] Found 1 Pods for label selector component=kube-controller-manager
+[upgrade/staticpods] Component "kube-controller-manager" upgraded successfully!
+[upgrade/staticpods] Moved upgraded manifest to "/etc/kubernetes/manifests/kube-scheduler.yaml" and backed up old manifest to "/etc/kubernetes/tmp/kubeadm-backup-manifests155856668/kube-scheduler.yaml"
+[upgrade/staticpods] Waiting for the kubelet to restart the component
+[apiclient] Found 1 Pods for label selector component=kube-scheduler
+[upgrade/staticpods] Component "kube-scheduler" upgraded successfully!
+[uploadconfig] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
+[bootstraptoken] Configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+[bootstraptoken] Configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+[addons] Applied essential addon: kube-dns
+[addons] Applied essential addon: kube-proxy
+
+[upgrade/successful] SUCCESS! Your cluster was upgraded to "v1.8.0". Enjoy!
+
+[upgrade/kubelet] Now that your control plane is upgraded, please proceed with upgrading your kubelets in turn.
+```
+<!--
+
+`kubeadm upgrade apply` does the following:
+
+--->
+对于 `kubeadm upgrade apply` 按照如下进行操作：
+<!--
+- It checks that your cluster is in an upgradeable state, that is:
+  - The API Server is reachable,
+  - All nodes are in the `Ready` state, and
+  - The control plane is healthy
+- It enforces the version skew policies.
+- It makes sure the control plane images are available or available to pull to the machine.
+- It upgrades the control plane components or rollbacks if any of them fails to come up.
+- It applies the new `kube-dns` and `kube-proxy` manifests and enforces that all necessary RBAC rules are created.
+--->
+- 检查集群是否处于升级状态，即：
+  - API server是可达，
+  - 所有的节点处于 `Ready` 状态，和
+  - 控制面板是健康的
+- 强制执行版本倾斜策略
+- 确保控制面板镜像可用或者在机器上可以拉取下来
+- 升级控制面板组件或者回滚如果其中一个无法出现
+- 应用新的 `kube-dns` 和 `kube-proxy` 清单并强制创建所必须的RBAC规则
+
+<!--
+5. Manually upgrade your Software Defined Network (SDN).
+
+   Your Container Network Interface (CNI) provider might have its own upgrade instructions to follow now.
+   Check the [addons](/docs/concepts/cluster-administration/addons/) page to
+   find your CNI provider and see if there are additional upgrade steps
+   necessary.
+--->
+5. 手动升级定义的网络（SDN）软件。
+   
+   容器网络接口（CNI）提供者可能有自己的升级说明指导。
+   检查这个[插件](/docs/concepts/cluster-administration/addons/)页面来找到 CNI 提供者和查看是否需要额外的升级步骤。
+
+<!--   
+6. Add RBAC permissions for automated certificate rotation. In the future, kubeadm will perform this step automatically:
+--->
+6. 为自动证书轮换添加 RBAC 权限。不久将来，kubeadm 会自动执行这些步骤：
+```shell
+kubectl create clusterrolebinding kubeadm:node-autoapprove-certificate-rotation --clusterrole=system:certificates.k8s.io:certificatesigningrequests:selfnodeclient --group=system:nodes
+```
+<!--
+## Upgrading your master and node packages
+--->
+## 升级master和node节点包
+<!--
+For each host (referred to as `$HOST` below) in your cluster, upgrade `kubelet` by executing the following commands:
+
+1. Prepare the host for maintenance, marking it unschedulable and evicting the workload:
+-->
+在您的集群中涉及 `$HOST` 的每个主机，可以通过执行下面的命令来升级 `kubelet`：
+1. 做好主机的维护，标记它不可达和收回工作负载：
+```shell
+kubectl drain $HOST --ignore-daemonsets
+```
+<!--
+When running this command against the master host, this error is expected and can be safely ignored (since there are static pods running on the master):
+--->
+当在 master 主机上运行这个命令，这个错误是可以预料的并且可以忽略（因为静态的 pods 运行在 master 上）
+```shell
+node "master" already cordoned
+error: pods not managed by ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet (use --force to override): etcd-kubeadm, kube-apiserver-kubeadm, kube-controller-manager-kubeadm, kube-scheduler-kubeadm
+```
+<!--
+2. Upgrade the Kubernetes package versions on the `$HOST` node by using a Linux distribution-specific package manager:
+
+If the host is running a Debian-based distro such as Ubuntu, run:
+--->
+2. 在 `$HOST` 节点上使用特定的包管理器升级 kubernetes 包版本：
+
+如果主机运行 Debian-based 发行版，如 ubuntu，运行如下：
+```shell
+apt-get update
+apt-get upgrade
+```
+<!--
+If the host is running CentOS or the like, run:
+--->
+如果主机运行 centos 或者类似，运行如下：
+```shell
+yum update
+```
+<!--
+Now the new version of the `kubelet` should be running on the host. Verify this using the following command on `$HOST`:
+--->
+现在 `kubelet` 新的版本运行在主机上。在 `$HOST` 上使用如下命令验证：
+```shell
+systemctl status kubelet
+```
+<!--
+3. Bring the host back online by marking it schedulable:
+--->
+3. 通过标记可计划的将主机从新联机：
+```shell
+kubectl uncordon $HOST
+```
+<!--
+4. After upgrading `kubelet` on each host in your cluster, verify that all nodes are available again by executing the following (from anywhere, for example, from outside the cluster):
+--->
+4. 在您的集群上的主机升级 `kubelet` 后，通过从任意位置运行以下命令例如从集群外来验证所有节点是否可用：
+```shell
+kubectl get nodes
+```
+<!--
+If the `STATUS` column of the above command shows `Ready` for all of your hosts, you are done.
+--->
+如果上面命令的 `STATUS` 列显示所有的主机的`Ready`状态，就完成了。
+<!--
+## Recovering from a bad state
+--->
+##从坏的状态中恢复
+<!----
+If `kubeadm upgrade` somehow fails and fails to roll back, due to an unexpected shutdown during execution for instance,
+you may run `kubeadm upgrade` again as it is idempotent and should eventually make sure the actual state is the desired state you are declaring.
+
+You can use `kubeadm upgrade` to change a running cluster with `x.x.x --> x.x.x` with `--force`, which can be used to recover from a bad state.
+>
+如果 `kubeadm upgrade` 以某种方式失败并无法回滚，原因是在执行过程中出现意外关机，可以再次运行 `kubeadm upgrade` ，因为它是幂等的，并且最终确保实际状态是期待的状态。
+
+您可以使用 `kubeadm upgrade` 来更改运行的集群使用 `x.x.x --> x.x.x` with `--force`参数，它是用来恢复坏的状态的。
+
+{{% /capture %}}
+
