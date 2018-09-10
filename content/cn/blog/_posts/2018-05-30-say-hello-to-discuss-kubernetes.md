@@ -48,6 +48,7 @@ Hop in and take a look. We're just getting started, so you might want to begin b
 
 -->
 
+
 马上，我们有用户可以浏览的类别。检查和发布这些类别允许用户参与他们可能感兴趣的事情，而无需订阅列表。精细的通知控件允许用户只订阅他们想要的类别或标签，并允许通过电子邮件回复主题。
 
 生态系统合作伙伴和开发人员现在有一个地方可以[宣布项目]（https://discuss.kubernetes.io/c/announcements ），他们正在为用户工作，而不会想知道它是否会在官方列表中脱离主题。我们可以让这个地方不仅仅是关于核心Kubernetes，而是关于我们社区正在建设的数百个精彩工具。
