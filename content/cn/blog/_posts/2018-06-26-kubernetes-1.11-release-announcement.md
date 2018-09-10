@@ -16,7 +16,6 @@ slug: kubernetes-1.11-release-announcement
 
 ---
 
- 
 
 <!--
 
@@ -52,11 +51,9 @@ Notable additions in this release include two highly-anticipated features gradua
 
 今天的发布继续推进Kubernetes的成熟度，可扩展性和灵活性，标志着团队在过去一年中努力研发的功能取得了重大进展。 这个最新版本涵盖网络的关键功能，开启了SIG-API Machinery和SIG-Node的两个主要功能，用于beta测试，并继续增强存储功能，这些功能一直是过去两个版本的焦点。 此版本中的功能使得将任何基础架构，云或预置部署加入Kubernetes系统的可能性越来越大。
 
- 
 
 此版本中值得注意的新增功能包括两个备受期待的功能,并将逐渐被广泛使用：基于IPVS的集群内负载平衡和CoreDNS作为集群DNS附加选项，这意味着可以提高生产应用程序的可扩展性和灵活性。
 
- 
 
 <!--
 
@@ -83,7 +80,6 @@ In this release, IPVS-based in-cluster service load balancing has moved to stabl
  
 
 在此版本中，[基于IPVS的集群内服务负载均衡]（https://github.com/kubernetes/features/issues/265 ）已稳定运行。 IPVS（IP虚拟服务器）提供高性能的内核负载均衡，具有比iptables更简单的编程接口。 此更改为包含Kubernetes服务模型的集群范围的分布式负载均衡器提供了更好的网络吞吐量，更好的编程延迟和更高的可伸缩性限制。 IPVS尚未成为默认值，但集群可以开始将其用于大量流量。
-
  
 
 <!--
@@ -97,7 +93,6 @@ CoreDNS is now available as a cluster DNS add-on option, and is the default when
 -->
 
  
-
 ## CoreDNS升级为一般可用性
 
  
@@ -123,7 +118,6 @@ This feature makes it possible for new Kubelet configurations to be rolled out i
  
 
 此功能可以在实时集群中推出新的Kubelet配置。 目前，Kubelet是通过命令行标志配置的，这使得在正在运行的集群中更新Kubelet配置变得很困难。 有了这个测试版功能，[用户可以通过API服务器在实时集群中配置Kubelet]（https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/）。
-
  
 
 <!--
@@ -193,13 +187,11 @@ Support for dynamic maximum volume count has been introduced as an alpha feature
 The StorageObjectInUseProtection feature is now stable and prevents the removal of both Persistent Volumes that are bound to a Persistent Volume Claim, and Persistent Volume Claims that are being used by a pod. This safeguard will help prevent issues from deleting a PV or a PVC that is currently tied to an active pod.
 
  
-
 Each Special Interest Group (SIG) within the community continues to deliver the most-requested enhancements, fixes, and functionality for their respective specialty areas. For a complete list of inclusions by SIG, please visit the release notes.
 
 -->
 
  
-
 ##新存储功能
 
  
@@ -228,7 +220,6 @@ StorageObjectInUseProtection功能现在是稳定的，并且可以防止删除�
 
 Kubernetes 1.11 is available for download on GitHub. To get started with Kubernetes, check out these interactive tutorials.
 
- 
 
 You can also install 1.11 using Kubeadm. Version 1.11.0 will be available as Deb and RPM packages, installable using the Kubeadm cluster installer sometime on June 28th.
 
@@ -427,14 +418,11 @@ The world’s largest Kubernetes gathering, KubeCon + CloudNativeCon is coming t
 -->
 
  
-
 ## KubeCon
 
  
-
 世界上最大的Kubernetes聚会，KubeCon + CloudNativeCon将于2018年11月14日至15日在[上海]（https://www.lfasiallc.com/events/kubecon-cloudnativecon-china-2018/ ）和2018年12月11日至13日在[西雅图]（https//events.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2018/ ）举行。此次会议将包括技术会议，案例研究，开发者深度交流，沙龙等等！ 所有活动的CFP目前正在开放。在今天 [提交您的演讲]（https://events.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2018/program/call-for-proposals-cfp/ ）和[注册]（https：// events。 linuxfoundation.org/events/kubecon-cloudnativecon-europe-2018/attend/register/）！
 
- 
 
 <!--
 
