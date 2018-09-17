@@ -20,13 +20,13 @@ Communication is key when it comes to engaging a community of over 35,000 people
 
 -->
 
-成为在全球范围有超过35,000人的社区时沟通是非常关键的。 跟踪 Kubernetes 社区中的所有内容可能是一项艰巨的任务。 一方面，我们有官方资源，如 Stack Overflow ，GitHub 和邮件列表，另一方面，我们有更多实时的资源，如 Slack，你可以在那里跳，与某人聊天，然后继续按你喜欢的方式去做。
+当要成为在全球范围有超过35,000人的社区时，沟通是非常关键的。 跟踪 Kubernetes 社区中的所有内容可能是一项艰巨的任务。 一方面，我们有官方资源，如 Stack Overflow ，GitHub 和邮件列表，另一方面，我们有更多瞬时的资源，如 Slack，你可以在那里，与某人聊天，然后继续按你喜欢的方式去做。
 
 <!--
 Slack is great for casual and timely conversations and keeping up with other community members, but communication can't be easily referenced in the future. Plus it can be hard to raise your hand in a room filled with 35,000 participants and find a voice. Mailing lists are useful when trying to reach a specific group of people with a particular ask and want to keep track of responses on the thread, but can be daunting with a large amount of people. Stack Overflow and GitHub are ideal for collaborating on projects or questions that involve code and need to be searchable in the future, but certain topics like "What's your favorite CI/CD tool" or "Kubectl tips and tricks" are offtopic there.
 -->
 
-Slack非常适合随意和及时的对话，并与其他社区成员保持联系，但未来很难轻易引用通信。此外，在35,000名参与者中提问并得到回答很难。邮件列表在有问题尝试联系特定人群并且想要跟踪大家的回应时非常有用，但是对于大量人员来说可能是麻烦的。 Stack Overflow 和 GitHub 非常适合在涉及代码的项目或问题上进行协作，并且如果在将来要进行搜索也很有用，但某些主题如“你最喜欢的 CI / CD 工具是什么”或“[Kubectl提示和技巧]”（https：// discuss.kubernetes.io/t/kubectl-tips-and-tricks/192）“在那里是没有意义的。
+Slack非常适合随意和及时的对话，并与其他社区成员保持联系，但未来很难轻易引用通信。此外，在35,000名参与者中提问并得到回答很难。邮件列表在有问题尝试联系特定人群并且想要跟踪大家的回应时非常有用，但是对于大量人员来说可能是麻烦的。 Stack Overflow 和 GitHub 非常适合在涉及代码的项目或问题上进行协作，并且如果在将来要进行搜索也很有用，但某些主题如“你最喜欢的 CI/CD 工具是什么”或“[Kubectl提示和技巧]”（https：// discuss.kubernetes.io/t/kubectl-tips-and-tricks/192）“在那里是没有意义的。
 
 <!--
 
@@ -34,7 +34,7 @@ While our current assortment of communication channels are valuable in their own
 
 -->
 
-虽然我们目前的各种沟通渠道对他们自己来说都很有价值，但我们发现电子邮件和实时聊天之间仍然存在差距。在网络的其他部分，许多其他开源项目，如 Docker ， Mozilla ，Swift ，Ghost 和 Chef ，已经成功地在[Discourse]（https://www.discourse.org/features ）之上构建社区，一个开放的讨论平台。那么，如果我们可以使用这个工具将我们的讨论结合在一个平台下，使用开放的API，或许也不会让我们的大部分信息消失在网络中呢？只有一种方法可以找到：欢迎来到[discuss.kubernetes.io]（https://discuss.kubernetes.io）
+虽然我们目前的各种沟通渠道就其自身而言都很有价值，但我们发现电子邮件和实时聊天之间仍然存在差距。在网络的其他部分，许多其他开源项目，如 Docker ， Mozilla ，Swift ，Ghost 和 Chef ，已经成功地在[Discourse]（https://www.discourse.org/features ）之上构建社区，一个开放的讨论平台。那么，如果我们可以使用这个工具将我们的讨论结合在一个平台下，使用开放的API，或许也不会让我们的大部分信息消失在网络中呢？只有一种方法可以找到：欢迎来到[discuss.kubernetes.io]（https://discuss.kubernetes.io）
 
 
 
@@ -48,7 +48,7 @@ Right off the bat we have categories that users can browse. Checking and posting
 Ecosystem partners and developers now have a place where they can announce projects that they're working on to users without wondering if it would be offtopic on an official list. We can make this place be not just about core Kubernetes, but about the hundreds of wonderful tools our community is building. 
 -->
 
-生态系统合作伙伴和开发人员现在有一个地方可以[宣布项目]（ https://discuss.kubernetes.io/c/announcements ），他们正在为用户工作，而不会想知道它是否会在官方列表中脱离主题。我们可以让这个地方不仅仅是关于核心Kubernetes，而是关于我们社区正在建设的数百个精彩工具。
+生态系统合作伙伴和开发人员现在有一个地方可以宣布他们正在为用户开发的项目，而不必担心它是否会在官方列表中脱离主题。我们可以让这个地方不仅仅是关于核心Kubernetes，而是关于我们社区正在构建的数百个精彩工具。
 
 <!--
 This new community forum gives people a place to go where they can discuss Kubernetes, and a sounding board for developers to make announcements of things happening around Kubernetes, all while being searchable and easily accessible to a wider audience. 
@@ -59,4 +59,4 @@ Hop in and take a look. We're just getting started, so you might want to begin b
 
 这个新的社区论坛为人们提供了一个可以讨论 Kubernetes 的地方，也是开发人员在 Kubernetes 周围发布事件的声音板，同时可以搜索并且更容易被更广泛的用户访问。
 
-进来看看。我们刚刚开始，所以您可能希望从[自我介绍]（https://discuss.kubernetes.io/t/introduce-yourself-here/56 ）开始，然后浏览。 [Android]（https://play.google.com/store/apps/details?id=com.discourse&hl=en_US&rdid=com.discourse&pli=1 ）和[iOS]（https：// itunes ）也可以使用应用。 apple.com/us/app/discourse-app/id1173672076?mt=8 ）。
+进来看看。我们刚刚开始，所以您可能希望从[自我介绍]（https://discuss.kubernetes.io/t/introduce-yourself-here/56 ）开始，然后进行浏览。 [Android]（https://play.google.com/store/apps/details?id=com.discourse&hl=en_US&rdid=com.discourse&pli=1 ）和[iOS]（https://itunes ）也可以使用应用。 (apple.com/us/app/discourse-app/id1173672076?mt=8 ）。
