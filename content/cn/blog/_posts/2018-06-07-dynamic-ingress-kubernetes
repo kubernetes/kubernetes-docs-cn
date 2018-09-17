@@ -40,7 +40,7 @@ Ambassador is configured using Kubernetes annotations. Annotations are used to c
 
  
 
-Kubernetes 可以轻松部署由许多微服务组成的应用程序，但这种架构的关键挑战之一是动态地将流量路由到这些服务中的每一个。 一种方法是 [Ambassador]（https://www.getambassador.io ），这是一个基于[Envoy Proxy]（https://www.envoyproxy.io ）构建的Kubernetes本地开源API网关。Ambassador专为动态环境而设计，服务可能频繁出入访问。
+Kubernetes 可以轻松部署由许多微服务组成的应用程序，但这种架构的关键挑战之一是动态地将流量路由到这些服务中的每一个。 一种方法是 [Ambassador]（https://www.getambassador.io ），这是一个基于[Envoy Proxy]（https://www.envoyproxy.io ）构建的Kubernetes本地开源API网关。Ambassador专为动态环境而设计，服务可能会被频繁地创建和删除。
 
  
 
@@ -62,46 +62,28 @@ Ambassador is typically installed as a Kubernetes deployment, and is also availa
 
  
 
-Ambassador 通常作为 Kubernetes 部署安装，也可以作为 Helm 图表使用。 要配置 Ambassador ，请使用 Ambassador 注释创建 Kubernetes 服务。 这是一个配置 Ambassador，将请求路由到/ httpbin /公共 httpbin.org 服务的示例：
+Ambassador 通常作为 Kubernetes Deployment安装，也可以作为 Helm Charts使用。 要配置 Ambassador ，请使用 Ambassador 注释创建 Kubernetes 服务。 这是一个配置 Ambassador，将请求路由到/httpbin/，然后到公共 httpbin.org 服务的示例：
 
  
 
 ```
-
 apiVersion: v1
-
 kind: Service
-
 metadata:
-
   name: httpbin
-
   annotations:
-
     getambassador.io/config: |
-
       ---
-
       apiVersion: ambassador/v0
-
       kind:  Mapping
-
       name:  httpbin_mapping
-
       prefix: /httpbin/
-
       service: httpbin.org:80
-
       host_rewrite: httpbin.org
-
 spec:
-
   type: ClusterIP
-
   ports:
-
     - port: 80
-
 ```
 
 <!--
@@ -202,11 +184,6 @@ In this example, the “test” service uses Ambassador annotations to dynamical
 
 ## Kubeflow 和 Ambassador
 
- 
-
-
-
- 
 
 <!--
 
@@ -232,4 +209,4 @@ If you’re interested in using Ambassador as an API Gateway or Kubernetes ingre
 
  
 
-如果您有兴趣将 Ambassador 用作 API 网关或 Kubernetes 入口解决方案，请查看[Ambassador入门指南]（https://www.getambassador.io/user-guide/getting--启动 ）。
+如果您有兴趣将 Ambassador 用作 API 网关或 Kubernetes ingress 解决方案，请查看[Ambassador入门指南]（https://www.getambassador.io/user-guide/getting）。
