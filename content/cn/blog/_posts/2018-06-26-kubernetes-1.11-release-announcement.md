@@ -1,6 +1,6 @@
 ---
 
-title: ' Kubernetes 1.11 ：集群内负载均衡和 CoreDNS 插件的普遍可用性'
+title: ' Kubernetes 1.11 ：集群内负载均衡和 CoreDNS 插件即将发行使用'
 
 cn-approvers:
 
@@ -45,14 +45,14 @@ Notable additions in this release include two highly-anticipated features gradua
 
  
 
-我们很高兴地宣布推出2018年第二个发型版本，Kubernetes 1.11！
+我们很高兴地宣布推出2018年第二个发行版本，Kubernetes 1.11！
 
  
 
-今天的发布继续推进 Kubernetes 的成熟度，可扩展性和灵活性，标志着团队在过去一年中努力研发的功能取得了重大进展。 这个最新版本涵盖网络的关键功能，开启了 SIG-API Machinery 和 SIG-Node 的两个主要功能，用于 beta 测试，并继续增强存储功能，这些功能一直是过去两个版本的焦点。 此版本中的功能使得将任何基础架构，云或预置部署加入 Kubernetes 系统的可能性越来越大。
+今天的发布继续推进 Kubernetes 的成熟度，可扩展性和灵活性，标志着团队在过去一年中努力研发的功能取得了重大进展。 这个最新版本涵盖网络的关键功能，开启了 SIG-API Machinery 和 SIG-Node 的两个主要功能，用于 beta 测试，并继续增强存储功能，这些功能一直是过去两个版本的焦点。 此版本中的功能使得将任何基础架构，云或客户自己的机房/数据中心的资产或服务加入 Kubernetes 系统的可能性越来越大。
 
 
-此版本中值得注意的新增功能包括两个备受期待的功能,并将逐渐被广泛使用：基于 IPVS 的集群内负载平衡和 CoreDNS 作为集群DNS附加选项，这意味着可以提高生产应用程序的可扩展性和灵活性。
+此版本中值得注意的新增功能包括两个备受期待的功能,并将逐渐被广泛使用：基于 IPVS 的集群内负载平衡和 CoreDNS 作为集群 DNS 附加选项，这意味着可以提高生产应用程序的可扩展性和灵活性。
 
 
 <!--
@@ -79,7 +79,7 @@ In this release, IPVS-based in-cluster service load balancing has moved to stabl
 
  
 
-在此版本中，[基于 IPVS 的集群内服务负载均衡]（https://github.com/kubernetes/features/issues/265 ）已稳定运行。 IPVS（IP虚拟服务器）提供高性能的内核负载均衡，具有比 iptables 更简单的编程接口。 此更改为包含 Kubernetes 服务模型的集群范围的分布式负载均衡器提供了更好的网络吞吐量，更好的编程延迟和更高的可伸缩性限制。 IPVS 尚未成为默认值，但集群可以开始将其用于大量流量。
+在此版本中，[基于 IPVS 的集群内服务负载均衡]（https://github.com/kubernetes/features/issues/265 ）已稳定运行。 IPVS（IP虚拟服务器）提供高性能的内核负载均衡，具有比 iptables 更简单的编程接口。 此更改为包含 Kubernetes 服务模型的集群范围的分布式负载均衡器提供了更好的网络吞吐量，更好的编程延迟和更高的可伸缩性限制。 IPVS 尚未成为默认值，但集群可以开始将其用于大规模场景。
  
 
 <!--
@@ -97,7 +97,7 @@ CoreDNS is now available as a cluster DNS add-on option, and is the default when
 
  
 
-[CoreDNS]（https://coredns.io ）现在可用作[集群 DNS 附加选项]（https://github.com/kubernetes/features/issues/427 ），并且是使用 kubeadm 时的默认选项。 CoreDNS 是一个灵活，可扩展的权威 DNS 服务器，可直接与 Kubernetes API 集成。 CoreDNS 比以前的 DNS 服务器具有更少的移去的部件，因为它是单个可执行文件和单个进程，并通过创建自定义 DNS 条目来支持灵活的用例。 它也用 Go 编写，使其具有内存安全性。 您可以在[这里]（https://youtu.be/dz9S7R8r5gw）了解更多有关CoreDNS的信息。
+[CoreDNS]（https://coredns.io ）现在可用作[集群 DNS 附加选项]（https://github.com/kubernetes/features/issues/427 ），并且是使用 kubeadm 时的默认选项。 CoreDNS 是一个灵活，可扩展的权威 DNS 服务器，可直接与 Kubernetes API 集成。 CoreDNS 比以前的 DNS 服务器具有更少的架构中经常发生变动且其变化难以跟踪的组件，因为它是单个可执行文件和单个进程，并通过创建自定义 DNS 条目来支持灵活的用例。 它也用 Go 编写，使其具有内存安全性。 您可以在[这里]（https://youtu.be/dz9S7R8r5gw）了解更多有关CoreDNS的信息。
 
  
 
@@ -117,7 +117,7 @@ This feature makes it possible for new Kubelet configurations to be rolled out i
 
  
 
-此功能可以在实时集群中推出新的 Kubelet 配置。 目前，Kubelet 是通过命令行标志配置的，这使得在正在运行的集群中更新 Kubelet 配置变得很困难。 有了这个测试版功能，[用户可以通过 API 服务器在实时集群中配置 Kubelet]（https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/）。
+此功能可以在运行中的集群中推出新的 Kubelet 配置。 目前，Kubelet 是通过命令行标志配置的，这使得在正在运行的集群中更新 Kubelet 配置变得很困难。 有了这个测试版功能，[用户可以通过 API 服务器在运行中的集群中配置 Kubelet]（https://kubernetes.io/docs/tasks/administer-cluster/reconfigure-kubelet/）。
  
 
 <!--
@@ -140,7 +140,7 @@ Custom Resource Definitions now also support "status" and "scale" subresources, 
 
  
 
-自定义资源定义不再局限于定义单个版本的自定义资源，这是一种难以解决的限制。现在，通过此 beta [feature]（https://github.com/kubernetes/features/issues/544 ），可以定义多个版本的资源。将来，这将扩展到支持一些自动转换;目前，此功能允许自定义资源作者“通过安全更改进行促销，例如： v1beta1 到 v1，“并为有更改的资源创建迁移路径。
+自定义资源定义不再局限于定义单个版本的自定义资源，这是一种难以解决的限制。现在，通过此 beta [feature]（https://github.com/kubernetes/features/issues/544 ），可以定义多个版本的资源。将来，这将扩展到支持一些自动转换;目前，此功能允许自定义资源作者“通过安全更改进行版本升级，例如： v1beta1 到 v1，“并为有更改的资源创建迁移路径。
 
  
 
@@ -164,28 +164,21 @@ Container Storage Interface (CSI) has been a major topic over the last few relea
 
  
 
-容器存储接口（CSI）是过去几个版本中的一个主要话题。 在转向[beta 1.10]（https://github.com/container-storage-interface/spec/blob/master/spec.md ）之后，1.11版本继续通过许多功能增强 CSI。 1.11版本为 CSI 添加了对原始块体积的 alpha 支持，将 CSI 与新的kubelet 插件注册机制集成在一起，并且更容易将秘密传递给 CSI 插件。
+容器存储接口（CSI）是过去几个版本中的一个主要话题。 在转向[beta in 1.10]（https://github.com/container-storage-interface/spec/blob/master/spec.md ）之后，1.11版本继续通过许多功能增强 CSI。 1.11版本为 CSI 添加了对原始块存储的 alpha 支持，将 CSI 与新的kubelet 插件注册机制集成在一起，并且更容易将secret传递给 CSI 插件。
 
- 
-
- 
 
 <!--
 
 ## New Storage Features
 
- 
 
 Support for online resizing of Persistent Volumes has been introduced as an alpha feature. This enables users to increase the size of PVs without having to terminate pods and unmount volume first. The user will update the PVC to request a new size and kubelet will resize the file system for the PVC.
-
  
 
 Support for dynamic maximum volume count has been introduced as an alpha feature. This new feature enables in-tree volume plugins to specify the maximum number of volumes that can be attached to a node and allows the limit to vary depending on the type of node. Previously, these limits were hard coded or configured via an environment variable.
-
  
 
 The StorageObjectInUseProtection feature is now stable and prevents the removal of both Persistent Volumes that are bound to a Persistent Volume Claim, and Persistent Volume Claims that are being used by a pod. This safeguard will help prevent issues from deleting a PV or a PVC that is currently tied to an active pod.
-
  
 Each Special Interest Group (SIG) within the community continues to deliver the most-requested enhancements, fixes, and functionality for their respective specialty areas. For a complete list of inclusions by SIG, please visit the release notes.
 
@@ -200,11 +193,11 @@ Each Special Interest Group (SIG) within the community continues to deliver the 
 
  
 
-支持[动态最大卷数]（https://github.com/kubernetes/features/issues/554 ）已作为 alpha 功能引入。此新功能使 in-卷插件能够指定可附加到节点的最大卷数，并允许限制根据节点类型而变化。以前，这些限制是通过环境变量进行硬编码或配置的。
+支持[动态最大卷数]（https://github.com/kubernetes/features/issues/554 ）已作为 alpha 功能引入。此新功能使 in-tree 卷插件能够指定可附加到节点的最大卷数，并允许限制根据节点类型而变化。以前，这些限制是通过环境变量进行硬编码或配置的。
 
  
 
-StorageObjectInUseProtection 功能现在是稳定的，并且可以防止删除绑定到持久卷声明和[持久卷声明]的[持久卷]（https://github.com/kubernetes/features/issues/499 ） pod 正在使用：（http://github.com/kubernetes/features/issues/498 ）。此安全措施有助于防止删除当前绑定到活动窗格的 PV 或 PVC 的问题。
+StorageObjectInUseProtection 功能现在是稳定的，并且可以防止删除绑定到持久卷声明和[持久卷声明]的[持久卷]（https://github.com/kubernetes/features/issues/499 ） 被pod使用的：（http://github.com/kubernetes/features/issues/498 ）。此安全措施有助于防止删除当前绑定到 pod 的 PV 或 PVC 的问题。
 
  
 
@@ -227,7 +220,7 @@ You can also install 1.11 using Kubeadm. Version 1.11.0 will be available as Deb
 
  
 
-＃＃ 可用性
+## 可用性
 
  
 
@@ -261,7 +254,7 @@ If you’re interested in exploring these features more in depth, check back in 
 
  
 
-## 4天特色博客系列
+## 4天功能博客系列
 
  
 
