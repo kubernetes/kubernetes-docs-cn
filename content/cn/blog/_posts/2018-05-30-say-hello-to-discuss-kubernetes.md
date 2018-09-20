@@ -26,7 +26,7 @@ Communication is key when it comes to engaging a community of over 35,000 people
 Slack is great for casual and timely conversations and keeping up with other community members, but communication can't be easily referenced in the future. Plus it can be hard to raise your hand in a room filled with 35,000 participants and find a voice. Mailing lists are useful when trying to reach a specific group of people with a particular ask and want to keep track of responses on the thread, but can be daunting with a large amount of people. Stack Overflow and GitHub are ideal for collaborating on projects or questions that involve code and need to be searchable in the future, but certain topics like "What's your favorite CI/CD tool" or "Kubectl tips and tricks" are offtopic there.
 -->
 
-Slack非常适合随意和及时的对话，并与其他社区成员保持联系，但未来很难轻易引用通信。此外，在35,000名参与者中提问并得到回答很难。邮件列表在有问题尝试联系特定人群并且想要跟踪大家的回应时非常有用，但是对于大量人员来说可能是麻烦的。 Stack Overflow 和 GitHub 非常适合在涉及代码的项目或问题上进行协作，并且如果在将来要进行搜索也很有用，但某些主题如“你最喜欢的 CI/CD 工具是什么”或“[Kubectl提示和技巧]”（https：// discuss.kubernetes.io/t/kubectl-tips-and-tricks/192）“在那里是没有意义的。
+Slack非常适合随意和及时的对话，并与其他社区成员保持联系,但未来很难轻易引用通信。此外，在35,000名参与者中提问并得到回答很难。邮件列表在有问题尝试联系特定人群并且想要跟踪大家的回应时非常有用，但是对于大量人员来说可能是麻烦的。 Stack Overflow 和 GitHub 非常适合在涉及代码的项目或问题上进行协作，并且如果在将来要进行搜索也很有用，但某些主题如“你最喜欢的 CI/CD 工具是什么”或“[Kubectl提示和技巧]”（https：// discuss.kubernetes.io/t/kubectl-tips-and-tricks/192）“在那里是没有意义的。
 
 <!--
 
