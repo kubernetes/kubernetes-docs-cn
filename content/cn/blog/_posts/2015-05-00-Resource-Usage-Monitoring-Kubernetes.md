@@ -32,7 +32,6 @@ Heapster is a cluster-wide aggregator of monitoring and event data. It currently
 
 Heapster 是一个集群范围的监控和事件数据聚合器。它目前原生支持 Kubernetes ，并适用于所有 Kubernetes 计划。Heapster 作为集群中的 pod 运行，类似于任何 Kubernetes 应用程序的运行方式。Heapster pod 发现集群中的所有节点，并通过节点的 [Kubelets](https://github.com/kubernetes/kubernetes/blob/master/DESIGN.md#kubelet) (Kubernetes 在物理机上的代理) 查询使用情况。 Kubelet 从每个机器上的 [cAdvisor](https://github.com/google/cadvisor) 代理获取数据。Heapster 按照每个 Pod 和其相关标签进行分组。然后将该数据推送到可配置的后端进行存储和可视化。目前支持的后端包括[InfluxDB](http://influxdb.com/) (使用 [Grafana](http://grafana.org/)进行可视化)，[Google Cloud Monitoring](https://cloud.google.com/monitoring/) 和这里描述的其它应用。该服务的整体架构如下所示：
 
-
 [![](https://2.bp.blogspot.com/-6Bu15356Zqk/V4mGINP8eOI/AAAAAAAAAmk/-RwvkJUt4rY2cmjqYFBmRo25FQQPRb27ACEw/s640/monitoring-architecture.png)](https://2.bp.blogspot.com/-6Bu15356Zqk/V4mGINP8eOI/AAAAAAAAAmk/-RwvkJUt4rY2cmjqYFBmRo25FQQPRb27ACEw/s1600/monitoring-architecture.png)
 
 <!--
