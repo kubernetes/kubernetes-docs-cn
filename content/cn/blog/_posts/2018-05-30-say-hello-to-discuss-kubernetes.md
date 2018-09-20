@@ -59,4 +59,4 @@ Hop in and take a look. We're just getting started, so you might want to begin b
 
 这个新的社区论坛为人们提供了一个可以讨论 Kubernetes 的地方，也是开发人员在 Kubernetes 周围发布事件的声音板，同时可以搜索并且更容易被更广泛的用户访问。
 
-进来看看。我们刚刚开始，所以您可能希望从[自我介绍]（https://discuss.kubernetes.io/t/introduce-yourself-here/56 ）开始，然后进行浏览。 [Android]（https://play.google.com/store/apps/details?id=com.discourse&hl=en_US&rdid=com.discourse&pli=1 ）和[iOS]（https://itunes ）也可以使用应用。 (apple.com/us/app/discourse-app/id1173672076?mt=8 ）。
+进来看看。我们刚刚开始，所以您可能希望从[自我介绍]（https://discuss.kubernetes.io/t/introduce-yourself-here/56 ）开始，然后进行浏览。 [Android]（https://play.google.com/store/apps/details?id=com.discourse&hl=en_US&rdid=com.discourse&pli=1 ）和[iOS]（https://itunes ）也可以使用应用。 (apple.com/us/app/discourse-app/id1173672076?mt=8）。
